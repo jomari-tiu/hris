@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { cookies } from "next/headers";
 
-import UserAuth from "@/components/HOC/UserAuth";
 import Layout from "@/components/Layout";
+import Login from "@/components/Layout/Login";
 
 import "./globals.css";
 
@@ -19,12 +20,14 @@ function RootLayout({
   children: React.ReactNode;
   message: string;
 }) {
+  const token = cookies()?.get("user")?.value;
   return (
     <html lang="en">
       <body className={inter.className}>
         <Layout>{children}</Layout>
+        {/* {token ? <Layout>{children}</Layout> : <Login />} */}
       </body>
     </html>
   );
 }
-export default UserAuth(RootLayout);
+export default RootLayout;

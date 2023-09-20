@@ -3,16 +3,47 @@
 @tailwind utilities;
 
 :root {
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --background: #fff;
+  --background_blue: #7599b3;
+  --white: #fff;
+  --black: #000;
+  --blue: #678195;
+  --blue2: #6890ad;
+  --blue3: #39557c;
+  --red: #dd0000;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
-    --background: #fff;
+
   }
-}
+} */
 
 body {
   background: var(--background);
+}
+p,
+li,
+a {
+  @apply text-[1rem] 1024px:text-[.8rem] text-black;
+}
+
+h1 {
+  @apply text-[4rem];
+}
+
+h2 {
+  @apply text-[3rem];
+}
+
+h3 {
+  @apply text-[2rem];
+}
+
+input[type="text"] {
+  @apply border rounded-md px-2 py-2 outline-blue;
+}
+
+button {
+  @apply px-3 py-2 border rounded-md;
 }
