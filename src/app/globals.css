@@ -5,12 +5,16 @@
 :root {
   --background: #fff;
   --background_blue: #7599b3;
-  --white: #fff;
+  --white0: #fff;
+  --white: #faf8f4;
   --black: #000;
   --blue: #678195;
   --blue2: #6890ad;
   --blue3: #39557c;
-  --red: #dd0000;
+  --red: #e9dfdc;
+  --red1: #6f1817;
+  --red2: #520100;
+  --gold: #ffcc00;
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -29,15 +33,15 @@ a {
 }
 
 h1 {
-  @apply text-[4rem];
+  @apply text-[4rem] 820px:text-[3rem];
 }
 
 h2 {
-  @apply text-[3rem];
+  @apply text-[3rem] 820px:text-[2rem];
 }
 
 h3 {
-  @apply text-[2rem];
+  @apply text-[2rem]  820px:text-[1rem];
 }
 
 input[type="text"] {
@@ -46,4 +50,23 @@ input[type="text"] {
 
 button {
   @apply px-3 py-2 border rounded-md;
+}
+
+*::-webkit-scrollbar {
+  height: 5px;
+  width: 5px;
+}
+*::-webkit-scrollbar:hover {
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  cursor: pointer !important;
+  background-color: var(--red2);
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }

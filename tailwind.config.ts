@@ -20,6 +20,10 @@ const config: Config = {
         "blue-2": "var(--blue2)",
         "blue-3": "var(--blue3)",
         red: "var(--red)",
+        "red-2": "var(--red2)",
+        "white-0": "var(--white0)",
+        gold: "var(--gold)",
+        "red-1": "var(--red1)",
       },
       screens: {
         "2500px": { max: "2500px" },
