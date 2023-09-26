@@ -1,12 +1,19 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 
 import Button from "@/components/Button";
+import Modal from "@/components/Modal";
+import EmployeeForm from "@/components/page-components/Employee/Profile/EmployeeForm";
 import PageTitle from "@/components/PageTitle";
+import Search from "@/components/Search";
+import Tab from "@/components/Tab";
 import Table, { TableColumnsType } from "@/components/Table";
 
 function page() {
+  const [search, setSearch] = useState("");
+  const [isTab, setTab] = useState("profile");
+  const [modal, setModal] = useState(true);
   const columns: TableColumnsType[] = [
     {
       title: "sample",
@@ -47,9 +54,13 @@ function page() {
   ];
   return (
     <>
+      <PageTitle>Employee {">"} Profile</PageTitle>
+      <Tab tab={isTab} setTab={setTab} tabMenu={["profile", "archive"]} />
       <div className=" flex items-center flex-wrap gap-3 justify-between">
-        <PageTitle>Profile</PageTitle>
-        <Button appearance={"primary"}>ADD</Button>
+        <Search search={search} setSearch={setSearch} />
+        <Button appearance={"primary"} onClick={() => setModal(true)}>
+          Add
+        </Button>
       </div>
       <Table
         columns={columns}
@@ -58,6 +69,15 @@ function page() {
           alert(data);
         }}
       />
+      <Modal
+        show={modal}
+        onClose={() => {
+          setModal(false);
+        }}
+        width="regular"
+      >
+        <EmployeeForm />
+      </Modal>
     </>
   );
 }

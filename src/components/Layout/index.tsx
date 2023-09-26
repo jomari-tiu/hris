@@ -98,7 +98,6 @@ const Menu = ({ itemMenu, isTab, setTab }: MenuProps) => {
     <motion.li>
       {itemMenu.submenu ? (
         <motion.div
-          layoutId="menu"
           onClick={() => {
             if (itemMenu.title === isTab) {
               setTab(undefined);
@@ -147,7 +146,6 @@ const Menu = ({ itemMenu, isTab, setTab }: MenuProps) => {
             {itemMenu?.submenu?.map((item, index) => (
               <Link href={item.url} key={index}>
                 <motion.div
-                  layoutId="side-menu"
                   className={` mt-2 gap-3 flex items-center rounded-md w-full  text-gray-400 py-4 px-5 pl-[3.5rem] duration-200 ease-in-out ${
                     pathname === item.url
                       ? "bg-red text-red-2 font-bold"

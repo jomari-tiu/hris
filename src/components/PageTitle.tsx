@@ -1,11 +1,11 @@
 import React from "react";
 
 type Props = {
-  children: string;
+  children: any;
 };
 
 function PageTitle({ children }: Props) {
-  return <h2 className=" font-bold">{children}</h2>;
+  return <p className=" text-red-2 font-bold">{children}</p>;
 }
 
 export default PageTitle;

@@ -29,7 +29,7 @@ body {
 p,
 li,
 a {
-  @apply text-[1rem] 1024px:text-[.8rem] text-black;
+  @apply text-[1rem] 1024px:text-[.8rem] text-gray-500;
 }
 
 h1 {
@@ -44,8 +44,13 @@ h3 {
   @apply text-[2rem]  820px:text-[1rem];
 }
 
-input[type="text"] {
-  @apply border rounded-md px-2 py-2 outline-blue;
+input[type="text"],
+input[type="number"],
+input[type="password"],
+input[type="email"],
+select,
+input[type="date"] {
+  @apply border rounded-md px-2 py-2 outline-red-2;
 }
 
 button {

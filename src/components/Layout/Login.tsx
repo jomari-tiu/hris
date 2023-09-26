@@ -58,7 +58,7 @@ function Login() {
                     className=" w-full"
                   />
                   {errors?.username?.message && (
-                    <span className=" text-red">
+                    <span className=" text-red-2">
                       {errors?.username?.message}
                     </span>
                   )}
@@ -80,7 +80,7 @@ function Login() {
                     className=" w-full"
                   />
                   {errors?.password?.message && (
-                    <span className=" text-red">
+                    <span className=" text-red-2">
                       {errors?.password?.message}
                     </span>
                   )}
