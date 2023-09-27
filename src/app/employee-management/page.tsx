@@ -1,7 +1,7 @@
 import React from "react";
 
-function page() {
+function Index() {
   return <div>employee management</div>;
 }
 
-export default page;
+export default Index;

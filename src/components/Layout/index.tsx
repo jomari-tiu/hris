@@ -1,17 +1,20 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BiDownArrow } from "react-icons/bi";
+
 import { CgMenuRight } from "react-icons/cg";
 
 import { MdKeyboardArrowDown } from "react-icons/md";
 
 import AnimationContainer from "../Animation/animationContainer";
 import { fadeDown } from "../Animation/animationVariants";
+import { useGlobalState } from "../Context/AppMangement";
+import LoadingScreen from "./LoadingScreen";
 import { SideMenuLinks, SideMenuLinksType } from "./SideMenuUrls";
 
 type Props = {
@@ -19,6 +22,7 @@ type Props = {
 };
 
 function Layout({ children }: Props) {
+  // const { isAppLoading, setAppLoading } = useGlobalState();
   const [isTab, setTab] = useState(undefined);
 
   const [menu, setMenu] = useState(true);
@@ -140,25 +144,23 @@ const Menu = ({ itemMenu, isTab, setTab }: MenuProps) => {
         </Link>
       )}
 
-      <AnimatePresence mode="wait">
-        {isTab === itemMenu.title && (
-          <AnimationContainer variants={fadeDown}>
-            {itemMenu?.submenu?.map((item, index) => (
-              <Link href={item.url} key={index}>
-                <motion.div
-                  className={` mt-2 gap-3 flex items-center rounded-md w-full  text-gray-400 py-4 px-5 pl-[3.5rem] duration-200 ease-in-out ${
-                    pathname === item.url
-                      ? "bg-red text-red-2 font-bold"
-                      : "hover:bg-red text-gray-400"
-                  }`}
-                >
-                  {item.title}
-                </motion.div>
-              </Link>
-            ))}
-          </AnimationContainer>
-        )}
-      </AnimatePresence>
+      {isTab === itemMenu.title && (
+        <AnimationContainer variants={fadeDown}>
+          {itemMenu?.submenu?.map((item, index) => (
+            <Link href={item.url} key={index}>
+              <motion.div
+                className={` mt-2 gap-3 flex items-center rounded-md w-full  text-gray-400 py-4 px-5 pl-[3.5rem] duration-200 ease-in-out ${
+                  pathname === item.url
+                    ? "bg-red text-red-2 font-bold"
+                    : "hover:bg-red text-gray-400"
+                }`}
+              >
+                {item.title}
+              </motion.div>
+            </Link>
+          ))}
+        </AnimationContainer>
+      )}
     </motion.li>
   );
 };

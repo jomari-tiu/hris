@@ -8,12 +8,21 @@ type info = {
   age: number;
 };
 
-type GeneraState = {
-  isLoading: boolean;
-  setLoading: (isLoading: boolean) => void;
+type globalState = {
+  isAppLoading: boolean;
+  setAppLoading: (isLoading: boolean) => void;
+  // SAMPLE OF OBJECT TYPE
+  // info: info;
+  // setInfo: (name: string, age: number) => void;
 };
 
-export const useGenerationStore = create<GeneraState>()((set) => ({
-  isLoading: false,
-  setLoading: (isLoadingpr: boolean) => set({ isLoading: isLoadingpr }),
+export const useGlobalState = create<globalState>()((set) => ({
+  isAppLoading: false,
+  setAppLoading: (isAppLoadingpr: boolean) =>
+    set({ isAppLoading: isAppLoadingpr }),
+  // info: { name: "", age: 0 },
+  // setInfo: (name: string, age: number) => set({ info: { name, age } }),
 }));
+
+// how call in component/pages
+// const { info, setInfo } = useGlobalState();

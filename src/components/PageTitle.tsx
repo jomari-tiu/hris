@@ -1,11 +1,23 @@
 import React from "react";
+import { IoIosArrowForward } from "react-icons/io";
 
 type Props = {
-  children: any;
+  title: string[];
 };
 
-function PageTitle({ children }: Props) {
-  return <p className=" text-red-2 font-bold">{children}</p>;
+function PageTitle({ title }: Props) {
+  return (
+    <div className=" flex items-center gap-2">
+      {title.map((item, index) => (
+        <span
+          key={index}
+          className="flex text-red-2 items-center gap-2 font-bold"
+        >
+          {item} {title.length !== index + 1 && <IoIosArrowForward />}
+        </span>
+      ))}
+    </div>
+  );
 }
 
 export default PageTitle;

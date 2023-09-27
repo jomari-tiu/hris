@@ -23,7 +23,7 @@ function Table({ columns, data, className, onClickRow }: Props) {
         <thead className=" bg-gray-100 text-gray-400">
           <tr>
             {columns.map((item, index) => (
-              <th key={index} className=" p-4 text-center uppercase">
+              <th key={index} className=" p-4 text-start uppercase">
                 {item.title}
               </th>
             ))}
