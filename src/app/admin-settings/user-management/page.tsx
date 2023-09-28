@@ -12,7 +12,7 @@ import Table, { TableColumnsType } from "@/components/Table";
 
 function UserPage() {
   const [search, setSearch] = useState("");
-  const [isTab, setTab] = useState("profile");
+  const [isTab, setTab] = useState("users");
   const [modal, setModal] = useState(false);
   const columns: TableColumnsType[] = [
     {
@@ -52,7 +52,7 @@ function UserPage() {
   return (
     <>
       <PageTitle title={["Admin Settings", "User Management"]} />
-      <Tab tab={isTab} setTab={setTab} tabMenu={["profile", "archive"]} />
+      <Tab tab={isTab} setTab={setTab} tabMenu={["users", "archive"]} />
       <div className=" flex items-center flex-wrap gap-3 justify-between">
         <Search search={search} setSearch={setSearch} />
         <Button appearance={"primary"} onClick={() => setModal(true)}>

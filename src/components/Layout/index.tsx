@@ -1,20 +1,18 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BiDownArrow } from "react-icons/bi";
-
 import { CgMenuRight } from "react-icons/cg";
-
 import { MdKeyboardArrowDown } from "react-icons/md";
 
 import AnimationContainer from "../Animation/animationContainer";
 import { fadeDown } from "../Animation/animationVariants";
 import { useGlobalState } from "../Context/AppMangement";
-import LoadingScreen from "./LoadingScreen";
+import PromptMessage from "../PromptMessage";
 import { SideMenuLinks, SideMenuLinksType } from "./SideMenuUrls";
 
 type Props = {
@@ -22,7 +20,7 @@ type Props = {
 };
 
 function Layout({ children }: Props) {
-  // const { isAppLoading, setAppLoading } = useGlobalState();
+  const { notification } = useGlobalState();
   const [isTab, setTab] = useState(undefined);
 
   const [menu, setMenu] = useState(true);
@@ -44,6 +42,9 @@ function Layout({ children }: Props) {
 
   return (
     <main className=" w-full h-screen flex flex-wrap ">
+      <AnimatePresence mode="wait">
+        {notification.toggle && <PromptMessage />}
+      </AnimatePresence>
       <section
         className={` ${
           !menu && "ml-[-20rem] 820px:ml-[-15rem]"

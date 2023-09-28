@@ -16,6 +16,7 @@ type Props = {
     | "radio"
     | "password"
     | "email"
+    | "textarea"
     | "date";
   selectOptions?: string[];
 };
@@ -39,7 +40,7 @@ function ControllerField({
           <label htmlFor={name} className=" text-[.9rem] text-red-2">
             {placeholder}
           </label>
-          {type !== "select" && (
+          {type !== "select" && type !== "textarea" && (
             <input
               id={name}
               type={type}
@@ -47,6 +48,14 @@ function ControllerField({
               {...field}
               className=" w-full"
             />
+          )}
+          {type === "textarea" && (
+            <textarea
+              id={name}
+              //   placeholder={placeholder}
+              {...field}
+              className=" w-full"
+            ></textarea>
           )}
           {type === "select" && (
             <select id={name} {...field} className=" w-full">

@@ -11,7 +11,7 @@ export const fadeDown = {
     },
   },
   exit: {
-    y: 50,
+    y: -50,
     opacity: 0,
     transition: {
       duration: 0.2,

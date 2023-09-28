@@ -49,6 +49,7 @@ input[type="number"],
 input[type="password"],
 input[type="email"],
 select,
+textarea,
 input[type="date"] {
   @apply border rounded-md px-2 py-2 outline-red-2;
 }
