@@ -58,7 +58,12 @@ function ControllerField({
             ></textarea>
           )}
           {type === "select" && (
-            <select id={name} {...field} className=" w-full">
+            <select
+              id={name}
+              {...field}
+              defaultValue={selectOptions ? selectOptions[0] : ""}
+              className=" w-full capitalize"
+            >
               {selectOptions?.map((item, index) => (
                 <option key={index} value={item}>
                   {item}

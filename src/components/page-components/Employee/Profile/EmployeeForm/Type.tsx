@@ -1,4 +1,5 @@
 export type employeeinfo = {
+  id?: string | number;
   birth_date: string;
   birth_place: string;
   citizenship: string;
@@ -6,37 +7,28 @@ export type employeeinfo = {
   date_hired: string;
   email: string;
   employee_id: string;
-  extension_name: string;
+  name_ext: string;
   first_name: string;
   middle_name: string;
   mobile_no: string;
   sex: string;
-  surname: string;
-  telephone_no: string;
+  last_name: string;
+  tel_no: string;
+  department_id: string;
+  position_id: string;
 };
 
 export type employeeEducation = {
-  elementary_basic_education: string;
-  elementary_from: string;
-  elementary_highest_level: string;
-  elementary_name_of_school: string;
-  elementary_scholar_honor_received: string;
-  elementary_to: string;
-  elementary_year_graduated: string;
-  secondary_basic_education: string;
-  secondary_from: string;
-  secondary_highest_level: string;
-  secondary_name_of_school: string;
-  secondary_scholar_honor_received: string;
-  secondary_to: string;
-  secondary_year_graduated: string;
-  vacational_basic_education: string;
-  vacational_from: string;
-  vacational_highest_level: string;
-  vacational_name_of_school: string;
-  vacational_scholar_honor_received: string;
-  vacational_to: string;
-  vacational_year_graduated: string;
+  educational_backgrounds: {
+    level: string;
+    school_name: string;
+    degree: string;
+    period_from: string;
+    period_to: string;
+    units_earned: string;
+    year_graduated: string;
+    academic_honors_received: string;
+  }[];
 };
 
 export type employeeTrainings = {

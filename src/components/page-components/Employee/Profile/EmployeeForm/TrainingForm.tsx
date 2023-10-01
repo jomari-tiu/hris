@@ -8,28 +8,16 @@ import ControllerField from "@/components/ControllerField";
 import LayoutColumn from "@/components/LayoutColumn";
 import SectionLabel from "@/components/SectionLabel";
 
-import { employeeEducation } from "./Type";
+import { usePost } from "@/util/api";
+
+import { employeeEducation, employeeTrainings, employeeinfo } from "./Type";
 
 type Props = {
-  setOverAllFormData: Function;
-  setProgress: Function;
-  defaultValues: any;
+  control: any;
+  errors: any;
 };
 
-function TrainingForm({
-  setOverAllFormData,
-  setProgress,
-  defaultValues,
-}: Props) {
-  const {
-    handleSubmit,
-    control,
-    setValue,
-    formState: { errors },
-  } = useForm<any>({
-    defaultValues: defaultValues,
-  });
-
+function TrainingForm({ control, errors }: Props) {
   const { fields, append, remove } = useFieldArray({
     control,
     rules: {
@@ -38,12 +26,8 @@ function TrainingForm({
     name: "trainings", // This should match the name of your field in the form data
   });
 
-  const SaveHandler = (data: employeeEducation) => {
-    console.log(data);
-  };
-
   return (
-    <form onSubmit={handleSubmit(SaveHandler)} className=" space-y-10">
+    <div className=" space-y-10">
       <ul className=" space-y-10">
         {fields.map((field, index) => (
           <li key={field.id}>
@@ -129,20 +113,7 @@ function TrainingForm({
       >
         Add Training/Seminar
       </Button>
-      <div className=" flex justify-end items-center space-x-2">
-        <Button
-          appearance={"default"}
-          onClick={() => {
-            setProgress(1);
-          }}
-        >
-          Back
-        </Button>
-        <Button type="submit" appearance={"primary"}>
-          SAVE
-        </Button>
-      </div>
-    </form>
+    </div>
   );
 }
 

@@ -19,7 +19,9 @@
 
 /* @media (prefers-color-scheme: dark) {
   :root {
-
+    --background: #18191a;
+    --white: #242526;
+    --white0: #3a3b3c;
   }
 } */
 

@@ -8,15 +8,17 @@ export const usePost = (
   onSucces: any,
   onError: any,
   endpoint: string,
-  update: boolean
+  id: boolean | string | number,
+  toRefetchNameQuery: string
 ) => {
+  const queryClient = useQueryClient();
   return useMutation(
     (payload: any) => {
-      if (update) {
+      if (id) {
         payload._method = "PUT";
       }
       return axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}${endpoint}`,
+        `${process.env.NEXT_PUBLIC_API_URL}${endpoint}${id ? `/${id}` : ""}`,
         payload,
         {
           headers: {
@@ -26,7 +28,10 @@ export const usePost = (
       );
     },
     {
-      onSuccess: onSucces,
+      onSuccess: () => {
+        queryClient.invalidateQueries(toRefetchNameQuery);
+        onSucces();
+      },
       onError: onError,
     }
   );
@@ -73,35 +78,39 @@ export const usePostFile = (
   );
 };
 
-export const useRemove = (onSucces: any, onError: any, endpoint: string) => {
+export const useRemove = (
+  onSucces: any,
+  onError: any,
+  endpoint: string,
+  toRefetchNameQuery: string
+) => {
+  const queryClient = useQueryClient();
   return useMutation(
     (id: any) => {
-      return axios.post(`${process.env.NEXT_PUBLIC_API_URL}${endpoint}${id}`, {
-        headers: {
-          Authorization: "Bearer " + getCookie("user"),
-        },
-      });
+      return axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}${endpoint}${id}`,
+        {
+          headers: {
+            Authorization: "Bearer " + getCookie("user"),
+          },
+        }
+      );
     },
     {
-      onSuccess: onSucces,
+      onSuccess: () => {
+        queryClient.invalidateQueries(toRefetchNameQuery);
+        onSucces();
+      },
       onError: onError,
     }
   );
 };
 
-export const useFetch = (
-  name: string,
-  queryKey: string[],
-  endpoint: string
-) => {
+export const useFetch = (name: string, queryKey: any[], endpoint: string) => {
   return useQuery(
-    [name, queryKey],
+    queryKey,
     () => {
-      return axios.get(`${process.env.NEXT_PUBLIC_API_URL}${endpoint}`, {
-        headers: {
-          Authorization: "Bearer " + getCookie("user"),
-        },
-      });
+      return axios.get(`${process.env.NEXT_PUBLIC_API_URL}${endpoint}`);
     }
     // {
     //   refetchOnWindowFocus: false,
@@ -109,11 +118,17 @@ export const useFetch = (
   );
 };
 export const useFetchDetail = (name: string, endpoint: string, id: any) => {
-  return useQuery([name, id], () => {
-    return axios.get(`${process.env.NEXT_PUBLIC_API_URL}${endpoint}${id}`, {
-      headers: {
-        Authorization: "Bearer " + getCookie("user"),
-      },
-    });
-  });
+  return useQuery(
+    [name, id],
+    () => {
+      return axios.get(`${process.env.NEXT_PUBLIC_API_URL}${endpoint}/${id}`, {
+        headers: {
+          Authorization: "Bearer " + getCookie("user"),
+        },
+      });
+    },
+    {
+      enabled: !!id,
+    }
+  );
 };

@@ -1,10 +1,16 @@
 import React from "react";
 
+import Pagination from "./Pagination";
+
 type Props = {
   columns: TableColumnsType[];
   data: any[];
   onClickRow?: (selectedItem: any, data?: any) => void;
   className?: string;
+  isLoading: boolean;
+  setPage: Function;
+  page: number;
+  totalPage: number;
 };
 
 export type TableColumnsType = {
@@ -14,11 +20,20 @@ export type TableColumnsType = {
   render?: (value: any, data?: any) => React.ReactNode;
 };
 
-function Table({ columns, data, className, onClickRow }: Props) {
+function Table({
+  columns,
+  data,
+  className,
+  onClickRow,
+  isLoading,
+  setPage,
+  page,
+  totalPage,
+}: Props) {
   return (
     <div className=" w-full overflow-auto">
       <table
-        className={`${className} w-full min-w-[800px] bg-white-0 border border-gray-200`}
+        className={`${className} w-full min-w-[800px] bg-white-0 border border-gray-200 mb-5`}
       >
         <thead className=" bg-gray-100 text-gray-400">
           <tr>
@@ -30,7 +45,7 @@ function Table({ columns, data, className, onClickRow }: Props) {
           </tr>
         </thead>
         <tbody>
-          {data.map((item, index) => (
+          {data?.map((item, index) => (
             <tr
               key={index}
               onClick={() => {
@@ -49,7 +64,7 @@ function Table({ columns, data, className, onClickRow }: Props) {
                   }}
                 >
                   {col.render
-                    ? col.render(item[col.cellKey], data)
+                    ? col.render(item[col.cellKey], item)
                     : item[col.cellKey]}
                 </td>
               ))}
@@ -57,6 +72,11 @@ function Table({ columns, data, className, onClickRow }: Props) {
           ))}
         </tbody>
       </table>
+      <Pagination
+        setTablePage={setPage}
+        tablePage={page}
+        totalPage={totalPage}
+      />
     </div>
   );
 }
