@@ -2,7 +2,9 @@ import React from "react";
 import { useForm } from "react-hook-form";
 
 import Button from "@/components/Button";
+import { useGlobalState } from "@/components/Context/AppMangement";
 import ControllerField from "@/components/ControllerField";
+import { usePost, useRemove } from "@/util/api";
 
 type user = {
   name: string;
@@ -12,9 +14,11 @@ type user = {
 
 type Props = {
   defaultValues: user;
+  setModal: Function;
 };
 
-function UserForm({ defaultValues }: Props) {
+function UserForm({ defaultValues, setModal }: Props) {
+  const { setNotification } = useGlobalState();
   const id = defaultValues?.id;
   const {
     handleSubmit,
@@ -25,8 +29,41 @@ function UserForm({ defaultValues }: Props) {
     defaultValues: defaultValues,
   });
 
+  const successDelete = () => {
+    setModal(false);
+    setNotification(true, "success", `user Successfully deleted!`);
+  };
+  const success = () => {
+    setModal(false);
+    setNotification(
+      true,
+      "success",
+      `user Successfully ${defaultValues?.id ? "updated" : "registered"}!`
+    );
+  };
+  const error = (error: any) => {
+    setNotification(true, "error", error);
+  };
+
+  const { isLoading: DeleteLoading, mutate: Delete } = useRemove(
+    successDelete,
+    error,
+    "/api/users",
+    "users-list"
+  );
+
+  const { isLoading, mutate } = usePost(
+    success,
+    error,
+    "/api/users",
+    defaultValues?.id ? defaultValues?.id : false,
+    "users-list"
+  );
+
   const SubmitHandler = (data: any) => {
-    console.log(data);
+    delete data.deleted_at;
+    delete data.user_id;
+    mutate(data);
   };
 
   return (
@@ -50,7 +87,16 @@ function UserForm({ defaultValues }: Props) {
           type={"email"}
         />
         <div className=" flex justify-end items-center">
-          <Button type="submit" appearance={"primary"}>
+          {defaultValues?.id && (
+            <Button
+              appearance={"primary"}
+              loading={DeleteLoading}
+              onClick={() => Delete(defaultValues?.id)}
+            >
+              Delete
+            </Button>
+          )}
+          <Button type="submit" appearance={"primary"} loading={isLoading}>
             Save
           </Button>
         </div>

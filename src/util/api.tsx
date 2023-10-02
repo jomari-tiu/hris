@@ -88,7 +88,7 @@ export const useRemove = (
   return useMutation(
     (id: any) => {
       return axios.delete(
-        `${process.env.NEXT_PUBLIC_API_URL}${endpoint}${id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}${endpoint}/${id}`,
         {
           headers: {
             Authorization: "Bearer " + getCookie("user"),

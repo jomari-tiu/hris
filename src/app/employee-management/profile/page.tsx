@@ -18,7 +18,7 @@ function ProfilePage() {
   const [isTab, setTab] = useState("profile");
   const [modal, setModal] = useState(false);
 
-  const [defaultValue, setDefaultValue] = useState({
+  const emptyVal = {
     birth_date: "",
     department_id: "",
     position_id: "",
@@ -57,7 +57,9 @@ function ProfilePage() {
         to: "",
       },
     ],
-  });
+  };
+
+  const [defaultValue, setDefaultValue] = useState(emptyVal);
 
   const columns: TableColumnsType[] = [
     {
@@ -123,7 +125,13 @@ function ProfilePage() {
       <Tab tab={isTab} setTab={setTab} tabMenu={["profile", "archive"]} />
       <div className=" flex items-center flex-wrap gap-3 justify-between">
         <Search search={search} setSearch={setSearch} />
-        <Button appearance={"primary"} onClick={() => setModal(true)}>
+        <Button
+          appearance={"primary"}
+          onClick={() => {
+            setDefaultValue(emptyVal);
+            setModal(true);
+          }}
+        >
           Add
         </Button>
       </div>

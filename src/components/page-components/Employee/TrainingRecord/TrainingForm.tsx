@@ -5,6 +5,7 @@ import Button from "@/components/Button";
 import { useGlobalState } from "@/components/Context/AppMangement";
 import ControllerField from "@/components/ControllerField";
 import LayoutColumn from "@/components/LayoutColumn";
+import { usePost, useRemove } from "@/util/api";
 
 type training = {
   title: string;
@@ -19,9 +20,10 @@ type training = {
 
 type Props = {
   defaultValues: training;
+  setModal: Function;
 };
 
-function TrainingForm({ defaultValues }: Props) {
+function TrainingForm({ defaultValues, setModal }: Props) {
   const { setNotification } = useGlobalState();
   const id = defaultValues?.id;
   const {
@@ -33,12 +35,41 @@ function TrainingForm({ defaultValues }: Props) {
     defaultValues: defaultValues,
   });
 
-  const success = () => {};
-  const error = () => {};
+  const successDelete = () => {
+    setModal(false);
+    setNotification(true, "success", `Training Successfully deleted!`);
+  };
+  const success = () => {
+    setModal(false);
+    setNotification(
+      true,
+      "success",
+      `Training Successfully ${defaultValues?.id ? "updated" : "registered"}!`
+    );
+  };
+  const error = (error: any) => {
+    setNotification(true, "error", error);
+  };
+
+  const { isLoading: DeleteLoading, mutate: Delete } = useRemove(
+    successDelete,
+    error,
+    "/api/trainings",
+    "trainings-list"
+  );
+
+  const { isLoading, mutate } = usePost(
+    success,
+    error,
+    "/api/trainings",
+    defaultValues?.id ? defaultValues?.id : false,
+    "trainings-list"
+  );
 
   const SubmitHandler = (data: any) => {
-    console.log(data);
-    setNotification(true, "success", "Sample");
+    delete data.deleted_at;
+    delete data.user_id;
+    mutate(data);
   };
 
   return (
@@ -106,7 +137,16 @@ function TrainingForm({ defaultValues }: Props) {
           />
         </LayoutColumn>
         <div className=" flex justify-end items-center">
-          <Button type="submit" appearance={"primary"}>
+          {defaultValues?.id && (
+            <Button
+              appearance={"primary"}
+              loading={DeleteLoading}
+              onClick={() => Delete(defaultValues?.id)}
+            >
+              Delete
+            </Button>
+          )}
+          <Button type="submit" loading={isLoading} appearance={"primary"}>
             Save
           </Button>
         </div>

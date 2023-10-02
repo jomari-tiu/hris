@@ -21,10 +21,9 @@ function PromptMessage() {
   }, [notification.toggle]);
 
   let arrayNotif: any = [];
-
   if (
     typeof notification.message === "object" &&
-    notification?.message?.response?.data?.error
+    notification?.message?.response?.data?.errors
   ) {
     arrayNotif = Object?.entries(notification?.message?.response?.data?.errors);
   } else {
@@ -38,7 +37,7 @@ function PromptMessage() {
         notification.type === "success" && "bg-[#65c85c] flex flex-col"
       } ${notification.type === "error" && "bg-red-2"} ${
         notification.type === "warning" && "bg-[#cf9846]"
-      } transition duration-75 min-w-[15rem] fixed top-10 right-10 480px:top-5 480px:right-5 z-[99999999] 820px:p-3 opacity-90 p-4 shadow-lg`}
+      } transition duration-75 min-w-[15rem] max-w-10/12 fixed top-10 right-10 480px:top-5 480px:right-5 z-[99999999] 820px:p-3 opacity-90 p-4 shadow-lg`}
     >
       <p className=" capitalize text-white text-lg mb-1">{notification.type}</p>
       <CiCircleRemove
@@ -49,17 +48,17 @@ function PromptMessage() {
       />
       {typeof notification.message === "object" ? (
         <>
-          {arrayNotif.length <= 0 ? (
+          {/* {arrayNotif.length <= 0 ? (
             <p className=" text-white">Something went wrong</p>
-          ) : (
-            <>
-              {arrayNotif?.map((item: string, index: number) => (
-                <p key={index} className=" text-white">
-                  {item[1][0]}
-                </p>
-              ))}
-            </>
-          )}
+          ) : ( */}
+          <>
+            {arrayNotif?.map((item: string, index: number) => (
+              <p key={index} className=" text-white">
+                {item[1][0]}
+              </p>
+            ))}
+          </>
+          {/* )} */}
         </>
       ) : (
         <p className=" text-white">{notification.message}</p>
