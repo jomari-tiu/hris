@@ -35,7 +35,7 @@ function EmployeeForm({ defaultValues, setModal }: Props) {
   const {
     handleSubmit,
     control,
-    setValue,
+    getValues,
     watch,
     formState: { errors },
   } = useForm<any>({
@@ -82,9 +82,10 @@ function EmployeeForm({ defaultValues, setModal }: Props) {
         user_id?: string;
       }
   ) => {
+    console.log(data);
     if (isProgress === 2) {
-      delete data.deleted_at;
-      delete data.user_id;
+      delete data.department_name;
+      delete data.position_name;
       mutate(data);
     } else {
       setIsProgress((value) => value + 1);
@@ -101,7 +102,12 @@ function EmployeeForm({ defaultValues, setModal }: Props) {
       <Progress progressList={progressList} progressActive={isProgress} />
       <form onSubmit={handleSubmit(NextHandler)}>
         {isProgress === 0 && (
-          <Info control={control} errors={errors} watch={watch} />
+          <Info
+            control={control}
+            errors={errors}
+            watch={watch}
+            defaultValue={defaultValues}
+          />
         )}
         {isProgress === 1 && (
           <EducationForm control={control} errors={errors} />

@@ -14,7 +14,8 @@ type Props = {
   rules?: any;
   placeholder: string;
   endpoint: string;
-  parentID?: string | number;
+  parentFilter?: string | number;
+  displayValue?: string;
 };
 
 function ControllerFieldData({
@@ -24,7 +25,8 @@ function ControllerFieldData({
   rules,
   placeholder,
   endpoint,
-  parentID,
+  parentFilter,
+  displayValue,
 }: Props) {
   return (
     <Controller
@@ -38,7 +40,8 @@ function ControllerFieldData({
           endpoint={endpoint}
           placeholder={placeholder}
           errors={errors}
-          parentID={parentID}
+          parentID={parentFilter}
+          displayValue={displayValue}
         />
       )}
     />
@@ -53,14 +56,18 @@ const Field = ({
   endpoint,
   placeholder,
   errors,
-  parentID,
+  parentFilter,
+  displayValue,
 }: any) => {
   const [open, setOpen] = useState(false);
-  const [displayValue, setDisplayValue] = useState("");
+  const [isDisplayValue, setDisplayValue] = useState(displayValue);
+  useEffect(() => {
+    setDisplayValue(displayValue);
+  }, [displayValue]);
   const { isLoading, isError, data } = useFetch(
     name,
-    [name, field.value, parentID],
-    `${endpoint}${parentID ? `?department_id=${parentID}` : ""}`
+    [name, field.value, parentFilter],
+    `${endpoint}${parentFilter ? `${parentFilter}` : ""}`
   );
   return (
     <aside>
@@ -76,8 +83,8 @@ const Field = ({
           autoComplete="off"
           onFocus={() => setOpen(true)}
           {...field}
-          value={displayValue}
-          disabled={isLoading || parentID === "" || parentID === null}
+          value={isDisplayValue}
+          disabled={isLoading || parentFilter === "" || parentFilter === null}
           className=" w-full"
         />
         {open && (

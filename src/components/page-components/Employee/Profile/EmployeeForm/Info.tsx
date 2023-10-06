@@ -7,13 +7,17 @@ import ControllerFieldData from "@/components/ControllerFieldData";
 
 import LayoutColumn from "@/components/LayoutColumn";
 
+import { employeeinfo, employeeEducation, employeeTrainings } from "./Type";
+
 type Props = {
   control: any;
   errors: any;
   watch: any;
+  defaultValue?: employeeinfo &
+    employeeEducation & { trainings: employeeTrainings };
 };
 
-function Info({ control, errors, watch }: Props) {
+function Info({ control, errors, watch, defaultValue }: Props) {
   return (
     <div className=" space-y-5">
       <LayoutColumn colNumber={2}>
@@ -22,6 +26,7 @@ function Info({ control, errors, watch }: Props) {
           errors={errors}
           rules={{ required: "required" }}
           name={"department_id"}
+          displayValue={defaultValue?.department_name}
           placeholder={"Department"}
           endpoint={"/api/options/departments"}
         />
@@ -31,8 +36,9 @@ function Info({ control, errors, watch }: Props) {
           rules={{ required: "required" }}
           name={"position_id"}
           placeholder={"Position"}
+          displayValue={defaultValue?.position_name}
           endpoint={"/api/options/positions"}
-          parentID={watch("department_id")}
+          parentFilter={`?department_id=${watch("department_id")}`}
         />
       </LayoutColumn>
       <LayoutColumn colNumber={4}>

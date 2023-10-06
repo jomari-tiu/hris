@@ -14,8 +14,36 @@ export type employeeinfo = {
   sex: string;
   last_name: string;
   tel_no: string;
-  department_id: string;
-  position_id: string;
+  department_id?: string;
+  department_name?: string;
+  position_id?: string;
+  position_name?: string;
+};
+
+export type employeeinfoResponse = {
+  id?: string | number;
+  birth_date: string;
+  birth_place: string;
+  citizenship: string;
+  civil_status: string;
+  date_hired: string;
+  email: string;
+  employee_id: string;
+  name_ext: string;
+  first_name: string;
+  middle_name: string;
+  mobile_no: string;
+  sex: string;
+  last_name: string;
+  tel_no: string;
+  department: {
+    name: string;
+    id: string;
+  };
+  position: {
+    name: string;
+    id: string;
+  };
 };
 
 export type employeeEducation = {

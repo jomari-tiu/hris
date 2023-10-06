@@ -49,8 +49,8 @@ export const SideMenuLinks: SideMenuLinksType[] = [
     icon: <BsCalendar2Range />,
   },
   {
-    title: "Leave Records",
-    url: "/leave-records",
+    title: "Leave Management",
+    url: "/leave-management",
     icon: <BsRecordCircleFill />,
   },
   {

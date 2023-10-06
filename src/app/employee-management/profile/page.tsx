@@ -6,6 +6,12 @@ import Button from "@/components/Button";
 import { textDateFormat } from "@/components/helper";
 import Modal from "@/components/Modal";
 import EmployeeForm from "@/components/page-components/Employee/Profile/EmployeeForm/EmployeeForm";
+import {
+  employeeEducation,
+  employeeTrainings,
+  employeeinfo,
+  employeeinfoResponse,
+} from "@/components/page-components/Employee/Profile/EmployeeForm/Type";
 import PageTitle from "@/components/PageTitle";
 import Search from "@/components/Search";
 import Tab from "@/components/Tab";
@@ -19,8 +25,11 @@ function ProfilePage() {
   const [modal, setModal] = useState(false);
 
   const emptyVal = {
+    id: "",
     birth_date: "",
     department_id: "",
+    department_name: "",
+    position_name: "",
     position_id: "",
     birth_place: "",
     citizenship: "",
@@ -59,7 +68,9 @@ function ProfilePage() {
     ],
   };
 
-  const [defaultValue, setDefaultValue] = useState(emptyVal);
+  const [defaultValue, setDefaultValue] = useState<
+    employeeinfo & employeeEducation & { trainings: employeeTrainings }
+  >(emptyVal);
 
   const columns: TableColumnsType[] = [
     {
@@ -68,8 +79,8 @@ function ProfilePage() {
       render: (value, data) => {
         return (
           <div>
-            {data.last_name} {data.first_name} {data.name_ext}{" "}
-            {data.middle_name}
+            {data?.last_name} {data?.first_name} {data?.name_ext}{" "}
+            {data?.middle_name}
           </div>
         );
       },
@@ -143,9 +154,57 @@ function ProfilePage() {
             ? data?.data?.data?.data
             : archive?.data?.data?.data
         }
-        onClickRow={(data) => {
+        onClickRow={(
+          data: employeeinfoResponse &
+            employeeEducation & { trainings: employeeTrainings }
+        ) => {
           if (isTab === "profile") {
-            setDefaultValue(data);
+            setDefaultValue({
+              id: data?.id,
+              birth_date: data?.birth_date,
+              department_id: data?.department?.id,
+              position_id: data?.position?.id,
+              department_name: data?.department?.name,
+              position_name: data?.position?.name,
+              birth_place: data?.birth_place,
+              citizenship: data?.citizenship,
+              civil_status: data?.civil_status,
+              date_hired: data?.date_hired,
+              email: data?.email,
+              employee_id: data?.employee_id,
+              name_ext: data?.name_ext,
+              first_name: data?.first_name,
+              middle_name: data?.middle_name,
+              mobile_no: data?.mobile_no,
+              sex: data?.sex,
+              last_name: data?.last_name,
+              tel_no: data?.tel_no,
+
+              educational_backgrounds: data?.educational_backgrounds.map(
+                (item) => {
+                  return {
+                    level: item?.level,
+                    school_name: item?.school_name,
+                    degree: item?.degree,
+                    period_from: item?.period_from,
+                    period_to: item?.period_to,
+                    units_earned: item?.units_earned,
+                    year_graduated: item?.year_graduated,
+                    academic_honors_received: item?.academic_honors_received,
+                  };
+                }
+              ),
+              trainings: data?.trainings.map((item) => {
+                return {
+                  title: item?.title,
+                  conducted_by: item?.conducted_by,
+                  hours_no: item?.hours_no,
+                  type_id: item?.type_id,
+                  from: item?.from,
+                  to: item?.to,
+                };
+              }),
+            });
             setModal(true);
           }
         }}
