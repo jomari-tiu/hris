@@ -58,7 +58,7 @@ function Table({
               {columns.map((col, indexCol) => (
                 <td
                   key={indexCol}
-                  className={`border-t p-4`}
+                  className={`border-t p-4 min-w-[15rem]`}
                   style={{
                     textAlign: col.textAlign,
                   }}

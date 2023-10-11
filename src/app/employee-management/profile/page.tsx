@@ -2,7 +2,10 @@
 
 import React, { useState } from "react";
 
+import { useQueryClient } from "react-query";
+
 import Button from "@/components/Button";
+import { useGlobalState } from "@/components/Context/AppMangement";
 import { textDateFormat } from "@/components/helper";
 import Modal from "@/components/Modal";
 import EmployeeForm from "@/components/page-components/Employee/Profile/EmployeeForm/EmployeeForm";
@@ -16,7 +19,7 @@ import PageTitle from "@/components/PageTitle";
 import Search from "@/components/Search";
 import Tab from "@/components/Tab";
 import Table, { TableColumnsType } from "@/components/Table";
-import { useFetch } from "@/util/api";
+import { useFetch, restore } from "@/util/api";
 
 function ProfilePage() {
   const [search, setSearch] = useState("");
@@ -130,6 +133,21 @@ function ProfilePage() {
     `/api/employees/archive?search=${search}&page=${page}`
   );
 
+  const { setNotification } = useGlobalState();
+  const queryClient = useQueryClient();
+  const successRestore = () => {
+    queryClient.invalidateQueries("profile-list");
+    queryClient.invalidateQueries("profile-list-archive");
+    setModal(false);
+    setNotification(true, "success", `Employee profile successfully restored!`);
+  };
+  const errorRestore = (error: any) => {
+    setNotification(true, "error", "Something went wrong");
+  };
+  const restoreHandler = (id: any) => {
+    restore(successRestore, errorRestore, `/api/employees/restore/${id}`);
+  };
+
   return (
     <>
       <PageTitle title={["Employee", "Profile"]} />
@@ -148,7 +166,28 @@ function ProfilePage() {
       </div>
       <Table
         isLoading={isTab === "profile" ? isLoading : archiveLoading}
-        columns={columns}
+        columns={
+          isTab === "archive"
+            ? [
+                ...columns,
+                {
+                  title: "Action",
+                  cellKey: "date_period",
+                  textAlign: "left",
+                  render: (_, data) => (
+                    <div className=" flex ">
+                      <Button
+                        appearance={"primary"}
+                        onClick={() => restoreHandler(data?.id)}
+                      >
+                        Restore
+                      </Button>
+                    </div>
+                  ),
+                },
+              ]
+            : columns
+        }
         data={
           isTab === "profile"
             ? data?.data?.data?.data

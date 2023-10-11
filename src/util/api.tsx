@@ -99,6 +99,7 @@ export const useRemove = (
     {
       onSuccess: () => {
         queryClient.invalidateQueries(toRefetchNameQuery);
+        queryClient.invalidateQueries(`${toRefetchNameQuery}-archive`);
         onSucces();
       },
       onError: onError,
@@ -131,4 +132,15 @@ export const useFetchDetail = (name: string, endpoint: string, id: any) => {
       enabled: !!id,
     }
   );
+};
+
+export const restore = (onSuccess: any, onError: any, endpoint: string) => {
+  return axios
+    .get(`${process.env.NEXT_PUBLIC_API_URL}${endpoint}`)
+    .then(function (response) {
+      onSuccess(response);
+    })
+    .catch(function (error) {
+      onError(error);
+    });
 };

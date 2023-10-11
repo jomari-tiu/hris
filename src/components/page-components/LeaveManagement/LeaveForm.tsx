@@ -4,24 +4,60 @@ import { useForm } from "react-hook-form";
 import Button from "@/components/Button";
 import { useGlobalState } from "@/components/Context/AppMangement";
 import ControllerField from "@/components/ControllerField";
+import ControllerFieldData from "@/components/ControllerFieldData";
 import LayoutColumn from "@/components/LayoutColumn";
 import { usePost, useRemove } from "@/util/api";
 
-export type Leave = {
-  name: string;
-  leave_type: string;
+export type LeaveDefaultValue = {
+  employee_id: string;
+  employee_name: string;
+  leave_type_id: string;
+  leave_type_name: string;
   date_filed: string;
-  start_date: string;
-  end_date: string;
-  start_time: string;
-  end_time: string;
-  reason: string;
+  date_start: string;
+  date_end: string;
+  time_start: string;
+  time_end: string;
+  details_of_leave: string;
   status: string;
+  disapproved_for: string;
+  approved_for: string;
+  approved_for_type: string;
+  commutation: string;
   id?: any;
 };
 
+export type LeaveResponse = {
+  id: string;
+  employee_id: string;
+  date_filed: string;
+  date_start: string;
+  date_end: string;
+  time_start: string;
+  time_end: string;
+  leave_type_id: string;
+  status: string;
+  details_of_leave: string;
+  disapproved_for: string;
+  approved_for: string;
+  approved_for_type: any;
+  commutation: any;
+  created_at: string;
+  updated_at: string;
+  deleted_at: null;
+  employee: {
+    last_name: string;
+    first_name: string;
+    id: string;
+  };
+  leave_type: {
+    name: string;
+    id: string;
+  };
+};
+
 type Props = {
-  defaultValues: Leave;
+  defaultValues: LeaveDefaultValue;
   setModal: Function;
 };
 
@@ -32,8 +68,9 @@ function LeaveForm({ defaultValues, setModal }: Props) {
     handleSubmit,
     control,
     setValue,
+    watch,
     formState: { errors },
-  } = useForm<Leave>({
+  } = useForm<LeaveDefaultValue>({
     defaultValues: defaultValues,
   });
 
@@ -57,7 +94,7 @@ function LeaveForm({ defaultValues, setModal }: Props) {
     successDelete,
     error,
     "/api/leaves",
-    "Leaves-list"
+    "leaves-list"
   );
 
   const { isLoading, mutate } = usePost(
@@ -69,8 +106,8 @@ function LeaveForm({ defaultValues, setModal }: Props) {
   );
 
   const SubmitHandler = (data: any) => {
-    delete data.deleted_at;
-    delete data.user_id;
+    delete data.employee_name;
+    delete data.leave_type_name;
     mutate(data);
   };
 
@@ -78,22 +115,27 @@ function LeaveForm({ defaultValues, setModal }: Props) {
     <div className=" space-y-5">
       <p>{id ? "Update" : "Create"} - Leave</p>
       <form onSubmit={handleSubmit(SubmitHandler)} className=" space-y-5">
-        <ControllerField
+        <ControllerFieldData
           control={control}
           errors={errors}
           rules={{ required: "required" }}
-          name={"name"}
+          name={"employee_id"}
           placeholder={"Name"}
-          type={"text"}
+          displayValue={defaultValues?.employee_name}
+          endpoint={"/api/employees"}
+          keyName={"first_name"}
+          FourData={true}
         />
         <LayoutColumn colNumber={3}>
-          <ControllerField
+          <ControllerFieldData
             control={control}
             errors={errors}
-            name={"leave_type"}
             rules={{ required: "required" }}
+            name={"leave_type_id"}
             placeholder={"Leave Type"}
-            type={"text"}
+            displayValue={defaultValues?.leave_type_name}
+            endpoint={"/api/leave_types"}
+            FourData={true}
           />
           <ControllerField
             control={control}
@@ -101,7 +143,8 @@ function LeaveForm({ defaultValues, setModal }: Props) {
             name={"status"}
             rules={{ required: "required" }}
             placeholder={"Status"}
-            type={"text"}
+            type={"select"}
+            selectOptions={["pending", "approved", "disapproved"]}
           />
           <ControllerField
             control={control}
@@ -117,7 +160,7 @@ function LeaveForm({ defaultValues, setModal }: Props) {
           <ControllerField
             control={control}
             errors={errors}
-            name={"start_date"}
+            name={"date_start"}
             rules={{ required: "required" }}
             placeholder={"Start Date"}
             type={"date"}
@@ -125,7 +168,7 @@ function LeaveForm({ defaultValues, setModal }: Props) {
           <ControllerField
             control={control}
             errors={errors}
-            name={"end_date"}
+            name={"date_end"}
             rules={{ required: "required" }}
             placeholder={"End Date"}
             type={"date"}
@@ -136,7 +179,7 @@ function LeaveForm({ defaultValues, setModal }: Props) {
           <ControllerField
             control={control}
             errors={errors}
-            name={"start_time"}
+            name={"time_start"}
             rules={{ required: "required" }}
             placeholder={"Start Time"}
             type={"text"}
@@ -144,7 +187,7 @@ function LeaveForm({ defaultValues, setModal }: Props) {
           <ControllerField
             control={control}
             errors={errors}
-            name={"end_time"}
+            name={"time_end"}
             rules={{ required: "required" }}
             placeholder={"End Time"}
             type={"text"}
@@ -153,11 +196,63 @@ function LeaveForm({ defaultValues, setModal }: Props) {
         <ControllerField
           control={control}
           errors={errors}
-          name={"reason"}
+          name={"details_of_leave"}
           rules={{ required: "required" }}
-          placeholder={"Reason"}
+          placeholder={"Details of Leave"}
           type={"textarea"}
         />
+        {watch("status") === "disapproved" && (
+          <ControllerField
+            control={control}
+            errors={errors}
+            name={"disapproved_for"}
+            rules={{ required: "required" }}
+            placeholder={"Disapproved for"}
+            type={"textarea"}
+          />
+        )}
+        <LayoutColumn colNumber={2}>
+          {watch("status") === "approved" && (
+            <aside className=" space-y-2">
+              <ControllerField
+                control={control}
+                errors={errors}
+                name={"approved_for"}
+                rules={{ required: "required" }}
+                placeholder={"Approved for"}
+                type={"text"}
+              />
+              <ControllerField
+                control={control}
+                errors={errors}
+                name={"approved_for_type"}
+                rules={{ required: "required" }}
+                placeholder={""}
+                type={"radio"}
+                radioOptions={[
+                  { label: "days with pay", value: 1 },
+                  { label: "days without pay", value: 2 },
+                  { label: "others (specify)", value: 3 },
+                ]}
+              />
+            </aside>
+          )}
+          <aside className=" space-y-2">
+            <ControllerField
+              control={control}
+              errors={errors}
+              name={"commutation"}
+              rules={{ required: "required" }}
+              placeholder={"Commutation"}
+              type={"radio"}
+              radioOptions={[
+                { label: "Not Requested", value: 0 },
+                { label: "Requested", value: 1 },
+              ]}
+            />
+          </aside>
+        </LayoutColumn>
+
         <div className=" flex justify-end items-center">
           {defaultValues?.id && (
             <Button

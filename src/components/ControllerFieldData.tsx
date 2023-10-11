@@ -16,6 +16,9 @@ type Props = {
   endpoint: string;
   parentFilter?: string | number;
   displayValue?: string;
+  keyID?: string;
+  keyName?: string;
+  FourData?: boolean;
 };
 
 function ControllerFieldData({
@@ -27,6 +30,9 @@ function ControllerFieldData({
   endpoint,
   parentFilter,
   displayValue,
+  keyID,
+  keyName,
+  FourData,
 }: Props) {
   return (
     <Controller
@@ -42,6 +48,9 @@ function ControllerFieldData({
           errors={errors}
           parentID={parentFilter}
           displayValue={displayValue}
+          keyID={keyID}
+          keyName={keyName}
+          FourData={FourData}
         />
       )}
     />
@@ -58,6 +67,9 @@ const Field = ({
   errors,
   parentFilter,
   displayValue,
+  keyID,
+  keyName,
+  FourData,
 }: any) => {
   const [open, setOpen] = useState(false);
   const [isDisplayValue, setDisplayValue] = useState(displayValue);
@@ -69,13 +81,14 @@ const Field = ({
     [name, field.value, parentFilter],
     `${endpoint}${parentFilter ? `${parentFilter}` : ""}`
   );
+
   return (
     <aside>
       <label htmlFor={name} className=" text-[.9rem] text-red-2">
         {placeholder}
       </label>
 
-      <div className=" relative">
+      <div className="relative">
         <input
           id={name}
           placeholder={isLoading ? "Loading..." : ""}
@@ -88,20 +101,40 @@ const Field = ({
           className=" w-full"
         />
         {open && (
-          <ul className=" absolute top-[110%] left-0 bg-white w-full shadow-md max-h-[10rem] overflow-auto">
-            {data?.data?.data.map((item: any, indx: number) => (
-              <li
-                key={indx}
-                className=" px-2 py-1 hover:bg-red-2 hover:text-white duration-150 cursor-pointer"
-                onClick={() => {
-                  field.onChange(item.id);
-                  setDisplayValue(item.name);
-                  setOpen(false);
-                }}
-              >
-                {item.name}
-              </li>
-            ))}
+          <ul className=" absolute top-[110%] z-10 left-0 bg-white w-full shadow-md max-h-[10rem] overflow-auto">
+            {FourData ? (
+              <>
+                {data?.data?.data?.data.map((item: any, indx: number) => (
+                  <li
+                    key={indx}
+                    className=" px-2 py-1 hover:bg-red-2 hover:text-white duration-150 cursor-pointer"
+                    onClick={() => {
+                      field.onChange(keyID ? item[keyID] : item?.id);
+                      setDisplayValue(keyName ? item[keyName] : item?.name);
+                      setOpen(false);
+                    }}
+                  >
+                    {keyName ? item[keyName] : item?.name}
+                  </li>
+                ))}
+              </>
+            ) : (
+              <>
+                {data?.data?.data.map((item: any, indx: number) => (
+                  <li
+                    key={indx}
+                    className=" px-2 py-1 hover:bg-red-2 hover:text-white duration-150 cursor-pointer"
+                    onClick={() => {
+                      field.onChange(keyID ? item[keyID] : item?.id);
+                      setDisplayValue(keyName ? item[keyName] : item?.name);
+                      setOpen(false);
+                    }}
+                  >
+                    {keyName ? item[keyName] : item?.name}
+                  </li>
+                ))}
+              </>
+            )}
           </ul>
         )}
       </div>

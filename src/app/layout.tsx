@@ -4,6 +4,7 @@ import Head from "next/head";
 import { cookies } from "next/headers";
 
 import Layout from "@/components/Layout";
+import Login from "@/components/Layout/Login";
 import QueryProvider from "@/components/QueryProvider";
 
 import "./globals.css";
@@ -27,19 +28,11 @@ function RootLayout({
   const token = cookies()?.get("user")?.value;
   return (
     <html lang="en">
-      <Head>
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/images/logo/logo.png"
-        />
-      </Head>
       <body className={inter.className}>
         <QueryProvider>
           <Layout>{children}</Layout>
+          {/* {token ? <Layout>{children}</Layout> : <Login />} */}
         </QueryProvider>
-        {/* {token ? <Layout>{children}</Layout> : <Login />} */}
       </body>
     </html>
   );

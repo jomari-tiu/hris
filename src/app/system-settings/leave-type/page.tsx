@@ -1,44 +1,34 @@
 "use client";
 
 import React, { useState } from "react";
-
 import { useQueryClient } from "react-query";
 
 import Button from "@/components/Button";
 import { useGlobalState } from "@/components/Context/AppMangement";
 import { textDateFormat } from "@/components/helper";
 import Modal from "@/components/Modal";
-import UserForm from "@/components/page-components/AdminSettings/Users/UserForm";
-import TrainingForm from "@/components/page-components/Employee/TrainingRecord/TrainingForm";
+import LeaveTypeForm from "@/components/page-components/SystemSettings/LeaveTypes/LeaveTypeForm";
 import PageTitle from "@/components/PageTitle";
 import Search from "@/components/Search";
 import Tab from "@/components/Tab";
 import Table, { TableColumnsType } from "@/components/Table";
 import { useFetch, restore } from "@/util/api";
 
-function TrainingPage() {
+function LeaveTypePage() {
+  const { setNotification } = useGlobalState();
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const [isTab, setTab] = useState("trainings");
+  const [isTab, setTab] = useState("leave types");
   const [modal, setModal] = useState(false);
 
-  const emptyVal = {
-    title: "",
-    description: "",
-    conducted_by: "",
-    period_from: "",
-    period_to: "",
-    hours: 0,
-    type_of_ld: "",
-    id: undefined,
-  };
+  const emptyVal = {};
 
   const [defaultValue, setDefaultValue] = useState(emptyVal);
 
   const columns: TableColumnsType[] = [
     {
-      title: "Title",
-      cellKey: "title",
+      title: "Name",
+      cellKey: "name",
       textAlign: "left",
     },
     {
@@ -47,62 +37,41 @@ function TrainingPage() {
       textAlign: "left",
     },
     {
-      title: "Conducted by",
-      cellKey: "conducted_by",
-      textAlign: "left",
-    },
-    {
-      title: "From",
-      cellKey: "period_from",
-      textAlign: "left",
-      render: (value) => {
-        return <div>{textDateFormat(value)}</div>;
-      },
-    },
-    {
-      title: "To",
-      cellKey: "period_to",
-      textAlign: "left",
-      render: (value) => {
-        return <div>{textDateFormat(value)}</div>;
-      },
-    },
-    {
-      title: "Hours",
-      cellKey: "hours",
+      title: "Date Period",
+      cellKey: "date_period",
       textAlign: "left",
     },
   ];
+
   const { data, isLoading } = useFetch(
-    "trainings-list",
-    ["trainings-list", search, page],
-    `/api/trainings?search=${search}&page=${page}`
+    "leave_types-list",
+    ["leave_types-list", search, page],
+    `/api/leave_types?search=${search}&page=${page}`
   );
 
   const { data: archive, isLoading: archiveLoading } = useFetch(
-    "trainings-list-archive",
-    ["trainings-list-archive", search, page],
-    `/api/trainings/archive?search=${search}&page=${page}`
+    "leave_types-list-archive",
+    ["leave_types-list-archive", search, page],
+    `/api/leave_types/archive?search=${search}&page=${page}`
   );
 
-  const { setNotification } = useGlobalState();
   const queryClient = useQueryClient();
   const successRestore = () => {
-    queryClient.invalidateQueries("trainings-list");
-    queryClient.invalidateQueries("trainings-list-archive");
+    queryClient.invalidateQueries("leave_types-list");
+    queryClient.invalidateQueries("leave_types-list-archive");
     setModal(false);
-    setNotification(true, "success", `Position successfully restored!`);
+    setNotification(true, "success", `Leave type successfully restored!`);
   };
   const errorRestore = (error: any) => {
     setNotification(true, "error", "Something went wrong");
   };
   const restoreHandler = (id: any) => {
-    restore(successRestore, errorRestore, `/api/trainings/restore/${id}`);
+    restore(successRestore, errorRestore, `/api/leave_types/restore/${id}`);
   };
   return (
     <>
-      <PageTitle title={["Employee", "Training Records"]} />
-      <Tab tab={isTab} setTab={setTab} tabMenu={["trainings", "archive"]} />
+      <PageTitle title={["System Settings", "Leave Types"]} />
+      <Tab tab={isTab} setTab={setTab} tabMenu={["leave types", "archive"]} />
       <div className=" flex items-center flex-wrap gap-3 justify-between">
         <Search search={search} setSearch={setSearch} />
         <Button
@@ -116,7 +85,7 @@ function TrainingPage() {
         </Button>
       </div>
       <Table
-        isLoading={isTab === "trainings" ? isLoading : archiveLoading}
+        isLoading={isTab === "leave types" ? isLoading : archiveLoading}
         columns={
           isTab === "archive"
             ? [
@@ -140,12 +109,12 @@ function TrainingPage() {
             : columns
         }
         data={
-          isTab === "trainings"
+          isTab === "leave types"
             ? data?.data?.data?.data
             : archive?.data?.data?.data
         }
         onClickRow={(data) => {
-          if (isTab === "trainings") {
+          if (isTab === "leave types") {
             setDefaultValue(data);
             setModal(true);
           }
@@ -153,7 +122,7 @@ function TrainingPage() {
         setPage={setPage}
         page={page}
         totalPage={
-          isTab === "trainings"
+          isTab === "leave types"
             ? data?.data?.data?.last_page
             : archive?.data?.data?.last_page
         }
@@ -165,10 +134,10 @@ function TrainingPage() {
         }}
         width="narrow"
       >
-        <TrainingForm defaultValues={defaultValue} setModal={setModal} />
+        <LeaveTypeForm setModal={setModal} defaultValues={defaultValue} />
       </Modal>
     </>
   );
 }
 
-export default TrainingPage;
+export default LeaveTypePage;

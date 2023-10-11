@@ -19,6 +19,10 @@ type Props = {
     | "textarea"
     | "date";
   selectOptions?: string[];
+  radioOptions?: {
+    label: string;
+    value: any;
+  }[];
 };
 
 function ControllerField({
@@ -29,6 +33,7 @@ function ControllerField({
   placeholder,
   type,
   selectOptions,
+  radioOptions,
 }: Props) {
   return (
     <Controller
@@ -40,7 +45,7 @@ function ControllerField({
           <label htmlFor={name} className=" text-[.9rem] text-red-2">
             {placeholder}
           </label>
-          {type !== "select" && type !== "textarea" && (
+          {type !== "select" && type !== "textarea" && type !== "radio" && (
             <input
               id={name}
               type={type}
@@ -70,6 +75,25 @@ function ControllerField({
                 </option>
               ))}
             </select>
+          )}
+          {type === "radio" && (
+            <ul className=" space-y-2">
+              {radioOptions?.map((item, index) => (
+                <li
+                  key={index}
+                  className=" flex items-center justify-start gap-2"
+                >
+                  <input
+                    id={name + item.label}
+                    type={type}
+                    value={item.value}
+                    checked={field.value === item.value}
+                    onClick={() => field.onChange(item.value)}
+                  />
+                  <label htmlFor={name + item.label}>{item.label}</label>
+                </li>
+              ))}
+            </ul>
           )}
           {errors[name]?.message && (
             <span className=" text-[.9rem] text-red-2">

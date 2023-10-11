@@ -8,37 +8,28 @@ import Button from "@/components/Button";
 import { useGlobalState } from "@/components/Context/AppMangement";
 import { textDateFormat } from "@/components/helper";
 import Modal from "@/components/Modal";
-import UserForm from "@/components/page-components/AdminSettings/Users/UserForm";
-import TrainingForm from "@/components/page-components/Employee/TrainingRecord/TrainingForm";
+import DepartmentForm from "@/components/page-components/SystemSettings/Department/DepartmentForm";
+import LeaveTypeForm from "@/components/page-components/SystemSettings/LeaveTypes/LeaveTypeForm";
 import PageTitle from "@/components/PageTitle";
 import Search from "@/components/Search";
 import Tab from "@/components/Tab";
 import Table, { TableColumnsType } from "@/components/Table";
 import { useFetch, restore } from "@/util/api";
 
-function TrainingPage() {
+function DepartmentPage() {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const [isTab, setTab] = useState("trainings");
+  const [isTab, setTab] = useState("departments");
   const [modal, setModal] = useState(false);
 
-  const emptyVal = {
-    title: "",
-    description: "",
-    conducted_by: "",
-    period_from: "",
-    period_to: "",
-    hours: 0,
-    type_of_ld: "",
-    id: undefined,
-  };
+  const emptyVal = {};
 
   const [defaultValue, setDefaultValue] = useState(emptyVal);
 
   const columns: TableColumnsType[] = [
     {
-      title: "Title",
-      cellKey: "title",
+      title: "Name",
+      cellKey: "name",
       textAlign: "left",
     },
     {
@@ -46,63 +37,38 @@ function TrainingPage() {
       cellKey: "description",
       textAlign: "left",
     },
-    {
-      title: "Conducted by",
-      cellKey: "conducted_by",
-      textAlign: "left",
-    },
-    {
-      title: "From",
-      cellKey: "period_from",
-      textAlign: "left",
-      render: (value) => {
-        return <div>{textDateFormat(value)}</div>;
-      },
-    },
-    {
-      title: "To",
-      cellKey: "period_to",
-      textAlign: "left",
-      render: (value) => {
-        return <div>{textDateFormat(value)}</div>;
-      },
-    },
-    {
-      title: "Hours",
-      cellKey: "hours",
-      textAlign: "left",
-    },
   ];
+
   const { data, isLoading } = useFetch(
-    "trainings-list",
-    ["trainings-list", search, page],
-    `/api/trainings?search=${search}&page=${page}`
+    "departments-list",
+    ["departments-list", search, page],
+    `/api/departments?search=${search}&page=${page}`
   );
 
   const { data: archive, isLoading: archiveLoading } = useFetch(
-    "trainings-list-archive",
-    ["trainings-list-archive", search, page],
-    `/api/trainings/archive?search=${search}&page=${page}`
+    "departments-list-archive",
+    ["departments-list-archive", search, page],
+    `/api/departments/archive?search=${search}&page=${page}`
   );
 
   const { setNotification } = useGlobalState();
   const queryClient = useQueryClient();
   const successRestore = () => {
-    queryClient.invalidateQueries("trainings-list");
-    queryClient.invalidateQueries("trainings-list-archive");
+    queryClient.invalidateQueries("departments-list");
+    queryClient.invalidateQueries("departments-list-archive");
     setModal(false);
-    setNotification(true, "success", `Position successfully restored!`);
+    setNotification(true, "success", `Department successfully restored!`);
   };
   const errorRestore = (error: any) => {
     setNotification(true, "error", "Something went wrong");
   };
   const restoreHandler = (id: any) => {
-    restore(successRestore, errorRestore, `/api/trainings/restore/${id}`);
+    restore(successRestore, errorRestore, `/api/departments/restore/${id}`);
   };
   return (
     <>
-      <PageTitle title={["Employee", "Training Records"]} />
-      <Tab tab={isTab} setTab={setTab} tabMenu={["trainings", "archive"]} />
+      <PageTitle title={["System Settings", "Departments"]} />
+      <Tab tab={isTab} setTab={setTab} tabMenu={["departments", "archive"]} />
       <div className=" flex items-center flex-wrap gap-3 justify-between">
         <Search search={search} setSearch={setSearch} />
         <Button
@@ -116,7 +82,7 @@ function TrainingPage() {
         </Button>
       </div>
       <Table
-        isLoading={isTab === "trainings" ? isLoading : archiveLoading}
+        isLoading={isTab === "departments" ? isLoading : archiveLoading}
         columns={
           isTab === "archive"
             ? [
@@ -140,12 +106,12 @@ function TrainingPage() {
             : columns
         }
         data={
-          isTab === "trainings"
+          isTab === "departments"
             ? data?.data?.data?.data
             : archive?.data?.data?.data
         }
         onClickRow={(data) => {
-          if (isTab === "trainings") {
+          if (isTab === "departments") {
             setDefaultValue(data);
             setModal(true);
           }
@@ -153,7 +119,7 @@ function TrainingPage() {
         setPage={setPage}
         page={page}
         totalPage={
-          isTab === "trainings"
+          isTab === "departments"
             ? data?.data?.data?.last_page
             : archive?.data?.data?.last_page
         }
@@ -165,10 +131,10 @@ function TrainingPage() {
         }}
         width="narrow"
       >
-        <TrainingForm defaultValues={defaultValue} setModal={setModal} />
+        <DepartmentForm setModal={setModal} defaultValues={defaultValue} />
       </Modal>
     </>
   );
 }
 
-export default TrainingPage;
+export default DepartmentPage;

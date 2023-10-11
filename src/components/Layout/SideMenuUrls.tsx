@@ -106,5 +106,23 @@ export const SideMenuLinks: SideMenuLinksType[] = [
     title: "System Settings",
     url: "/system-settings",
     icon: <AiFillSetting />,
+    submenu: [
+      {
+        title: "Leave Type",
+        url: "/system-settings/leave-type",
+      },
+      {
+        title: "Department",
+        url: "/system-settings/department",
+      },
+      {
+        title: "Position",
+        url: "/system-settings/position",
+      },
+      {
+        title: "Employee Status",
+        url: "/system-settings/employee-status",
+      },
+    ],
   },
 ];
