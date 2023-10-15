@@ -25,7 +25,7 @@ export type SideMenuLinksType = {
 export const SideMenuLinks: SideMenuLinksType[] = [
   {
     title: "Dashboard",
-    url: "/",
+    url: "/dashboard",
     icon: <LuLayoutDashboard />,
   },
   {
@@ -44,8 +44,8 @@ export const SideMenuLinks: SideMenuLinksType[] = [
     ],
   },
   {
-    title: "Timekeeping",
-    url: "/timekeeping",
+    title: "Attendance",
+    url: "/attendance",
     icon: <BsCalendar2Range />,
   },
   {

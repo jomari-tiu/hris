@@ -2,21 +2,16 @@
 
 import React, { useState } from "react";
 
-import { useRouter } from "next/navigation";
+import { LuImport } from "react-icons/lu";
 
 import { useQueryClient } from "react-query";
 
 import Button from "@/components/Button";
 import { useGlobalState } from "@/components/Context/AppMangement";
 import DeleteButton from "@/components/DeleteButton";
-import { textDateFormat } from "@/components/helper";
+import { textDateFormat, timeTwelveFormat } from "@/components/helper";
 import Modal from "@/components/Modal";
-import EmployeeForm from "@/components/page-components/Employee/Profile/EmployeeForm/EmployeeForm";
-import {
-  employeeEducation,
-  employeeTrainings,
-  employeeinfo,
-} from "@/components/page-components/Employee/Profile/EmployeeForm/Type";
+import AttendanceForm from "@/components/page-components/Attendance/AttendanceForm";
 import PageTitle from "@/components/PageTitle";
 import RestoreButton from "@/components/RestoreButton";
 import Search from "@/components/Search";
@@ -25,165 +20,125 @@ import Table, { TableColumnsType } from "@/components/Table";
 import ViewButton from "@/components/ViewButton";
 import { useFetch, restore, useRemove } from "@/util/api";
 
-function ProfilePage() {
+function AttendancesPage() {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const [isTab, setTab] = useState("profile");
+  const [isTab, setTab] = useState("attendances");
   const [modal, setModal] = useState(false);
 
-  const router = useRouter();
-
   const emptyVal = {
-    id: "",
-    birth_date: "",
-    department_id: "",
-    department_name: "",
-    position_name: "",
-    position_id: "",
-    birth_place: "",
-    citizenship: "",
-    civil_status: "",
-    date_hired: "",
+    name: "",
     email: "",
-    employee_id: "",
-    name_ext: "",
-    first_name: "",
-    middle_name: "",
-    mobile_no: "",
-    sex: "",
-    last_name: "",
-    tel_no: "",
-    educational_backgrounds: [
-      {
-        level: "",
-        school_name: "",
-        degree: "",
-        period_from: "",
-        period_to: "",
-        units_earned: "",
-        year_graduated: "",
-        academic_honors_received: "",
-      },
-    ],
-    trainings: [
-      {
-        title: "",
-        conducted_by: "",
-        hours_no: "",
-        type_id: "",
-        from: "",
-        to: "",
-      },
-    ],
   };
 
-  const [defaultValue, setDefaultValue] = useState<
-    employeeinfo & employeeEducation & { trainings: employeeTrainings }
-  >(emptyVal);
+  const [defaultValue, setDefaultValue] = useState(emptyVal);
 
   const columns: TableColumnsType[] = [
     {
       title: "Name",
-      cellKey: "first_name",
-      render: (value, data) => {
-        return (
-          <div>
-            {data?.last_name} {data?.first_name} {data?.name_ext}{" "}
-            {data?.middle_name}
-          </div>
-        );
-      },
+      cellKey: "",
       textAlign: "left",
+      render: (_, data) => (
+        <div>
+          {data?.employee?.first_name} {data?.employee?.last_name}
+        </div>
+      ),
     },
     {
       title: "Email",
-      cellKey: "email",
+      cellKey: "",
       textAlign: "left",
+      render: (_, data) => <div>{data?.employee?.email}</div>,
     },
     {
-      title: "Employee ID",
-      cellKey: "employee_id",
+      title: "Time In",
+      cellKey: "time_in",
       textAlign: "left",
-    },
-    {
-      title: "Date Hired",
-      cellKey: "date_hired",
-      textAlign: "left",
-      render: (value) => {
-        return <div>{textDateFormat(value)}</div>;
+      render: (timeIn) => {
+        const date = textDateFormat(timeIn.split(" ")[0]);
+        const time = timeTwelveFormat(timeIn.split(" ")[1]);
+        return (
+          <div>
+            {date} {time}
+          </div>
+        );
       },
     },
     {
-      title: "Birth Date",
-      cellKey: "birth_date",
+      title: "Time Out",
+      cellKey: "time_out",
       textAlign: "left",
-      render: (value) => {
-        return <div>{textDateFormat(value)}</div>;
+      render: (timeOut) => {
+        const date = textDateFormat(timeOut.split(" ")[0]);
+        const time = timeTwelveFormat(timeOut.split(" ")[1]);
+        return (
+          <div>
+            {date} {time}
+          </div>
+        );
       },
-    },
-    {
-      title: "Birth Place",
-      cellKey: "birth_place",
-      textAlign: "left",
     },
   ];
   const { data, isLoading } = useFetch(
-    "profile-list",
-    ["profile-list", search, page],
-    `/api/employees?search=${search}&page=${page}`
+    "attendances-list",
+    ["attendances-list", search, page],
+    `/api/attendances?search=${search}&page=${page}`
   );
 
   const { data: archive, isLoading: archiveLoading } = useFetch(
-    "profile-list-archive",
-    ["profile-list-archive", search, page],
-    `/api/employees/archive?search=${search}&page=${page}`
+    "attendances-list-archive",
+    ["attendances-list-archive", search, page],
+    `/api/attendances/archive?search=${search}&page=${page}`
   );
 
   const { setNotification } = useGlobalState();
   const queryClient = useQueryClient();
   const successRestore = () => {
-    queryClient.invalidateQueries("profile-list");
-    queryClient.invalidateQueries("profile-list-archive");
+    queryClient.invalidateQueries("attendances-list");
+    queryClient.invalidateQueries("attendances-list-archive");
     setModal(false);
-    setNotification(true, "success", `Employee profile successfully restored!`);
+    setNotification(true, "success", `User successfully restored!`);
   };
   const errorRestore = (error: any) => {
     setNotification(true, "error", "Something went wrong");
   };
   const restoreHandler = (id: any) => {
-    restore(successRestore, errorRestore, `/api/employees/restore/${id}`);
+    restore(successRestore, errorRestore, `/api/attendances/restore/${id}`);
   };
 
   const [deleteID, setDeleteID] = useState("");
   const { mutate: Delete, isLoading: deleteLoading } = useRemove(
     () => {
-      setNotification(true, "success", `Employee successfully deleted!`);
+      queryClient.invalidateQueries("attendances-list");
+      setNotification(true, "success", `Attendace successfully deleted!`);
     },
     (error: any) => {
       setNotification(true, "error", error);
     },
-    "/api/employees",
-    "profile-list"
+    "/api/attendances",
+    "attendances-list"
   );
 
   return (
     <>
-      <PageTitle title={["Employee", "Profile"]} />
-      <Tab tab={isTab} setTab={setTab} tabMenu={["profile", "archive"]} />
+      <PageTitle title={["Attendance"]} />
+      <Tab tab={isTab} setTab={setTab} tabMenu={["attendances", "archive"]} />
       <div className=" flex items-center flex-wrap gap-3 justify-between">
         <Search search={search} setSearch={setSearch} />
         <Button
           appearance={"primary"}
+          className="flex items-center gap-2"
           onClick={() => {
             setDefaultValue(emptyVal);
             setModal(true);
           }}
         >
-          Add
+          <LuImport />
+          Import
         </Button>
       </div>
       <Table
-        isLoading={isTab === "profile" ? isLoading : archiveLoading}
+        isLoading={isTab === "attendances" ? isLoading : archiveLoading}
         columns={
           isTab === "archive"
             ? [
@@ -206,14 +161,7 @@ function ProfilePage() {
                   cellKey: "",
                   textAlign: "left",
                   render: (_, data) => (
-                    <div className=" flex gap-2 items-center h-full ">
-                      <ViewButton
-                        onClick={() => {
-                          router.push(
-                            `/employee-management/profile/${data?.id}`
-                          );
-                        }}
-                      />
+                    <div className=" flex ">
                       <DeleteButton
                         loading={deleteLoading && data?.id === deleteID}
                         onClick={() => {
@@ -227,14 +175,14 @@ function ProfilePage() {
               ]
         }
         data={
-          isTab === "profile"
+          isTab === "attendances"
             ? data?.data?.data?.data
             : archive?.data?.data?.data
         }
         setPage={setPage}
         page={page}
         totalPage={
-          isTab === "profile"
+          isTab === "attendances"
             ? data?.data?.data?.last_page
             : archive?.data?.data?.last_page
         }
@@ -244,12 +192,12 @@ function ProfilePage() {
         onClose={() => {
           setModal(false);
         }}
-        width="wide"
+        width="narrow"
       >
-        <EmployeeForm setModal={setModal} defaultValues={defaultValue} />
+        <AttendanceForm setModal={setModal} />
       </Modal>
     </>
   );
 }
 
-export default ProfilePage;
+export default AttendancesPage;

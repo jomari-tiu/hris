@@ -13,11 +13,9 @@ type Props = {
   control: any;
   errors: any;
   watch: any;
-  defaultValue?: employeeinfo &
-    employeeEducation & { trainings: employeeTrainings };
 };
 
-function Info({ control, errors, watch, defaultValue }: Props) {
+function Info({ control, errors, watch }: Props) {
   return (
     <div className=" space-y-5">
       <LayoutColumn colNumber={2}>
@@ -26,7 +24,7 @@ function Info({ control, errors, watch, defaultValue }: Props) {
           errors={errors}
           rules={{ required: "required" }}
           name={"department_id"}
-          displayValue={defaultValue?.department_name}
+          displayValue={watch("department_name")}
           placeholder={"Department"}
           endpoint={"/api/options/departments"}
         />
@@ -36,7 +34,7 @@ function Info({ control, errors, watch, defaultValue }: Props) {
           rules={{ required: "required" }}
           name={"position_id"}
           placeholder={"Position"}
-          displayValue={defaultValue?.position_name}
+          displayValue={watch("position_name")}
           endpoint={"/api/options/positions"}
           parentFilter={`?department_id=${watch("department_id")}`}
         />
@@ -94,7 +92,7 @@ function Info({ control, errors, watch, defaultValue }: Props) {
           errors={errors}
           name={"email"}
           placeholder={"Email (Optional)"}
-          type={"text"}
+          type={"email"}
         />
         <ControllerField
           control={control}

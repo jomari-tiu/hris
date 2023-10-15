@@ -132,7 +132,7 @@ const Menu = ({ itemMenu, isTab, setTab }: MenuProps) => {
         <Link href={itemMenu.url} className=" w-full inline-block">
           <div
             className={` gap-3 flex items-center rounded-md w-full  text-gray-400 py-4 px-5 duration-200 ease-in-out ${
-              pathname === itemMenu.url
+              pathname.includes(itemMenu.url)
                 ? "bg-red text-red-2 font-bold"
                 : "hover:bg-red text-gray-400"
             }`}
@@ -151,7 +151,7 @@ const Menu = ({ itemMenu, isTab, setTab }: MenuProps) => {
             <Link href={item.url} key={index}>
               <motion.div
                 className={` mt-2 gap-3 flex items-center rounded-md w-full  text-gray-400 py-4 px-5 pl-[3.5rem] duration-200 ease-in-out ${
-                  pathname === item.url
+                  pathname.includes(item.url)
                     ? "bg-red text-red-2 font-bold"
                     : "hover:bg-red text-gray-400"
                 }`}

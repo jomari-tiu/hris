@@ -51,14 +51,18 @@ function Table({
               onClick={() => {
                 onClickRow && onClickRow(item, data);
               }}
-              className={`${
+              className={` ${
                 onClickRow && " cursor-pointer hover:bg-gray-100"
               } duration-200 `}
             >
               {columns.map((col, indexCol) => (
                 <td
                   key={indexCol}
-                  className={`border-t p-4 min-w-[15rem]`}
+                  className={`border-t p-4 ${
+                    col.title !== "Action"
+                      ? "min-w-[15rem]"
+                      : "flex justify-center items-center "
+                  }`}
                   style={{
                     textAlign: col.textAlign,
                   }}

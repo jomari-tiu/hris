@@ -64,7 +64,7 @@ function TrainingForm({ control, errors }: Props) {
                 <ControllerField
                   control={control}
                   errors={errors}
-                  name={`trainings[${index}].hours_no`}
+                  name={`trainings[${index}].hours`}
                   rules={{ required: "required" }}
                   placeholder={"No. of Hours"}
                   type={"number"}
@@ -72,7 +72,7 @@ function TrainingForm({ control, errors }: Props) {
                 <ControllerField
                   control={control}
                   errors={errors}
-                  name={`trainings[${index}].type_id`}
+                  name={`trainings[${index}].type_of_ld`}
                   rules={{ required: "required" }}
                   placeholder={"Type of I.D"}
                   type={"text"}
@@ -80,7 +80,7 @@ function TrainingForm({ control, errors }: Props) {
                 <ControllerField
                   control={control}
                   errors={errors}
-                  name={`trainings[${index}].from`}
+                  name={`trainings[${index}].period_from`}
                   rules={{ required: "required" }}
                   placeholder={"From"}
                   type={"date"}
@@ -88,7 +88,7 @@ function TrainingForm({ control, errors }: Props) {
                 <ControllerField
                   control={control}
                   errors={errors}
-                  name={`trainings[${index}].to`}
+                  name={`trainings[${index}].period_to`}
                   rules={{ required: "required" }}
                   placeholder={"To"}
                   type={"date"}

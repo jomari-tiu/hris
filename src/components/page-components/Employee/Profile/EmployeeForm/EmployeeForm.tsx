@@ -82,7 +82,6 @@ function EmployeeForm({ defaultValues, setModal }: Props) {
         user_id?: string;
       }
   ) => {
-    console.log(data);
     if (isProgress === 2) {
       delete data.department_name;
       delete data.position_name;
@@ -102,12 +101,7 @@ function EmployeeForm({ defaultValues, setModal }: Props) {
       <Progress progressList={progressList} progressActive={isProgress} />
       <form onSubmit={handleSubmit(NextHandler)}>
         {isProgress === 0 && (
-          <Info
-            control={control}
-            errors={errors}
-            watch={watch}
-            defaultValue={defaultValues}
-          />
+          <Info control={control} errors={errors} watch={watch} />
         )}
         {isProgress === 1 && (
           <EducationForm control={control} errors={errors} />
