@@ -41,7 +41,7 @@ const ProfileDetailPage = async ({ params }: any) => {
         sex: profile?.sex,
         last_name: profile?.last_name,
         tel_no: profile?.tel_no,
-
+        is_flexible: profile?.is_flexible,
         educational_backgrounds: profile?.educational_backgrounds.map(
           (item: any) => {
             return {

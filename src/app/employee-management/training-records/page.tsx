@@ -11,6 +11,7 @@ import Modal from "@/components/Modal";
 import UserForm from "@/components/page-components/AdminSettings/Users/UserForm";
 import TrainingForm from "@/components/page-components/Employee/TrainingRecord/TrainingForm";
 import PageTitle from "@/components/PageTitle";
+import RestoreButton from "@/components/RestoreButton";
 import Search from "@/components/Search";
 import Tab from "@/components/Tab";
 import Table, { TableColumnsType } from "@/components/Table";
@@ -127,12 +128,7 @@ function TrainingPage() {
                   textAlign: "left",
                   render: (_, data) => (
                     <div className=" flex ">
-                      <Button
-                        appearance={"primary"}
-                        onClick={() => restoreHandler(data?.id)}
-                      >
-                        Restore
-                      </Button>
+                      <RestoreButton onClick={() => restoreHandler(data?.id)} />
                     </div>
                   ),
                 },

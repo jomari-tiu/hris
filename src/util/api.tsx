@@ -112,10 +112,11 @@ export const useFetch = (name: string, queryKey: any[], endpoint: string) => {
     queryKey,
     () => {
       return axios.get(`${process.env.NEXT_PUBLIC_API_URL}${endpoint}`);
+    },
+    {
+      // refetchOnWindowFocus: false,
+      // keepPreviousData: true,
     }
-    // {
-    //   refetchOnWindowFocus: false,
-    // }
   );
 };
 export const useFetchDetail = (name: string, endpoint: string, id: any) => {

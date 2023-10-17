@@ -18,7 +18,7 @@ type Props = {
 function Info({ control, errors, watch }: Props) {
   return (
     <div className=" space-y-5">
-      <LayoutColumn colNumber={2}>
+      <LayoutColumn colNumber={3}>
         <ControllerFieldData
           control={control}
           errors={errors}
@@ -37,6 +37,14 @@ function Info({ control, errors, watch }: Props) {
           displayValue={watch("position_name")}
           endpoint={"/api/options/positions"}
           parentFilter={`?department_id=${watch("department_id")}`}
+        />
+        <ControllerField
+          control={control}
+          errors={errors}
+          name={"is_flexible"}
+          rules={{ required: "required" }}
+          placeholder={"Flexible Schedule"}
+          type={"checkbox"}
         />
       </LayoutColumn>
       <LayoutColumn colNumber={4}>

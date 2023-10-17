@@ -53,6 +53,7 @@ function ProfilePage() {
     sex: "",
     last_name: "",
     tel_no: "",
+    is_flexible: false,
     educational_backgrounds: [
       {
         level: "",

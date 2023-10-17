@@ -45,14 +45,28 @@ function ControllerField({
           <label htmlFor={name} className=" text-[.9rem] text-red-2">
             {placeholder}
           </label>
-          {type !== "select" && type !== "textarea" && type !== "radio" && (
-            <input
-              id={name}
-              type={type}
-              //   placeholder={placeholder}
-              {...field}
-              className=" w-full"
-            />
+          {type !== "select" &&
+            type !== "textarea" &&
+            type !== "radio" &&
+            type !== "checkbox" && (
+              <input
+                id={name}
+                type={type}
+                //   placeholder={placeholder}
+                {...field}
+                className=" w-full"
+              />
+            )}
+          {type === "checkbox" && (
+            <div className=" w-full">
+              <input
+                id={name}
+                type={type}
+                //   placeholder={placeholder}
+                {...field}
+                checked={field.value}
+              />
+            </div>
           )}
           {type === "textarea" && (
             <textarea

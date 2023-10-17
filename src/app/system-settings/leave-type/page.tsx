@@ -9,6 +9,7 @@ import { textDateFormat } from "@/components/helper";
 import Modal from "@/components/Modal";
 import LeaveTypeForm from "@/components/page-components/SystemSettings/LeaveTypes/LeaveTypeForm";
 import PageTitle from "@/components/PageTitle";
+import RestoreButton from "@/components/RestoreButton";
 import Search from "@/components/Search";
 import Tab from "@/components/Tab";
 import Table, { TableColumnsType } from "@/components/Table";
@@ -96,12 +97,7 @@ function LeaveTypePage() {
                   textAlign: "left",
                   render: (_, data) => (
                     <div className=" flex ">
-                      <Button
-                        appearance={"primary"}
-                        onClick={() => restoreHandler(data?.id)}
-                      >
-                        Restore
-                      </Button>
+                      <RestoreButton onClick={() => restoreHandler(data?.id)} />
                     </div>
                   ),
                 },

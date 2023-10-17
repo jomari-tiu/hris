@@ -18,6 +18,7 @@ export type employeeinfo = {
   department_name?: string;
   position_id?: string;
   position_name?: string;
+  is_flexible: boolean;
 };
 
 export type employeeinfoResponse = {

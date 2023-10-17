@@ -32,7 +32,14 @@ function AttendanceForm({ setModal }: Props) {
     setNotification(true, "error", error);
   };
 
-  const { isLoading, mutate } = usePost(
+  const { isLoading: xlsxLoading, mutate: xlsxMutate } = usePost(
+    success,
+    error,
+    "/api/attendances/import-xlsx",
+    false,
+    "attendances-list"
+  );
+  const { isLoading: datLoading, mutate: datMutate } = usePost(
     success,
     error,
     "/api/attendances/import-dat",
@@ -56,11 +63,34 @@ function AttendanceForm({ setModal }: Props) {
     }
     const filearray = file.name.split(".");
     const extension = filearray[filearray.length - 1];
-    if (extension !== "xlsx") {
-      setNotification(true, "warning", `Invalid File!`);
+    const payload: any = {
+      file: file,
+    };
+
+    const formData: any = new FormData();
+    const arrayData: any = [];
+    const keys = Object.keys(payload);
+    keys.forEach((key) => {
+      arrayData.push({
+        key: key,
+        keyData: payload[key],
+      });
+    });
+    arrayData.map(({ key, keyData }: any) => {
+      formData.append(key, keyData);
+    });
+    if (extension === "xlsx") {
+      xlsxMutate(formData);
+    } else if (extension === "dat") {
+      datMutate(formData);
+    } else {
+      setNotification(
+        true,
+        "warning",
+        `Invalid File, Must be xlsx or dat file!`
+      );
       return;
     }
-    mutate(file);
   };
 
   return (
@@ -71,7 +101,7 @@ function AttendanceForm({ setModal }: Props) {
         onDrop={(e) => dropHandler(e, "drop")}
         className=" bg-red w-full space-y-3 aspect-[2/1] border-2 border-red-1 border-dashed rounded-md flex flex-col items-center justify-center"
       >
-        {isLoading ? (
+        {xlsxLoading || datLoading ? (
           <RotateLoader color="#6f1817" className="mb-5" />
         ) : (
           <LuImport className=" text-[4rem] text-red-1" />

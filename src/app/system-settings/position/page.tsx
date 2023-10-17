@@ -12,6 +12,7 @@ import DepartmentForm from "@/components/page-components/SystemSettings/Departme
 import LeaveTypeForm from "@/components/page-components/SystemSettings/LeaveTypes/LeaveTypeForm";
 import PositionForm from "@/components/page-components/SystemSettings/Position/PositionForm";
 import PageTitle from "@/components/PageTitle";
+import RestoreButton from "@/components/RestoreButton";
 import Search from "@/components/Search";
 import Tab from "@/components/Tab";
 import Table, { TableColumnsType } from "@/components/Table";
@@ -100,12 +101,7 @@ function PositionPage() {
                   textAlign: "left",
                   render: (_, data) => (
                     <div className=" flex ">
-                      <Button
-                        appearance={"primary"}
-                        onClick={() => restoreHandler(data?.id)}
-                      >
-                        Restore
-                      </Button>
+                      <RestoreButton onClick={() => restoreHandler(data?.id)} />
                     </div>
                   ),
                 },
