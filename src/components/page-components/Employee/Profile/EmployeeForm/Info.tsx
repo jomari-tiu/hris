@@ -13,9 +13,10 @@ type Props = {
   control: any;
   errors: any;
   watch: any;
+  setValue: Function;
 };
 
-function Info({ control, errors, watch }: Props) {
+function Info({ control, errors, watch, setValue }: Props) {
   return (
     <div className=" space-y-5">
       <LayoutColumn colNumber={3}>
@@ -25,6 +26,8 @@ function Info({ control, errors, watch }: Props) {
           rules={{ required: "required" }}
           name={"department_id"}
           displayValue={watch("department_name")}
+          displayValueKey={"department_name"}
+          setDisplayValue={setValue}
           placeholder={"Department"}
           endpoint={"/api/options/departments"}
         />
@@ -35,6 +38,8 @@ function Info({ control, errors, watch }: Props) {
           name={"position_id"}
           placeholder={"Position"}
           displayValue={watch("position_name")}
+          displayValueKey={"position_name"}
+          setDisplayValue={setValue}
           endpoint={"/api/options/positions"}
           parentFilter={`?department_id=${watch("department_id")}`}
         />

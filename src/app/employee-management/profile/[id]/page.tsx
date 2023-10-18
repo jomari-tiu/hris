@@ -18,7 +18,6 @@ const ProfileDetailPage = async ({ params }: any) => {
     .catch((err) => {
       throw err;
     });
-
   return (
     <ProfileDetail
       defaultValue={{

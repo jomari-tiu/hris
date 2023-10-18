@@ -19,6 +19,8 @@ type Props = {
   keyID?: string;
   keyName?: string;
   FourData?: boolean;
+  displayValueKey: string;
+  setDisplayValue: Function;
 };
 
 function ControllerFieldData({
@@ -33,6 +35,8 @@ function ControllerFieldData({
   keyID,
   keyName,
   FourData,
+  displayValueKey,
+  setDisplayValue,
 }: Props) {
   return (
     <Controller
@@ -51,6 +55,8 @@ function ControllerFieldData({
           keyID={keyID}
           keyName={keyName}
           FourData={FourData}
+          displayValueKey={displayValueKey}
+          setDisplayValue={setDisplayValue}
         />
       )}
     />
@@ -70,12 +76,10 @@ const Field = ({
   keyID,
   keyName,
   FourData,
+  displayValueKey,
+  setDisplayValue,
 }: any) => {
   const [open, setOpen] = useState(false);
-  const [isDisplayValue, setDisplayValue] = useState(displayValue);
-  useEffect(() => {
-    setDisplayValue(displayValue);
-  }, [displayValue]);
   const { isLoading, isError, data } = useFetch(
     name,
     [name, field.value, parentFilter],
@@ -89,6 +93,7 @@ const Field = ({
       </label>
 
       <div className="relative">
+        <input type="text" hidden name={displayValueKey} />
         <input
           id={name}
           placeholder={isLoading ? "Loading..." : ""}
@@ -96,7 +101,7 @@ const Field = ({
           autoComplete="off"
           onFocus={() => setOpen(true)}
           {...field}
-          value={isDisplayValue}
+          value={displayValue}
           disabled={isLoading || parentFilter === "" || parentFilter === null}
           className=" w-full"
         />
@@ -110,7 +115,10 @@ const Field = ({
                     className=" px-2 py-1 hover:bg-red-2 hover:text-white duration-150 cursor-pointer"
                     onClick={() => {
                       field.onChange(keyID ? item[keyID] : item?.id);
-                      setDisplayValue(keyName ? item[keyName] : item?.name);
+                      setDisplayValue(
+                        displayValueKey,
+                        keyName ? item[keyName] : item?.name
+                      );
                       setOpen(false);
                     }}
                   >
@@ -126,7 +134,10 @@ const Field = ({
                     className=" px-2 py-1 hover:bg-red-2 hover:text-white duration-150 cursor-pointer"
                     onClick={() => {
                       field.onChange(keyID ? item[keyID] : item?.id);
-                      setDisplayValue(keyName ? item[keyName] : item?.name);
+                      setDisplayValue(
+                        displayValueKey,
+                        keyName ? item[keyName] : item?.name
+                      );
                       setOpen(false);
                     }}
                   >

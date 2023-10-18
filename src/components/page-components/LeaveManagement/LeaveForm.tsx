@@ -125,6 +125,8 @@ function LeaveForm({ defaultValues, setModal }: Props) {
           endpoint={"/api/employees"}
           keyName={"first_name"}
           FourData={true}
+          displayValueKey={"employee_name"}
+          setDisplayValue={setValue}
         />
         <LayoutColumn colNumber={3}>
           <ControllerFieldData
@@ -136,6 +138,8 @@ function LeaveForm({ defaultValues, setModal }: Props) {
             displayValue={defaultValues?.leave_type_name}
             endpoint={"/api/leave_types"}
             FourData={true}
+            displayValueKey={"leave_type_name"}
+            setDisplayValue={setValue}
           />
           <ControllerField
             control={control}

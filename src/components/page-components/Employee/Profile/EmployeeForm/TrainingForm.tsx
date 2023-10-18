@@ -103,10 +103,10 @@ function TrainingForm({ control, errors }: Props) {
           append({
             title: "",
             conducted_by: "",
-            hours_no: "",
-            type_id: "",
-            from: "",
-            to: "",
+            hours: "",
+            type_of_Id: "",
+            period_from: "",
+            period_to: "",
           })
         }
         appearance={"primary"}

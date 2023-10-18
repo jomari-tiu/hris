@@ -48,7 +48,7 @@ export type employeeinfoResponse = {
 };
 
 export type employeeEducation = {
-  educational_backgrounds: {
+  educational_backgrounds?: {
     level: string;
     school_name: string;
     degree: string;

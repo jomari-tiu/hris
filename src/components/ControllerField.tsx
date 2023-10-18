@@ -76,11 +76,11 @@ function ControllerField({
               className=" w-full"
             ></textarea>
           )}
-          {type === "select" && (
+          {type === "select" && selectOptions && (
             <select
               id={name}
               {...field}
-              defaultValue={selectOptions ? selectOptions[0] : ""}
+              defaultValue={selectOptions[0]}
               className=" w-full capitalize"
             >
               {selectOptions?.map((item, index) => (

@@ -89,6 +89,8 @@ function PositionForm({ defaultValues, setModal }: Props) {
           displayValue={defaultValues?.department?.name}
           placeholder={"Department"}
           endpoint={"/api/options/departments"}
+          displayValueKey={"department_name"}
+          setDisplayValue={setValue}
         />
 
         <div className=" flex justify-end items-center">

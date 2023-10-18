@@ -35,7 +35,7 @@ function EmployeeForm({ defaultValues, setModal }: Props) {
   const {
     handleSubmit,
     control,
-    getValues,
+    setValue,
     watch,
     formState: { errors },
   } = useForm<any>({
@@ -101,7 +101,12 @@ function EmployeeForm({ defaultValues, setModal }: Props) {
       <Progress progressList={progressList} progressActive={isProgress} />
       <form onSubmit={handleSubmit(NextHandler)}>
         {isProgress === 0 && (
-          <Info control={control} errors={errors} watch={watch} />
+          <Info
+            control={control}
+            errors={errors}
+            watch={watch}
+            setValue={setValue}
+          />
         )}
         {isProgress === 1 && (
           <EducationForm control={control} errors={errors} />
