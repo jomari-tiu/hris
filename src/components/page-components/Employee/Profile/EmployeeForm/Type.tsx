@@ -63,8 +63,9 @@ export type employeeEducation = {
 export type employeeTrainings = {
   title: string;
   conducted_by: string;
-  hours_no: string;
-  type_id: string;
-  from: string;
-  to: string;
+  hours: string;
+  type_of_Id: string;
+  period_from: string;
+  period_to: string;
+  description: string;
 }[];

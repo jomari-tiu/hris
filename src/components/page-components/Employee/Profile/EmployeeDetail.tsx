@@ -44,7 +44,7 @@ function ProfileDetail({ defaultValue }: Props) {
     if (isTab === "Educational Background") {
       setApi("/api/employees/education");
     }
-    if (isTab === "Training/Seminars/") {
+    if (isTab === "Training/Seminars") {
       setApi("/api/employees/training");
     }
   }, [isTab]);
@@ -93,13 +93,14 @@ function ProfileDetail({ defaultValue }: Props) {
     }
     if (isTab === "Educational Background") {
       const payload = {
-        educational_backgrounds: data.educational_backgrounds,
+        educations: data.educational_backgrounds,
       };
       mutate(payload);
       return;
     }
     if (isTab === "Training/Seminars") {
       const payload = {
+        employee_id: data?.id,
         trainings: data.trainings,
       };
       mutate(payload);

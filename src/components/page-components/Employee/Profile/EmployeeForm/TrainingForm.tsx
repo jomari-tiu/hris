@@ -72,7 +72,7 @@ function TrainingForm({ control, errors }: Props) {
                 <ControllerField
                   control={control}
                   errors={errors}
-                  name={`trainings[${index}].type_of_ld`}
+                  name={`trainings[${index}].type_of_Id`}
                   rules={{ required: "required" }}
                   placeholder={"Type of I.D"}
                   type={"text"}
@@ -94,6 +94,14 @@ function TrainingForm({ control, errors }: Props) {
                   type={"date"}
                 />
               </LayoutColumn>
+              <ControllerField
+                control={control}
+                errors={errors}
+                name={`trainings[${index}].description`}
+                rules={{ required: "required" }}
+                placeholder={"Description"}
+                type={"textarea"}
+              />
             </div>
           </li>
         ))}
