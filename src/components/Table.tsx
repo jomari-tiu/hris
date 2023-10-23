@@ -16,7 +16,7 @@ type Props = {
 };
 
 export type TableColumnsType = {
-  title: string;
+  title: string | React.ReactNode;
   cellKey: string;
   textAlign?: "right" | "left" | "center";
   render?: (value: any, data?: any) => React.ReactNode;

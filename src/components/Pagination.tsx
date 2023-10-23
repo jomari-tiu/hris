@@ -13,7 +13,7 @@ export default function Pagination({
   totalPage,
 }: Pagination) {
   const SelectPage = (page: number) => {
-    const SelectedPage = Number(page) + 1;
+    const SelectedPage = Number(page);
     setTablePage(SelectedPage);
   };
 
@@ -31,7 +31,6 @@ export default function Pagination({
 
   useEffect(() => {
     const activePage = getPreviousAndNextNumbers(tablePage);
-    console.log(activePage);
     setCurrentPages(activePage);
   }, [tablePage]);
 
@@ -65,7 +64,7 @@ export default function Pagination({
         <li>
           <button
             className="flex items-center"
-            onClick={() => setTablePage((page: number) => page + 1)}
+            onClick={() => setTablePage((page: number) => page)}
             disabled={tablePage === totalPage}
           >
             <RiArrowRightSLine className=" text-[24px] text-red-2 cursor-pointer" />
