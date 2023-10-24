@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { eachYearOfInterval, format, parse, startOfDay } from "date-fns";
 
 type props = {
@@ -27,9 +27,22 @@ function MonthField({ onChange }: props) {
     "December",
   ];
 
+  const element = useRef<any>();
+  useEffect(() => {
+    const clickOutSide = (e: any) => {
+      if (!element.current.contains(e.target)) {
+        setToggle(false);
+      }
+    };
+    document.addEventListener("mousedown", clickOutSide);
+    return () => {
+      document.removeEventListener("mousedown", clickOutSide);
+    };
+  });
+
   return (
     <>
-      <div className=" relative inline-block z-10">
+      <div ref={element} className=" relative inline-block z-10">
         <input
           type="text"
           value={currentMonth}
@@ -51,8 +64,8 @@ function MonthField({ onChange }: props) {
                 }`}
                 onClick={() => {
                   setCurrentMonth(month);
-                  const date = parse(month, "MMMM", new Date());
-                  onChange(format(date, "M"));
+
+                  onChange(month);
                   setToggle(false);
                 }}
               >

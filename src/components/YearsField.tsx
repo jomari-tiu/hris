@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { eachYearOfInterval, format, parse, startOfDay } from "date-fns";
 
 type props = {
@@ -19,9 +19,22 @@ function YearsField({ onChange }: props) {
     (a: number, b: number) => b - a
   );
 
+  const element = useRef<any>();
+  useEffect(() => {
+    const clickOutSide = (e: any) => {
+      if (!element.current.contains(e.target)) {
+        setToggle(false);
+      }
+    };
+    document.addEventListener("mousedown", clickOutSide);
+    return () => {
+      document.removeEventListener("mousedown", clickOutSide);
+    };
+  });
+
   return (
     <>
-      <div className=" relative inline-block z-10">
+      <div ref={element} className=" relative inline-block z-10">
         <input type="text" value={currenYear} onClick={() => setToggle(true)} />
         {toggle && (
           <ul className="absolute top-full left-0 w-full bg-white shadow-md max-h-[200px] overflow-auto">

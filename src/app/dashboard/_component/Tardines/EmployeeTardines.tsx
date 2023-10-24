@@ -8,6 +8,8 @@ import {
   endOfWeek,
   format,
   getDaysInMonth,
+  isValid,
+  parse,
   startOfDay,
   startOfMonth,
   startOfWeek,
@@ -16,6 +18,8 @@ import {
 import { useRouter } from "next/navigation";
 
 import { useQueryClient } from "react-query";
+
+import { ClipLoader } from "react-spinners";
 
 import Button from "@/components/Button";
 import { useGlobalState } from "@/components/Context/AppMangement";
@@ -36,35 +40,45 @@ import Tab from "@/components/Tab";
 import Table, { TableColumnsType } from "@/components/Table";
 import ViewButton from "@/components/ViewButton";
 import YearsField from "@/components/YearsField";
-import { useFetch, restore, useRemove } from "@/util/api";
+
+import { useFetch } from "@/util/api";
+
+import DepartmentSelect from "../DepartmentSelect";
 
 function EmployeeTardines() {
   const [page, setPage] = useState(1);
+
   const date = new Date();
   let today = startOfDay(date);
-  let days = eachDayOfInterval({
-    start: startOfMonth(today),
-    end: endOfMonth(today),
-  });
+  const [isDepartmentIds, setDepartmentIds] = useState<
+    { name: string; id: string }[]
+  >([]);
 
-  const columns: TableColumnsType[] = days.map((day) => {
-    return {
-      title: (
-        <div className=" flex flex-col items-center justify-center">
-          <p className=" text-[12px]">{format(day, "MMM")}</p>
-          <p className=" border-b-2 border-red-2 ">{format(day, "dd")}</p>
-          <p className=" text-[12px]">{format(day, "eee")}</p>
-        </div>
-      ),
-      cellKey: "date_hired",
-      textAlign: "left",
-    };
+  const [isMonth, setMonth] = useState(format(today, "M"));
+
+  const [isYear, setYear] = useState(format(today, "yyyy"));
+
+  let days = eachDayOfInterval({
+    start: startOfMonth(
+      isValid(parse(isMonth, "M", new Date()))
+        ? parse(isMonth, "M", new Date())
+        : today
+    ),
+    end: endOfMonth(today),
   });
 
   const { data, isLoading } = useFetch(
     "employee-tardines-list",
-    ["employee-tardines-list", page],
-    `/api/employee-tardiness`
+    [
+      "employee-tardines-list",
+      page,
+      isMonth,
+      isYear,
+      isDepartmentIds.map((item) => item.id),
+    ],
+    `/api/employee-tardiness?month=${isMonth}&year=${isYear}&department_ids=${isDepartmentIds.map(
+      (item) => item.id
+    )}`
   );
 
   return (
@@ -74,19 +88,32 @@ function EmployeeTardines() {
           Employee Tardines
         </h5>
         <aside className=" gap-2 flex">
+          <DepartmentSelect
+            selectedIDs={isDepartmentIds}
+            setSelected={setDepartmentIds}
+          />
           <MonthField
             onChange={(value) => {
-              console.log(value);
+              const date = parse(value, "MMMM", new Date());
+              setMonth(format(date, "M"));
             }}
           />
           <YearsField
             onChange={(value) => {
-              console.log(value);
+              setYear(`${value}`);
             }}
           />
         </aside>
       </div>
-      <div className=" w-full overflow-auto">
+      <div className=" w-full relative overflow-auto min-h-[10rem]">
+        {isLoading && (
+          <>
+            <aside className=" absolute top-0 gap-2 flex-col left-0 h-full w-full flex justify-center items-center bg-[#e6e6e652]">
+              <ClipLoader color="#520100" />
+              <h4 className=" font-bold animate-pulse">Loading...</h4>
+            </aside>
+          </>
+        )}
         <table className=" w-full">
           <thead>
             <tr>
@@ -114,8 +141,7 @@ function EmployeeTardines() {
                       className=" py-1 px-5 min-w-[10rem] border-b text-center"
                       key={indx}
                     >
-                      {/* {innerItem} */}
-                      On-Time
+                      {innerItem}
                     </td>
                   )
                 )}
