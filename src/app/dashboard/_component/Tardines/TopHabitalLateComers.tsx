@@ -3,29 +3,41 @@
 import React, { useState } from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
 
+import { ClipLoader } from "react-spinners";
+
 import { useFetch } from "@/util/api";
 
+type TopHabitualType = {
+  employee_name: string;
+  department_name: string;
+  total_tardiness: string;
+  total_tardiness_minutes: string;
+}[];
+
 function TopHabitualLateComers() {
-  const [type, setType] = useState("specific date");
+  const [type, setType] = useState("monthly");
   const [from, setFrom] = useState("");
   const [end, setEnd] = useState("");
   const { data, isLoading } = useFetch(
     "top-habitual-latecomers",
     ["top-habitual-latecomers", type, from, end],
     `/api/top-habitual-latecomers?frequency=${
-      type === "specific date" ? "" : type
-    }&start_date=${from}&end_date=${end}`
+      type === "specific date" ? "specific_date" : type
+    }${type === "specific date" && `&start_date=${from}&end_date=${end}`}`
   );
+
+  const topHabitual: TopHabitualType = data?.data?.data;
+
   return (
     <div className=" space-y-5 flex flex-col items-start h-full">
       <h5 className="inline-block font-bold text-red-2 relative after:content-[''] after:absolute after:w-full after:bottom-0 after:left-0 after:h-[2px] after:bg-yellow-400">
         Top Habitual Latecomers
       </h5>
-      <ul className=" flex items-center justify-between gap-3 w-full">
+      <ul className=" flex items-center justify-between gap-3 flex-wrap w-full">
         <li>
           <select
             className=" capitalize"
-            defaultValue={"specific date"}
+            defaultValue={"monthly"}
             onChange={(e) => setType(e.target.value)}
           >
             <option value="daily">daily</option>
@@ -36,301 +48,38 @@ function TopHabitualLateComers() {
           </select>
         </li>
         {type === "specific date" && (
-          <li className=" flex items-center gap-2">
+          <li className=" flex items-center flex-wrap gap-2">
             <input type="date" onChange={(e) => setFrom(e.target.value)} />
             <AiOutlineArrowRight className=" text-red-2" />
             <input type="date" onChange={(e) => setEnd(e.target.value)} />
           </li>
         )}
       </ul>
-      <div className="max-h-[400px] overflow-auto w-full">
+      <div className="max-h-[400px] relative min-h-[10rem] overflow-auto w-full">
+        {isLoading && (
+          <>
+            <aside className=" absolute top-0 gap-2 flex-col left-0 h-full w-full flex justify-center items-center bg-[#e6e6e652]">
+              <ClipLoader color="#520100" />
+              <h4 className=" font-bold animate-pulse">Loading...</h4>
+            </aside>
+          </>
+        )}
         <table className=" w-full font-medium">
           <tbody>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>{" "}
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
-            <tr>
-              <td>Johnson, Macey A.</td>
-              <td>ACAD</td>
-              <td>1hr 19mins</td>
-            </tr>
+            {topHabitual?.map((item, indx) => (
+              <tr key={indx}>
+                <td>{item?.employee_name}</td>
+                <td>{item?.department_name}</td>
+                <td>{item?.total_tardiness}</td>
+              </tr>
+            ))}
+            {topHabitual?.length <= 0 && (
+              <tr>
+                <td colSpan={3}>
+                  <h3 className=" text-center">NO RECORD FOUND</h3>
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

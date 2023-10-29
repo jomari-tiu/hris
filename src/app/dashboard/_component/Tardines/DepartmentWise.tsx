@@ -10,8 +10,12 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { Chart } from "chart.js";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 import { Line, Bar } from "react-chartjs-2";
 import { AiOutlineArrowRight } from "react-icons/ai";
+
+import { useFetch } from "@/util/api";
 
 ChartJS.register(
   CategoryScale,
@@ -22,25 +26,69 @@ ChartJS.register(
   Legend
 );
 
+type departmentWiseType = {
+  max_average_minutes: number | string | null;
+  max_occurrences: number;
+  average_minutes: number | string | null;
+  average_occurrences: number;
+  data: {
+    department: string;
+    average_tardiness_minutes: number;
+    average_tardiness_time: number;
+    total_occurrences: number;
+    late_employees: {
+      id: string;
+      department_id: string;
+      first_name: string;
+      middle_name: string;
+      last_name: string;
+      full_name: string;
+      full_name_formal: string;
+      is_flexible: boolean;
+      schedule: {
+        name: string;
+        is_default: boolean;
+        time_in: string;
+        time_out: string;
+        is_deletable: boolean;
+      };
+    }[];
+  }[];
+};
+
 function DepartmentWise() {
   const [LineChart, setLineChart] = useState<any>({
     labels: [],
     datasets: [],
   });
 
+  const [type, setType] = useState("monthly");
+  const [from, setFrom] = useState("");
+  const [end, setEnd] = useState("");
+  const { data, isLoading } = useFetch(
+    "department-wise-tardiness",
+    ["department-wise-tardiness", type, from, end],
+    `/api/department-wise-tardiness?frequency=${
+      type === "specific date" ? "specific_date" : type
+    }${type === "specific date" && `&start_date=${from}&end_date=${end}`}`
+  );
+
+  const departmentWise: departmentWiseType = data?.data?.data;
+
   useEffect(() => {
     setLineChart({
-      labels: ["sample", "sample"],
+      labels: departmentWise?.data.map((item) => item?.department), // x-axis
       datasets: [
         {
-          label: "sampleDSlbl",
-          data: [1, 2],
-
+          data: departmentWise?.data.map(
+            (item) => item?.average_tardiness_minutes
+          ),
           backgroundColor: "#520100",
         },
       ],
     });
-  }, []);
+  }, [departmentWise?.data]);
+
   const options = {
     responsive: true,
     plugins: {
@@ -48,42 +96,64 @@ function DepartmentWise() {
         position: "bottom" as const,
         display: false,
       },
-    },
-    layout: {
-      padding: 20,
+      datalabels: {
+        color: "#fff",
+        formatter: function (value: any, context: any) {
+          const hrValue =
+            departmentWise?.data[context.dataIndex]?.average_tardiness_time;
+          return hrValue;
+        },
+      },
     },
   };
+  const plugins = [ChartDataLabels];
+
   return (
     <div className=" space-y-5">
       <h5 className="inline-block font-bold text-red-2 relative after:content-[''] after:absolute after:w-full after:bottom-0 after:left-0 after:h-[2px] after:bg-yellow-400">
         Department Wise Tardines
       </h5>
-      <ul className=" flex items-center justify-between gap-3">
+      <ul className=" flex items-center justify-between gap-3 flex-wrap w-full">
         <li>
-          <select>
-            <option value="January">January</option>
-            <option value="Febuary">Febuary</option>
+          <select
+            className=" capitalize"
+            defaultValue={"monthly"}
+            onChange={(e) => setType(e.target.value)}
+          >
+            <option value="daily">daily</option>
+            <option value="weekly">weekly</option>
+            <option value="monthly">monthly</option>
+            <option value="yearly">yearly</option>
+            <option value="specific date">specific date</option>
           </select>
         </li>
-        <li className=" flex items-center gap-2">
-          <input type="date" />
-          <AiOutlineArrowRight className=" text-red-2" />
-          <input type="date" />
-        </li>
+        {type === "specific date" && (
+          <li className=" flex items-center flex-wrap gap-2">
+            <input type="date" onChange={(e) => setFrom(e.target.value)} />
+            <AiOutlineArrowRight className=" text-red-2" />
+            <input type="date" onChange={(e) => setEnd(e.target.value)} />
+          </li>
+        )}
       </ul>
-      <ul className=" flex gap-3 items-center">
+      <ul className=" flex gap-3 items-center flex-wrap">
         <li>Average</li>
         <li>
           <p className=" text-center">Minutes</p>
-          <h3 className=" font-bold text-red-2 text-center">15mins</h3>
+          <h3 className=" font-bold text-red-2 text-center">
+            {departmentWise?.average_minutes
+              ? departmentWise?.average_minutes
+              : "0mins"}
+          </h3>
         </li>
         <li>
           <p className=" text-center">Occurences</p>
-          <h3 className=" font-bold text-red-2 text-center">4.6</h3>
+          <h3 className=" font-bold text-red-2 text-center">
+            {departmentWise?.average_occurrences}
+          </h3>
         </li>
       </ul>
       <aside>
-        <Bar data={LineChart} options={options} />
+        <Bar data={LineChart} options={options} plugins={plugins} />
       </aside>
     </div>
   );
