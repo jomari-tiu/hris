@@ -53,12 +53,7 @@ function Layout({ children }: Props) {
         <aside className=" cursor-pointer duration-500 ease-in-out p-2 bg-red-2  text-white absolute top-0 left-full hover:shadow-lg hover:bg-red hover:text-red-2">
           <CgMenuRight onClick={() => setMenu(!menu)} />
         </aside>
-        <Image
-          src="/images/logo/sb-logo.png"
-          alt="logo"
-          width={150}
-          height={100}
-        />
+        <Image src="/images/logo/logo.png" alt="logo" width={80} height={80} />
         <div className=" w-full overflow-auto ">
           <ul className=" w-full px-5 space-y-2">
             {SideMenuLinks.map((item, index) => (

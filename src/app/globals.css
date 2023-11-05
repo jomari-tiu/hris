@@ -11,11 +11,26 @@
   --blue: #678195;
   --blue2: #6890ad;
   --blue3: #39557c;
+  --red: #adff2f;
+  --red1: #d1e231;
+  --red2: #9acd32;
+  --gold: #ffcc00;
+}
+
+/* :root {
+  --background: #fff;
+  --background_blue: #7599b3;
+  --white0: #fff;
+  --white: #faf8f4;
+  --black: #000;
+  --blue: #678195;
+  --blue2: #6890ad;
+  --blue3: #39557c;
   --red: #e9dfdc;
   --red1: #6f1817;
   --red2: #520100;
   --gold: #ffcc00;
-}
+} */
 
 /* @media (prefers-color-scheme: dark) {
   :root {
@@ -31,7 +46,7 @@ body {
 p,
 li,
 a {
-  @apply text-[1rem] 1024px:text-[.8rem] text-gray-500;
+  @apply text-[1rem] 1024px:text-[.8rem] text-black;
 }
 
 h1 {
@@ -39,11 +54,11 @@ h1 {
 }
 
 h2 {
-  @apply text-[3rem] 820px:text-[2rem];
+  @apply text-[3rem] 1024px:text-[2rem];
 }
 
 h3 {
-  @apply text-[2rem]  820px:text-[1rem];
+  @apply text-[2rem]  1024px:text-[1rem];
 }
 
 input[type="text"],
@@ -53,7 +68,7 @@ input[type="email"],
 select,
 textarea,
 input[type="date"] {
-  @apply border rounded-md px-2 py-2 outline-red-2;
+  @apply border rounded-md px-2 py-2 h-10 outline-red-2;
 }
 
 button {

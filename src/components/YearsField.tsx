@@ -35,7 +35,12 @@ function YearsField({ onChange }: props) {
   return (
     <>
       <div ref={element} className=" relative inline-block z-10">
-        <input type="text" value={currenYear} onClick={() => setToggle(true)} />
+        <input
+          type="text"
+          value={currenYear}
+          onClick={() => setToggle(true)}
+          onChange={() => {}}
+        />
         {toggle && (
           <ul className="absolute top-full left-0 w-full bg-white shadow-md max-h-[200px] overflow-auto">
             {YearsSort.map((year: string, index: any) => (

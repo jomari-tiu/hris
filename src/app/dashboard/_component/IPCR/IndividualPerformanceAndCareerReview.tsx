@@ -83,7 +83,7 @@ function IndividualPerformanceAndCareerReview() {
       datasets: [
         {
           data: [5, 20, 90, 15, 45],
-          backgroundColor: "#520100",
+          backgroundColor: "#9acd32",
         },
       ],
     });

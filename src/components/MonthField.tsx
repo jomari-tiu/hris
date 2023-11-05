@@ -47,6 +47,7 @@ function MonthField({ onChange }: props) {
           type="text"
           value={currentMonth}
           onClick={() => setToggle(true)}
+          onChange={() => {}}
         />
         {toggle && (
           <ul className="absolute top-full left-0 w-full bg-white shadow-md max-h-[200px] overflow-auto">

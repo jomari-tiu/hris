@@ -83,7 +83,7 @@ function DepartmentWise() {
           data: departmentWise?.data.map(
             (item) => item?.average_tardiness_minutes
           ),
-          backgroundColor: "#520100",
+          backgroundColor: "#9acd32",
         },
       ],
     });

@@ -27,6 +27,9 @@ const config: Config = {
         "white-0": "var(--white0)",
         gold: "var(--gold)",
         "red-1": "var(--red1)",
+        primary: "#7fff00",
+        secondary: "#dfff00",
+        thirdary: "#d1e231",
       },
       screens: {
         "2500px": { max: "2500px" },

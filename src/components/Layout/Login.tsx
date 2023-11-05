@@ -20,24 +20,24 @@ function Login() {
 
   return (
     <section className=" h-screen w-screen bg-white flex justify-center items-center ">
-      <ul className=" w-10/12 h-10/12 1024px:w-11/12 grid grid-cols-2 640px:grid-cols-1">
-        <li className=" flex justify-center items-center">
+      <ul className=" w-8/12 h-10/12 1024px:w-11/12 grid grid-cols-2 640px:grid-cols-1">
+        <li className=" flex justify-center items-center bg-white-0 py-10">
           <aside className=" flex flex-wrap items-center justify-center gap-5 w-full">
             <Image
               src="/images/logo/logo.png"
-              height={180}
-              width={180}
+              height={200}
+              width={200}
               alt="Logo"
             />
-            <Image
+            {/* <Image
               src="/images/logo/logo-text.png"
               height={200}
               width={300}
               alt="Logo"
-            />
+            /> */}
           </aside>
         </li>
-        <li className=" border-l p-10 space-y-10 1366px:space-y-5">
+        <li className=" border-l p-10 px-20 1024px:px-10 space-y-10 1366px:space-y-5 bg-gradient-to-b from-[#e5fe00] to-[#b3c415]">
           <div>
             <h2>User Login</h2>
             <p>Choose one of the option to go</p>

@@ -18,7 +18,7 @@ type Props = {
     | "email"
     | "textarea"
     | "date";
-  selectOptions?: string[];
+  selectOptions?: string[] | number[];
   radioOptions?: {
     label: string;
     value: any;
@@ -101,6 +101,7 @@ function ControllerField({
                     id={name + item.label}
                     type={type}
                     value={item.value}
+                    onChange={() => {}}
                     checked={field.value === item.value}
                     onClick={() => field.onChange(item.value)}
                   />
@@ -110,7 +111,7 @@ function ControllerField({
             </ul>
           )}
           {errors[name]?.message && (
-            <span className=" text-[.9rem] text-red-2">
+            <span className=" text-[.9rem] text-[#dd0000]">
               {errors[name]?.message}
             </span>
           )}

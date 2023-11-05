@@ -96,13 +96,18 @@ const Field = ({
         <input type="text" hidden name={displayValueKey} />
         <input
           id={name}
-          placeholder={isLoading ? "Loading..." : ""}
+          placeholder={
+            isError ? "Something went wrong" : isLoading ? "Loading..." : ""
+          }
           type="text"
           autoComplete="off"
           onFocus={() => setOpen(true)}
           {...field}
           value={displayValue}
-          disabled={isLoading || parentFilter === "" || parentFilter === null}
+          onChange={() => {}}
+          disabled={
+            isLoading || parentFilter === "" || parentFilter === null || isError
+          }
           className=" w-full"
         />
         {open && (
@@ -151,7 +156,7 @@ const Field = ({
       </div>
 
       {errors[name]?.message && (
-        <span className=" text-[.9rem] text-red-2">
+        <span className=" text-[.9rem] text-[#dd0000]">
           {errors[name]?.message}
         </span>
       )}
