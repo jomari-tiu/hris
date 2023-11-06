@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import Button from "@/components/Button";
@@ -6,18 +6,21 @@ import { useGlobalState } from "@/components/Context/AppMangement";
 import ControllerField from "@/components/ControllerField";
 import ControllerFieldData from "@/components/ControllerFieldData";
 import LayoutColumn from "@/components/LayoutColumn";
+import Modal from "@/components/Modal";
 import PageTitle from "@/components/PageTitle";
 import Tab from "@/components/Tab";
-import { usePost, useRemove } from "@/util/api";
+
+import { useFetch, usePost, useRemove } from "@/util/api";
 
 import SubCategory from "./SubCategory";
+import SubCategoryForm from "./SubCategoryForm";
 
 type ipcr = {
   id?: string;
   employee_name?: string;
   employee_id: string;
   ipcr_period_id: string;
-  ipcr_period_name?: string;
+  ipcr_period_date_range?: string;
   reviewed_by: string;
   reviewed_by_name: string;
   recommending_approval: string;
@@ -46,6 +49,12 @@ type Props = {
 };
 
 function IpcrForm({ defaultValues, setModal }: Props) {
+  // const { data: ipcrCategory, isLoading: ipcrLoading } = useFetch(
+  //   "ipcr-category",
+  //   ["ipcr-category"],
+  //   `/api/options/ipcr_categories`
+  // );
+
   const dummy = [
     {
       id: "adsa",
@@ -58,6 +67,7 @@ function IpcrForm({ defaultValues, setModal }: Props) {
   ];
   const { setNotification } = useGlobalState();
   const id = defaultValues?.id;
+
   const {
     handleSubmit,
     control,
@@ -102,7 +112,8 @@ function IpcrForm({ defaultValues, setModal }: Props) {
   const SubmitHandler = (data: any) => {
     delete data.deleted_at;
     delete data.user_id;
-    mutate(data);
+    // mutate(data);
+    console.log(data);
   };
 
   return (
@@ -120,14 +131,13 @@ function IpcrForm({ defaultValues, setModal }: Props) {
             errors={errors}
             rules={{ required: "required" }}
             name={"employee_id"}
-            keyID="employee_id"
-            keyName="last_name"
+            keyID="id"
+            keyName="full_name_formal"
             displayValue={watch("employee_name")}
             displayValueKey={"employee_name"}
             setDisplayValue={setValue}
             placeholder={"Employee"}
-            endpoint={"/api/employees"}
-            FourData={true}
+            endpoint={"/api/options/employees"}
           />
           <ControllerFieldData
             control={control}
@@ -136,12 +146,11 @@ function IpcrForm({ defaultValues, setModal }: Props) {
             displayValue={watch("reviewed_by_name")}
             displayValueKey={"reviewed_by_name"}
             name={"reviewed_by"}
-            keyID="employee_id"
-            keyName="last_name"
+            keyID="id"
+            keyName="full_name_formal"
             setDisplayValue={setValue}
             placeholder={"Reviewed By"}
-            endpoint={"/api/employees"}
-            FourData={true}
+            endpoint={"/api/options/employees"}
           />
           <ControllerFieldData
             control={control}
@@ -150,12 +159,11 @@ function IpcrForm({ defaultValues, setModal }: Props) {
             displayValue={watch("recommending_approval_name")}
             displayValueKey={"recommending_approval_name"}
             name={"recommending_approval"}
-            keyID="employee_id"
-            keyName="last_name"
+            keyID="id"
+            keyName="full_name_formal"
             setDisplayValue={setValue}
             placeholder={"Recommending Approval"}
-            endpoint={"/api/employees"}
-            FourData={true}
+            endpoint={"/api/options/employees"}
           />
 
           <ControllerFieldData
@@ -163,8 +171,10 @@ function IpcrForm({ defaultValues, setModal }: Props) {
             errors={errors}
             rules={{ required: "required" }}
             name={"ipcr_period_id"}
-            displayValue={watch("ipcr_period_name")}
-            displayValueKey={"ipcr_period_name"}
+            keyID="id"
+            keyName="date_range"
+            displayValue={watch("ipcr_period_date_range")}
+            displayValueKey={"ipcr_period_date_range"}
             setDisplayValue={setValue}
             placeholder={"Period"}
             endpoint={"/api/options/ipcr_periods"}
@@ -177,7 +187,50 @@ function IpcrForm({ defaultValues, setModal }: Props) {
           tabMenu={["Performance Rating"]}
         />
 
-        {dummy.map((item, indx) => (
+        <aside className=" w-full space-y-5">
+          <div className=" w-full flex items-center gap-4">
+            <p className=" text-red-2 font-bold">
+              Strategic Functions {`(40%)`}
+            </p>
+            <div className=" flex-1 h-[2px] bg-red-2"></div>
+          </div>
+          <SubCategory
+            watch={watch}
+            category_id={"12312"}
+            category_name={"strategic"}
+            control={control}
+            errors={errors}
+          />
+        </aside>
+        <aside className=" w-full space-y-5">
+          <div className=" w-full flex items-center gap-4">
+            <p className=" text-red-2 font-bold">Core Functions {`(40%)`}</p>
+            <div className=" flex-1 h-[2px] bg-red-2"></div>
+          </div>
+          <SubCategory
+            watch={watch}
+            category_id={"4443"}
+            category_name={"core"}
+            control={control}
+            errors={errors}
+          />
+        </aside>
+
+        <aside className=" w-full space-y-5">
+          <div className=" w-full flex items-center gap-4">
+            <p className=" text-red-2 font-bold">Support Functions {`(20%)`}</p>
+            <div className=" flex-1 h-[2px] bg-red-2"></div>
+          </div>
+          <SubCategory
+            watch={watch}
+            category_id={"76564"}
+            category_name={"support"}
+            control={control}
+            errors={errors}
+          />
+        </aside>
+
+        {/* {dummy.map((item, indx) => (
           <aside key={indx} className=" w-full space-y-5">
             <div className=" w-full flex items-center gap-4">
               <p className=" text-red-2 font-bold">
@@ -185,9 +238,15 @@ function IpcrForm({ defaultValues, setModal }: Props) {
               </p>
               <div className=" flex-1 h-[2px] bg-red-2"></div>
             </div>
-            <SubCategory watch={watch} control={control} errors={errors} />
+            <SubCategory
+              watch={watch}
+              category_id={item.id}
+              category_name={item.name}
+              control={control}
+              errors={errors}
+            />
           </aside>
-        ))}
+        ))} */}
 
         <div className=" flex justify-end items-center">
           {defaultValues?.id && (

@@ -62,31 +62,31 @@ export const SideMenuLinks: SideMenuLinksType[] = [
         title: "IPCR",
         url: "/performance-management/ipcr",
       },
-      {
-        title: "OPCR",
-        url: "/performance-management/opcr",
-      },
+      // {
+      //   title: "OPCR",
+      //   url: "/performance-management/opcr",
+      // },
     ],
   },
-  {
-    title: "HR Analytics and Reports",
-    url: "/hr-analytics-and-report",
-    icon: <MdPeopleAlt />,
-    submenu: [
-      {
-        title: "Data Analysis to compute habitual tardiness",
-        url: "/hr-analytics-and-report/data-analysis-to-compute-habitual-tardiness",
-      },
-      {
-        title: "Report Generation",
-        url: "/hr-analytics-and-report/report-Generation",
-      },
-      {
-        title: "Data Visualization",
-        url: "/hr-analytics-and-report/data-visualization",
-      },
-    ],
-  },
+  // {
+  //   title: "HR Analytics and Reports",
+  //   url: "/hr-analytics-and-report",
+  //   icon: <MdPeopleAlt />,
+  //   submenu: [
+  //     {
+  //       title: "Data Analysis to compute habitual tardiness",
+  //       url: "/hr-analytics-and-report/data-analysis-to-compute-habitual-tardiness",
+  //     },
+  //     {
+  //       title: "Report Generation",
+  //       url: "/hr-analytics-and-report/report-Generation",
+  //     },
+  //     {
+  //       title: "Data Visualization",
+  //       url: "/hr-analytics-and-report/data-visualization",
+  //     },
+  //   ],
+  // },
   {
     title: "Admin Settings",
     url: "/admin-settings",

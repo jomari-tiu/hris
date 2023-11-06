@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* :root {
   --background: #fff;
   --background_blue: #7599b3;
   --white0: #fff;
@@ -15,9 +15,9 @@
   --red1: #d1e231;
   --red2: #9acd32;
   --gold: #ffcc00;
-}
+} */
 
-/* :root {
+:root {
   --background: #fff;
   --background_blue: #7599b3;
   --white0: #fff;
@@ -30,7 +30,7 @@
   --red1: #6f1817;
   --red2: #520100;
   --gold: #ffcc00;
-} */
+}
 
 /* @media (prefers-color-scheme: dark) {
   :root {

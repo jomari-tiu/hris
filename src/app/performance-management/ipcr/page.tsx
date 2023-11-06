@@ -7,9 +7,7 @@ import { useQueryClient } from "react-query";
 import DepartmentSelect from "@/app/dashboard/_component/DepartmentSelect";
 import Button from "@/components/Button";
 import { useGlobalState } from "@/components/Context/AppMangement";
-import { textDateFormat } from "@/components/helper";
 import Modal from "@/components/Modal";
-import UserForm from "@/components/page-components/AdminSettings/Users/UserForm";
 import PageTitle from "@/components/PageTitle";
 import RestoreButton from "@/components/RestoreButton";
 import Search from "@/components/Search";
@@ -35,7 +33,39 @@ function Ipcr() {
     reviewed_by_name: "",
     recommending_approval: "",
     recommending_approval_name: "",
-    evaluations: [
+    strategic_evaluations: [
+      {
+        category_id: "",
+        name: "",
+        order: "",
+        major_final_output: "",
+        performance_indicators: "",
+        target_of_accomplishment: "",
+        actual_accomplishments: "",
+        rating_q: "",
+        rating_e: "",
+        rating_t: "",
+        remarks: "",
+        evaluations: undefined,
+      },
+    ],
+    core_evaluations: [
+      {
+        category_id: "",
+        name: "",
+        order: "",
+        major_final_output: "",
+        performance_indicators: "",
+        target_of_accomplishment: "",
+        actual_accomplishments: "",
+        rating_q: "",
+        rating_e: "",
+        rating_t: "",
+        remarks: "",
+        evaluations: undefined,
+      },
+    ],
+    support_evaluations: [
       {
         category_id: "",
         name: "",
@@ -68,15 +98,15 @@ function Ipcr() {
     },
   ];
   const { data, isLoading } = useFetch(
-    "users-list",
-    ["users-list", search, page],
-    `/api/users?search=${search}&page=${page}`
+    "ipcr-list",
+    ["ipcr-list", search, page],
+    `/api/ipcr_evaluations?search=${search}&page=${page}`
   );
 
   const { data: archive, isLoading: archiveLoading } = useFetch(
-    "users-list-archive",
-    ["users-list-archive", search, page],
-    `/api/users/archive?search=${search}&page=${page}`
+    "ipcr-list-archive",
+    ["ipcr-list-archive", search, page],
+    `/api/ipcr_evaluations/archive?search=${search}&page=${page}`
   );
 
   const [isDepartmentIds, setDepartmentIds] = useState<
@@ -86,8 +116,8 @@ function Ipcr() {
   const { setNotification } = useGlobalState();
   const queryClient = useQueryClient();
   const successRestore = () => {
-    queryClient.invalidateQueries("users-list");
-    queryClient.invalidateQueries("users-list-archive");
+    queryClient.invalidateQueries("ipcr-list");
+    queryClient.invalidateQueries("ipcr-list-archive");
     setModal(false);
     setNotification(true, "success", `User successfully restored!`);
   };
@@ -95,7 +125,7 @@ function Ipcr() {
     setNotification(true, "error", "Something went wrong");
   };
   const restoreHandler = (id: any) => {
-    restore(successRestore, errorRestore, `/api/users/restore/${id}`);
+    restore(successRestore, errorRestore, `/api/ipcr/restore/${id}`);
   };
   return (
     <>
@@ -125,9 +155,9 @@ function Ipcr() {
         </Button>
       </div>
       <Table
-        isLoading={isTab === "users" ? isLoading : archiveLoading}
+        isLoading={isTab === "IPCR" ? isLoading : archiveLoading}
         columns={
-          isTab === "archive"
+          isTab === "IPCR archive"
             ? [
                 ...columns,
                 {
@@ -144,10 +174,10 @@ function Ipcr() {
             : columns
         }
         data={
-          isTab === "users" ? data?.data?.data?.data : archive?.data?.data?.data
+          isTab === "IPCR" ? data?.data?.data?.data : archive?.data?.data?.data
         }
         onClickRow={(data) => {
-          if (isTab === "users") {
+          if (isTab === "IPCR") {
             setDefaultValue(data);
             setModal(true);
           }
@@ -155,7 +185,7 @@ function Ipcr() {
         setPage={setPage}
         page={page}
         totalPage={
-          isTab === "users"
+          isTab === "IPCR"
             ? data?.data?.data?.last_page
             : archive?.data?.data?.last_page
         }

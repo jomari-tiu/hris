@@ -17,15 +17,16 @@ export default function Pagination({
     setTablePage(SelectedPage);
   };
 
-  function getPreviousAndNextNumbers(number: number) {
+  const getPreviousAndNextNumbers = (number: number) => {
     const result = [];
+
     for (let i = number - 3; i <= number + 3; i++) {
-      if (i > 0 || i <= totalPage) {
+      if (i >= 1 && i <= totalPage) {
         result.push(i);
       }
     }
     return result;
-  }
+  };
 
   const [currentPages, setCurrentPages] = useState([1]);
 
