@@ -16,71 +16,59 @@ import Table, { TableColumnsType } from "@/components/Table";
 import { useFetch, restore } from "@/util/api";
 
 import IpcrForm from "./_components/IpcrForm";
+import { ipcr } from "./_components/ipcrType";
+import SubCategoryForm from "./_components/SubCategoryForm";
 
 function Ipcr() {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [isTab, setTab] = useState("IPCR");
   const [modal, setModal] = useState(false);
+  const [isModalSubCategoryForm, setModalSubCategoryForm] = useState(false);
 
-  const emptyVal = {
+  const emptyVal: ipcr = {
     id: undefined,
-    employee_name: undefined,
+    employee_name: "",
     employee_id: "",
     ipcr_period_id: "",
-    ipcr_period_name: undefined,
+    ipcr_period_date_range: "",
     reviewed_by: "",
     reviewed_by_name: "",
     recommending_approval: "",
     recommending_approval_name: "",
     strategic_evaluations: [
       {
-        category_id: "",
-        name: "",
-        order: "",
-        major_final_output: "",
-        performance_indicators: "",
-        target_of_accomplishment: "",
-        actual_accomplishments: "",
-        rating_q: "",
-        rating_e: "",
-        rating_t: "",
-        remarks: "",
-        evaluations: undefined,
+        subcategory_id: "1",
+        subcategory_name: "First Sub",
+        evaluations: [
+          {
+            name: "sample name",
+            order: "sample order",
+            major_final_output: "sample major",
+            performance_indicators: "sample perf",
+            target_of_accomplishment: "sample target",
+            actual_accomplishments: "sample actual",
+            rating_q: "2",
+            rating_e: "3",
+            rating_t: "4",
+            remarks: "sample remarks",
+            evaluations: [],
+          },
+        ],
       },
-    ],
-    core_evaluations: [
       {
-        category_id: "",
-        name: "",
-        order: "",
-        major_final_output: "",
-        performance_indicators: "",
-        target_of_accomplishment: "",
-        actual_accomplishments: "",
-        rating_q: "",
-        rating_e: "",
-        rating_t: "",
-        remarks: "",
-        evaluations: undefined,
+        subcategory_id: "2",
+        subcategory_name: "Seconrd Sub",
+        evaluations: [],
       },
-    ],
-    support_evaluations: [
       {
-        category_id: "",
-        name: "",
-        order: "",
-        major_final_output: "",
-        performance_indicators: "",
-        target_of_accomplishment: "",
-        actual_accomplishments: "",
-        rating_q: "",
-        rating_e: "",
-        rating_t: "",
-        remarks: "",
-        evaluations: undefined,
+        subcategory_id: "3",
+        subcategory_name: "Third Sub",
+        evaluations: [],
       },
     ],
+    core_evaluations: [],
+    support_evaluations: [],
   };
 
   const [defaultValue, setDefaultValue] = useState(emptyVal);
@@ -129,7 +117,10 @@ function Ipcr() {
   };
   return (
     <>
-      <PageTitle title={["Performance Management"]} />
+      <div className=" flex w-full font-bold text-3xl text-center">
+        Comming Soon...
+      </div>
+      {/* <PageTitle title={["Performance Management"]} />
       <Tab
         tab={isTab}
         setTab={setTab}
@@ -144,15 +135,25 @@ function Ipcr() {
           />
         </aside>
 
-        <Button
-          appearance={"primary"}
-          onClick={() => {
-            setDefaultValue(emptyVal);
-            setModal(true);
-          }}
-        >
-          Add
-        </Button>
+        <aside className=" gap-2 flex items-center flex-wrap">
+          <Button
+            appearance={"primary"}
+            onClick={() => {
+              setDefaultValue(emptyVal);
+              setModal(true);
+            }}
+          >
+            Add
+          </Button>
+          <Button
+            appearance={"primary"}
+            onClick={() => {
+              setModalSubCategoryForm(true);
+            }}
+          >
+            Add Sub-Category
+          </Button>
+        </aside>
       </div>
       <Table
         isLoading={isTab === "IPCR" ? isLoading : archiveLoading}
@@ -199,8 +200,79 @@ function Ipcr() {
       >
         <IpcrForm setModal={setModal} defaultValues={defaultValue} />
       </Modal>
+      <Modal
+        show={isModalSubCategoryForm}
+        onClose={() => {
+          setModalSubCategoryForm(false);
+        }}
+        width="narrow"
+      >
+        <SubCategoryForm setModal={setModalSubCategoryForm} />
+      </Modal> */}
     </>
   );
 }
 
 export default Ipcr;
+// {
+//   subcategory_id: "",
+//   subcategory_name: "",
+//   evaluations: [
+//     {
+//       name: "",
+//       order: "",
+//       major_final_output: "",
+//       performance_indicators: "",
+//       target_of_accomplishment: "",
+//       actual_accomplishments: "",
+//       rating_q: "",
+//       rating_e: "",
+//       rating_t: "",
+//       remarks: "",
+//       evaluations: [
+//         {
+//           subcategory_id: "",
+//           subcategory_name: "",
+//           evaluation: [],
+//         },
+//         {
+//           subcategory_id: "",
+//           subcategory_name: "",
+//           evaluation: [],
+//         },
+//       ],
+//     },
+//   ],
+// },
+// {
+//   subcategory_id: "",
+//   subcategory_name: "",
+//   evaluations: [
+//     {
+//       name: "",
+//       order: "",
+//       major_final_output: "",
+//       performance_indicators: "",
+//       target_of_accomplishment: "",
+//       actual_accomplishments: "",
+//       rating_q: "",
+//       rating_e: "",
+//       rating_t: "",
+//       remarks: "",
+//       evaluations: [],
+//     },
+//     {
+//       name: "",
+//       order: "",
+//       major_final_output: "",
+//       performance_indicators: "",
+//       target_of_accomplishment: "",
+//       actual_accomplishments: "",
+//       rating_q: "",
+//       rating_e: "",
+//       rating_t: "",
+//       remarks: "",
+//       evaluations: [],
+//     },
+//   ],
+// },

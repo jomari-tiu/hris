@@ -7,11 +7,11 @@ type PropsType = {
 };
 
 const SubCategoryForm = ({ setModal }: PropsType) => {
-  const [option, setOption] = useState("Select Sub-Category");
+  const [option, setOption] = useState("Create Sub-Category");
   return (
     <div className=" flex flex-col gap-5">
-      <h3>Add SubCategory</h3>
-      <select
+      <h3>Add Sub-Category</h3>
+      {/* <select
         name=""
         id=""
         defaultValue={option}
@@ -19,7 +19,7 @@ const SubCategoryForm = ({ setModal }: PropsType) => {
       >
         <option value="Select Sub-Category">Select Sub-Category</option>
         <option value="Create Sub-Category">Create Sub-Category</option>
-      </select>
+      </select> */}
       {option === "Select Sub-Category" && (
         <select name="" id="">
           <option>Instruction</option>
@@ -29,6 +29,11 @@ const SubCategoryForm = ({ setModal }: PropsType) => {
       )}
       {option === "Create Sub-Category" && (
         <>
+          <select name="" id="">
+            <option>Strategic Function</option>
+            <option>Core Function</option>
+            <option>Support Function</option>
+          </select>
           <input type="text" placeholder="Name" />
           <input type="number" placeholder="Weight" />
         </>

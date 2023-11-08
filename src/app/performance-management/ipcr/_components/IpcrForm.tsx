@@ -1,47 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import Button from "@/components/Button";
 import { useGlobalState } from "@/components/Context/AppMangement";
-import ControllerField from "@/components/ControllerField";
 import ControllerFieldData from "@/components/ControllerFieldData";
 import LayoutColumn from "@/components/LayoutColumn";
-import Modal from "@/components/Modal";
-import PageTitle from "@/components/PageTitle";
 import Tab from "@/components/Tab";
-
 import { useFetch, usePost, useRemove } from "@/util/api";
 
+import { ipcr, subCategory } from "./ipcrType";
 import SubCategory from "./SubCategory";
-import SubCategoryForm from "./SubCategoryForm";
-
-type ipcr = {
-  id?: string;
-  employee_name?: string;
-  employee_id: string;
-  ipcr_period_id: string;
-  ipcr_period_date_range?: string;
-  reviewed_by: string;
-  reviewed_by_name: string;
-  recommending_approval: string;
-  recommending_approval_name: string;
-  evaluations?: evaluations[];
-};
-
-type evaluations = {
-  category_id: string;
-  name: string;
-  order: number;
-  major_final_output: string;
-  performance_indicators: string;
-  target_of_accomplishment: string;
-  actual_accomplishments: string;
-  rating_q: number;
-  rating_e: number;
-  rating_t: number;
-  remarks: string;
-  evaluations?: evaluations[];
-};
 
 type Props = {
   defaultValues: ipcr;
@@ -55,16 +23,6 @@ function IpcrForm({ defaultValues, setModal }: Props) {
   //   `/api/options/ipcr_categories`
   // );
 
-  const dummy = [
-    {
-      id: "adsa",
-      name: "Strategic Functions",
-    },
-    {
-      id: "12312312",
-      name: "Core Functions",
-    },
-  ];
   const { setNotification } = useGlobalState();
   const id = defaultValues?.id;
 
@@ -77,6 +35,10 @@ function IpcrForm({ defaultValues, setModal }: Props) {
   } = useForm<ipcr>({
     defaultValues: defaultValues,
   });
+
+  useEffect(() => {
+    console.log(watch("strategic_evaluations"));
+  }, [watch("strategic_evaluations")]);
 
   const successDelete = () => {
     setModal(false);
@@ -196,8 +158,8 @@ function IpcrForm({ defaultValues, setModal }: Props) {
           </div>
           <SubCategory
             watch={watch}
-            category_id={"12312"}
-            category_name={"strategic"}
+            setValue={setValue}
+            category_name={"strategic_evaluations"}
             control={control}
             errors={errors}
           />
@@ -209,8 +171,8 @@ function IpcrForm({ defaultValues, setModal }: Props) {
           </div>
           <SubCategory
             watch={watch}
-            category_id={"4443"}
-            category_name={"core"}
+            setValue={setValue}
+            category_name={"core_evaluations"}
             control={control}
             errors={errors}
           />
@@ -223,8 +185,8 @@ function IpcrForm({ defaultValues, setModal }: Props) {
           </div>
           <SubCategory
             watch={watch}
-            category_id={"76564"}
-            category_name={"support"}
+            setValue={setValue}
+            category_name={"support_evaluations"}
             control={control}
             errors={errors}
           />
