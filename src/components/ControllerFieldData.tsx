@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 
 import { Controller } from "react-hook-form";
@@ -86,8 +86,21 @@ const Field = ({
     `${endpoint}${parentFilter ? `${parentFilter}` : ""}`
   );
 
+  const element = useRef<any>();
+  useEffect(() => {
+    const clickOutSide = (e: any) => {
+      if (!element.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", clickOutSide);
+    return () => {
+      document.removeEventListener("mousedown", clickOutSide);
+    };
+  });
+
   return (
-    <aside>
+    <aside ref={element}>
       <label htmlFor={name} className=" text-[.9rem] text-red-2">
         {placeholder}
       </label>

@@ -26,6 +26,7 @@ type props = {
   watch: any;
   setValue: any;
   category_name: string;
+  parentCategoryId: string;
 };
 
 const SubCategory = ({
@@ -34,12 +35,13 @@ const SubCategory = ({
   watch,
   category_name,
   setValue,
+  parentCategoryId,
 }: props) => {
   const { fields, append, remove, update } = useFieldArray({
     control,
-    rules: {
-      required: "Required!",
-    },
+    // rules: {
+    //   required: "Required!",
+    // },
     name: category_name, // This should match the name of your field in the form data
   });
 
@@ -59,6 +61,7 @@ const SubCategory = ({
           update={update}
           key={indx}
           setValue={setValue}
+          parentCategoryId={parentCategoryId}
         />
       ))}
     </>
@@ -79,6 +82,7 @@ type SubCategoryItemType = {
   append: any;
   update: any;
   setValue: any;
+  parentCategoryId: string;
 };
 
 const SubCategoryItem = ({
@@ -94,42 +98,20 @@ const SubCategoryItem = ({
   update,
   setValue,
 }: SubCategoryItemType) => {
+  const [isModalSubCategoryForm, setModalSubCategoryForm] = useState(false);
   const q = watch(`${category_name}[${indx}].rating_q`);
   const e = watch(`${category_name}[${indx}].rating_e`);
   const t = watch(`${category_name}[${indx}].rating_t`);
   const evaluations = watch(`${category_name}[${indx}].evaluations`);
-  const parent_evaluation = watch(
-    `${category_name}[${indx}].parent_evaluation`
-  );
+  const childNumber = `${category_name}[${indx}]`.split(".").length;
+  const parentSubCategoryId = watch(`${category_name}[${indx}].subcategory_id`);
   const getAverage = useMemo(() => {
     const average = Number(q) + Number(e) + Number(t);
     return average / 3;
   }, [q, e, t]);
 
-  const childNumber = `${category_name}[${indx}]`.split(".").length;
-
   const addHandler = () => {
-    let add: any = {
-      name: "",
-      order: "",
-      major_final_output: "",
-      performance_indicators: "",
-      target_of_accomplishment: "",
-      actual_accomplishments: "",
-      rating_q: "",
-      rating_e: "",
-      rating_t: "",
-      remarks: "",
-      evaluations: [],
-    };
-    if (parent_evaluation) {
-      add = { ...add, parent_evaluation: true };
-    }
-    append(add);
-  };
-
-  const updateEvaluationHandler = () => {
-    let addEvaluation: any = {
+    let itemField: any = {
       name: "",
       order: "",
       major_final_output: "",
@@ -144,141 +126,189 @@ const SubCategoryItem = ({
     };
     setValue(`${category_name}[${indx}].evaluations`, [
       ...evaluations,
-      addEvaluation,
+      itemField,
     ]);
+  };
+
+  const addSubCategory = () => {
+    let subCategory: any = {
+      subcategory_id: "",
+      subcategory_name: "",
+      evaluations: [],
+    };
+    setValue(`${category_name}[${indx}].evaluations`, [
+      ...evaluations,
+      subCategory,
+    ]);
+  };
+
+  const addRowHandler = () => {
+    let newRow = {};
+    if (watch(`${category_name}[${indx}].subcategory_id`) !== undefined) {
+      newRow = {
+        subcategory_id: "",
+        subcategory_name: "",
+        evaluations: [],
+      };
+    } else {
+      newRow = {
+        name: "",
+        order: "",
+        major_final_output: "",
+        performance_indicators: "",
+        target_of_accomplishment: "",
+        actual_accomplishments: "",
+        rating_q: "",
+        rating_e: "",
+        rating_t: "",
+        remarks: "",
+        evaluations: [],
+      };
+    }
+    append(newRow);
   };
 
   return (
     <>
       <div
-        className={`p-5 border-2 border-dashed rounded-md space-y-5 ${
-          parent_evaluation && "border-black"
-        }`}
+        className={`p-5 border-2 border-gray-300 border-dashed rounded-md space-y-5 `}
       >
         <div className=" w-full flex justify-between">
-          <h3 className=" font-bold text-red-2">
+          <h4 className=" font-bold text-red-2">
             {childNumber % 2 === 0 ? indx + 1 : convertToRoman(indx + 1)}
-          </h3>
-          {!parent_evaluation && (
+          </h4>
+          {(childNumber >= 2 ||
+            (fields.length > 1 && fields.length === indx + 1)) && (
             <IoIosRemoveCircle
               className=" cursor-pointer hover:text-red-1 text-2xl text-red-2 text-end"
               onClick={() => remove(indx)}
             />
           )}
         </div>
-
-        <ul className=" flex justify-between gap-5">
-          <li className=" w-9/12">
-            <LayoutColumn colNumber={3}>
-              {childNumber >= 2 && (
-                <ControllerFieldData
+        {watch(`${category_name}[${indx}].subcategory_id`) !== undefined ? (
+          <ul className=" flex justify-between gap-5">
+            <li className=" w-full">
+              <ControllerFieldData
+                control={control}
+                errors={errors}
+                rules={{ required: "required" }}
+                displayValue={watch(
+                  `${category_name}[${indx}].subcategory_name`
+                )}
+                displayValueKey={`${category_name}[${indx}].subcategory_name`}
+                name={`${category_name}[${indx}].subcategory_id`}
+                keyID="id"
+                keyName="name"
+                setDisplayValue={setValue}
+                placeholder={"Select Sub-Category"}
+                endpoint={`/api/options/ipcr_subcategories`}
+                parentFilter={`?parent_id=${parentSubCategoryId}`}
+              />
+            </li>
+          </ul>
+        ) : (
+          <ul className=" flex justify-between gap-5">
+            <li className=" w-9/12">
+              <LayoutColumn colNumber={3}>
+                <ControllerField
                   control={control}
                   errors={errors}
+                  name={`${category_name}[${indx}].name`}
                   rules={{ required: "required" }}
-                  displayValue={watch(
-                    `${category_name}[${indx}].parent_subcategory_id`
-                  )}
-                  displayValueKey={`${category_name}[${indx}].parent_subcategory_id`}
-                  name={`${category_name}[${indx}].parent_subcategory_id`}
-                  keyID="id"
-                  keyName="name"
-                  setDisplayValue={setValue}
-                  placeholder={"Select Sub-Category"}
-                  endpoint={"/api/options/ipcr_subcategories"}
+                  placeholder={"Sector Goals"}
+                  type={"text"}
                 />
-              )}
+                <ControllerField
+                  control={control}
+                  errors={errors}
+                  name={`${category_name}[${indx}].major_final_output`}
+                  rules={{ required: "required" }}
+                  placeholder={"Major Final Output"}
+                  type={"text"}
+                />
+                <ControllerField
+                  control={control}
+                  errors={errors}
+                  name={`${category_name}[${indx}].performance_indicators`}
+                  rules={{ required: "required" }}
+                  placeholder={"Performance Indicators"}
+                  type={"text"}
+                />
+                <ControllerField
+                  control={control}
+                  errors={errors}
+                  name={`${category_name}[${indx}].target_of_accomplishment`}
+                  rules={{ required: "required" }}
+                  placeholder={"Target Of Accomplishment"}
+                  type={"text"}
+                />
+                <ControllerField
+                  control={control}
+                  errors={errors}
+                  name={`${category_name}[${indx}].actual_accomplishments`}
+                  rules={{ required: "required" }}
+                  placeholder={"Actual Accomplishments"}
+                  type={"text"}
+                />
+                <ControllerField
+                  control={control}
+                  errors={errors}
+                  name={`${category_name}[${indx}].remarks`}
+                  rules={{ required: "required" }}
+                  placeholder={"Remarks"}
+                  type={"text"}
+                />
+              </LayoutColumn>
+            </li>
+            <li className=" w-3/12 space-y-5">
               <ControllerField
                 control={control}
                 errors={errors}
-                name={`${category_name}[${indx}].name`}
+                name={`${category_name}[${indx}].rating_q`}
                 rules={{ required: "required" }}
-                placeholder={"Sector Goals"}
-                type={"text"}
+                placeholder={"Rating Q"}
+                type={"select"}
+                selectOptions={[0, 1, 2, 3, 4, 5]}
               />
               <ControllerField
                 control={control}
                 errors={errors}
-                name={`${category_name}[${indx}].major_final_output`}
+                name={`${category_name}[${indx}].rating_e`}
                 rules={{ required: "required" }}
-                placeholder={"Major Final Output"}
-                type={"text"}
+                placeholder={"Rating E"}
+                type={"select"}
+                selectOptions={[0, 1, 2, 3, 4, 5]}
               />
               <ControllerField
                 control={control}
                 errors={errors}
-                name={`${category_name}[${indx}].performance_indicators`}
+                name={`${category_name}[${indx}].rating_t`}
                 rules={{ required: "required" }}
-                placeholder={"Performance Indicators"}
-                type={"text"}
+                placeholder={"Rating T"}
+                type={"select"}
+                selectOptions={[0, 1, 2, 3, 4, 5]}
               />
-              <ControllerField
-                control={control}
-                errors={errors}
-                name={`${category_name}[${indx}].target_of_accomplishment`}
-                rules={{ required: "required" }}
-                placeholder={"Target Of Accomplishment"}
-                type={"text"}
-              />
-              <ControllerField
-                control={control}
-                errors={errors}
-                name={`${category_name}[${indx}].actual_accomplishments`}
-                rules={{ required: "required" }}
-                placeholder={"Actual Accomplishments"}
-                type={"text"}
-              />
-              <ControllerField
-                control={control}
-                errors={errors}
-                name={`${category_name}[${indx}].remarks`}
-                rules={{ required: "required" }}
-                placeholder={"Remarks"}
-                type={"text"}
-              />
-            </LayoutColumn>
-          </li>
-          <li className=" w-3/12 space-y-5">
-            <ControllerField
-              control={control}
-              errors={errors}
-              name={`${category_name}[${indx}].rating_q`}
-              rules={{ required: "required" }}
-              placeholder={"Rating Q"}
-              type={"select"}
-              selectOptions={[0, 1, 2, 3, 4, 5]}
-            />
-            <ControllerField
-              control={control}
-              errors={errors}
-              name={`${category_name}[${indx}].rating_e`}
-              rules={{ required: "required" }}
-              placeholder={"Rating E"}
-              type={"select"}
-              selectOptions={[0, 1, 2, 3, 4, 5]}
-            />
-            <ControllerField
-              control={control}
-              errors={errors}
-              name={`${category_name}[${indx}].rating_t`}
-              rules={{ required: "required" }}
-              placeholder={"Rating T"}
-              type={"select"}
-              selectOptions={[0, 1, 2, 3, 4, 5]}
-            />
-            <aside>
-              Average Rating: {isNaN(getAverage) ? 0 : getAverage?.toFixed(2)}
-            </aside>
-          </li>
-        </ul>
+              <aside>
+                Average Rating: {isNaN(getAverage) ? 0 : getAverage?.toFixed(2)}
+              </aside>
+            </li>
+          </ul>
+        )}
+
         <aside className=" w-full flex justify-end gap-3">
-          <Button appearance="primary" onClick={updateEvaluationHandler}>
+          <Button
+            appearance="primary"
+            onClick={() => setModalSubCategoryForm(true)}
+          >
+            Create New Sub-Category
+          </Button>
+          <Button appearance="primary" onClick={addSubCategory}>
             Add Sub-Category
           </Button>
-          {fields.length === indx + 1 && (
-            <Button appearance="primary" onClick={addHandler}>
-              Add Item
-            </Button>
-          )}
+
+          <Button appearance="primary" onClick={addHandler}>
+            Add Item
+          </Button>
         </aside>
         <SubCategory
           watch={watch}
@@ -286,8 +316,29 @@ const SubCategoryItem = ({
           control={control}
           errors={errors}
           setValue={setValue}
+          parentCategoryId={parentSubCategoryId ? parentSubCategoryId : ""}
         />
       </div>
+      {fields.length === indx + 1 && (
+        <div className=" flex w-full justify-end">
+          <Button appearance="primary" onClick={addRowHandler}>
+            Add Row
+          </Button>
+        </div>
+      )}
+      <Modal
+        show={isModalSubCategoryForm}
+        onClose={() => {
+          setModalSubCategoryForm(false);
+        }}
+        width="narrow"
+      >
+        <SubCategoryForm
+          setModal={setModalSubCategoryForm}
+          parentSubCategoryId={parentSubCategoryId}
+          queryNameToRefresh={`${category_name}[${indx}].subcategory_id`}
+        />
+      </Modal>
     </>
   );
 };

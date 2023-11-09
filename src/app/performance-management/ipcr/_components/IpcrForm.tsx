@@ -36,10 +36,6 @@ function IpcrForm({ defaultValues, setModal }: Props) {
     defaultValues: defaultValues,
   });
 
-  useEffect(() => {
-    console.log(watch("strategic_evaluations"));
-  }, [watch("strategic_evaluations")]);
-
   const successDelete = () => {
     setModal(false);
     setNotification(true, "success", `user Successfully deleted!`);
@@ -49,7 +45,7 @@ function IpcrForm({ defaultValues, setModal }: Props) {
     setNotification(
       true,
       "success",
-      `user Successfully ${defaultValues?.id ? "updated" : "registered"}!`
+      `IPCR Successfully ${defaultValues?.id ? "updated" : "registered"}!`
     );
   };
   const error = (error: any) => {
@@ -59,23 +55,20 @@ function IpcrForm({ defaultValues, setModal }: Props) {
   const { isLoading: DeleteLoading, mutate: Delete } = useRemove(
     successDelete,
     error,
-    "/api/users",
-    "users-list"
+    "/api/ipcr_evaluations",
+    "ipcr-list"
   );
 
   const { isLoading, mutate } = usePost(
     success,
     error,
-    "/api/users",
+    "/api/ipcr_evaluations",
     defaultValues?.id ? defaultValues?.id : false,
-    "users-list"
+    "ipcr-list"
   );
 
   const SubmitHandler = (data: any) => {
-    delete data.deleted_at;
-    delete data.user_id;
-    // mutate(data);
-    console.log(data);
+    mutate(data);
   };
 
   return (
@@ -162,6 +155,7 @@ function IpcrForm({ defaultValues, setModal }: Props) {
             category_name={"strategic_evaluations"}
             control={control}
             errors={errors}
+            parentCategoryId={""}
           />
         </aside>
         <aside className=" w-full space-y-5">
@@ -175,6 +169,7 @@ function IpcrForm({ defaultValues, setModal }: Props) {
             category_name={"core_evaluations"}
             control={control}
             errors={errors}
+            parentCategoryId={""}
           />
         </aside>
 
@@ -189,26 +184,9 @@ function IpcrForm({ defaultValues, setModal }: Props) {
             category_name={"support_evaluations"}
             control={control}
             errors={errors}
+            parentCategoryId={""}
           />
         </aside>
-
-        {/* {dummy.map((item, indx) => (
-          <aside key={indx} className=" w-full space-y-5">
-            <div className=" w-full flex items-center gap-4">
-              <p className=" text-red-2 font-bold">
-                {item.name} {`(40%)`}
-              </p>
-              <div className=" flex-1 h-[2px] bg-red-2"></div>
-            </div>
-            <SubCategory
-              watch={watch}
-              category_id={item.id}
-              category_name={item.name}
-              control={control}
-              errors={errors}
-            />
-          </aside>
-        ))} */}
 
         <div className=" flex justify-end items-center">
           {defaultValues?.id && (

@@ -33,7 +33,7 @@ function Modal({ children, onClose, show, width }: Props) {
       {show && (
         <div
           style={{ margin: 0 }}
-          className={` bg-[#0000002f] fixed top-0 left-0 h-screen w-screen flex py-5 justify-center ${
+          className={` bg-[#0000002f] z-50 fixed top-0 left-0 h-screen w-screen flex py-5 justify-center ${
             isSameHeight ? " items-start" : "items-center"
           } overflow-auto`}
         >

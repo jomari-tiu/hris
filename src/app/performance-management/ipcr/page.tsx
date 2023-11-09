@@ -24,7 +24,6 @@ function Ipcr() {
   const [page, setPage] = useState(1);
   const [isTab, setTab] = useState("IPCR");
   const [modal, setModal] = useState(false);
-  const [isModalSubCategoryForm, setModalSubCategoryForm] = useState(false);
 
   const emptyVal: ipcr = {
     id: undefined,
@@ -38,37 +37,25 @@ function Ipcr() {
     recommending_approval_name: "",
     strategic_evaluations: [
       {
-        subcategory_id: "1",
-        subcategory_name: "First Sub",
-        evaluations: [
-          {
-            name: "sample name",
-            order: "sample order",
-            major_final_output: "sample major",
-            performance_indicators: "sample perf",
-            target_of_accomplishment: "sample target",
-            actual_accomplishments: "sample actual",
-            rating_q: "2",
-            rating_e: "3",
-            rating_t: "4",
-            remarks: "sample remarks",
-            evaluations: [],
-          },
-        ],
-      },
-      {
-        subcategory_id: "2",
-        subcategory_name: "Seconrd Sub",
-        evaluations: [],
-      },
-      {
-        subcategory_id: "3",
-        subcategory_name: "Third Sub",
+        subcategory_id: "",
+        subcategory_name: "",
         evaluations: [],
       },
     ],
-    core_evaluations: [],
-    support_evaluations: [],
+    core_evaluations: [
+      {
+        subcategory_id: "",
+        subcategory_name: "",
+        evaluations: [],
+      },
+    ],
+    support_evaluations: [
+      {
+        subcategory_id: "",
+        subcategory_name: "",
+        evaluations: [],
+      },
+    ],
   };
 
   const [defaultValue, setDefaultValue] = useState(emptyVal);
@@ -117,10 +104,7 @@ function Ipcr() {
   };
   return (
     <>
-      <div className=" flex w-full font-bold text-3xl text-center">
-        Comming Soon...
-      </div>
-      {/* <PageTitle title={["Performance Management"]} />
+      <PageTitle title={["Performance Management"]} />
       <Tab
         tab={isTab}
         setTab={setTab}
@@ -144,14 +128,6 @@ function Ipcr() {
             }}
           >
             Add
-          </Button>
-          <Button
-            appearance={"primary"}
-            onClick={() => {
-              setModalSubCategoryForm(true);
-            }}
-          >
-            Add Sub-Category
           </Button>
         </aside>
       </div>
@@ -200,15 +176,6 @@ function Ipcr() {
       >
         <IpcrForm setModal={setModal} defaultValues={defaultValue} />
       </Modal>
-      <Modal
-        show={isModalSubCategoryForm}
-        onClose={() => {
-          setModalSubCategoryForm(false);
-        }}
-        width="narrow"
-      >
-        <SubCategoryForm setModal={setModalSubCategoryForm} />
-      </Modal> */}
     </>
   );
 }
