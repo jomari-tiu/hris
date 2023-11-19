@@ -1,13 +1,22 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { getCookie, deleteCookie } from "cookies-next";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+
 import { BiDownArrow } from "react-icons/bi";
+
 import { CgMenuRight } from "react-icons/cg";
+
 import { MdKeyboardArrowDown } from "react-icons/md";
+import { useQueryClient } from "react-query";
+import { CircleLoader, SyncLoader } from "react-spinners";
+
+import { useFetch } from "@/util/api";
 
 import AnimationContainer from "../Animation/animationContainer";
 import { fadeDown } from "../Animation/animationVariants";
@@ -20,10 +29,21 @@ type Props = {
 };
 
 function Layout({ children }: Props) {
-  const { notification } = useGlobalState();
+  const { notification, setNotification } = useGlobalState();
   const [isTab, setTab] = useState(undefined);
+  const [profileMenu, setProfileMenu] = useState(false);
+
+  const router = useRouter();
+
+  const queryClient = useQueryClient();
 
   const [menu, setMenu] = useState(true);
+
+  const { data: profile, isLoading } = useFetch(
+    "user-profile",
+    ["user-profile"],
+    `/api/profile`
+  );
 
   useEffect(() => {
     const HandlerResize = () => {
@@ -39,6 +59,35 @@ function Layout({ children }: Props) {
       window.removeEventListener("resize", HandlerResize);
     };
   }, []);
+
+  const SignOutHandler = async () => {
+    try {
+      const token = getCookie("user");
+
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/logout`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        setNotification(true, "success", `Successfully Logout!`);
+        queryClient.removeQueries();
+        deleteCookie("user");
+        window.localStorage.clear();
+        router.refresh();
+      } else if (response.status === 401) {
+        setNotification(true, "error", "Authentication failed");
+      }
+    } catch (error) {
+      setNotification(true, "error", "Something went Wront");
+      deleteCookie("user");
+      router.refresh();
+    }
+  };
 
   return (
     <main className=" w-full h-screen flex flex-wrap ">
@@ -64,7 +113,10 @@ function Layout({ children }: Props) {
       </section>
       <section className=" h-full overflow-auto flex-1 border border-blue-500 p-10 820px:p-5 820px:pt-0 pt-0">
         <nav className=" flex justify-end py-5 820px:py-2 mb-5 820px:mb-3">
-          <div className=" flex items-center gap-3">
+          <div
+            className=" flex items-center gap-3 cursor-pointer relative"
+            onClick={() => setProfileMenu(!profileMenu)}
+          >
             <aside className=" relative h-10 aspect-square overflow-hidden rounded-full bg-gold">
               <Image
                 src="/images/logo/logo.png"
@@ -74,9 +126,32 @@ function Layout({ children }: Props) {
               />
             </aside>
             <div className=" flex items-center space-x-3 cursor-pointer">
-              <p>Jomari Tiu</p>
+              {isLoading ? (
+                <ul className=" text-lg animate-pulse flex gap-2">
+                  <li className=" w-2 h-2 animate-pulse rounded-full bg-red-2"></li>
+                  <li className=" w-2 h-2 animate-pulse rounded-full bg-red-2"></li>
+                  <li className=" w-2 h-2 animate-pulse rounded-full bg-red-2"></li>
+                </ul>
+              ) : (
+                profile?.data?.data?.name
+              )}
               <MdKeyboardArrowDown className=" text-xl" />
             </div>
+            {profileMenu && (
+              <ul className=" absolute top-full right-0 w-[200px] shadow-md bg-white">
+                <Link href="/edit-profile">
+                  <li className=" px-3 py-2 hover:bg-red-2 hover:text-white duration-150 text-right">
+                    Change Password
+                  </li>
+                </Link>
+                <li
+                  className=" px-3 py-2 hover:bg-red-2 hover:text-white duration-150  text-right cursor-pointer"
+                  onClick={SignOutHandler}
+                >
+                  Logout
+                </li>
+              </ul>
+            )}
           </div>
         </nav>
         <section className=" space-y-5">{children}</section>

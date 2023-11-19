@@ -9,13 +9,20 @@ export const usePost = (
   onError: any,
   endpoint: string,
   id: boolean | string | number,
-  toRefetchNameQuery: string
+  toRefetchNameQuery: string,
+  noHeader?: boolean
 ) => {
   const queryClient = useQueryClient();
   return useMutation(
     (payload: any) => {
       if (id) {
         payload._method = "PUT";
+      }
+      if (noHeader) {
+        return axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}${endpoint}${id ? `/${id}` : ""}`,
+          payload
+        );
       }
       return axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}${endpoint}${id ? `/${id}` : ""}`,
@@ -28,9 +35,9 @@ export const usePost = (
       );
     },
     {
-      onSuccess: () => {
+      onSuccess: (response) => {
         queryClient.invalidateQueries(toRefetchNameQuery);
-        onSucces();
+        onSucces(response);
       },
       onError: onError,
     }
@@ -111,7 +118,11 @@ export const useFetch = (name: string, queryKey: any[], endpoint: string) => {
   return useQuery(
     queryKey,
     () => {
-      return axios.get(`${process.env.NEXT_PUBLIC_API_URL}${endpoint}`);
+      return axios.get(`${process.env.NEXT_PUBLIC_API_URL}${endpoint}`, {
+        headers: {
+          Authorization: "Bearer " + getCookie("user"),
+        },
+      });
     },
     {
       refetchOnWindowFocus: false,

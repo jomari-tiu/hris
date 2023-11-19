@@ -33,7 +33,7 @@ export default function Pagination({
   useEffect(() => {
     const activePage = getPreviousAndNextNumbers(tablePage);
     setCurrentPages(activePage);
-  }, [tablePage]);
+  }, [tablePage, totalPage]);
 
   return (
     <div className=" w-full flex justify-end">

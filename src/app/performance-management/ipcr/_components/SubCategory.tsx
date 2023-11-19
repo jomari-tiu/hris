@@ -39,14 +39,55 @@ const SubCategory = ({
 }: props) => {
   const { fields, append, remove, update } = useFieldArray({
     control,
-    // rules: {
-    //   required: "Required!",
-    // },
-    name: category_name, // This should match the name of your field in the form data
+    name: category_name,
   });
+
+  const watchField = watch(category_name);
+
+  useEffect(() => {
+    console.log(category_name);
+  }, [watchField]);
+
+  const appendHandler = (add: string) => {
+    if (add === "subcategory") {
+      append({
+        subcategory_id: "",
+        subcategory_name: "",
+        evaluations: [],
+      });
+    }
+    if (add === "item") {
+      append({
+        name: "",
+        order: "",
+        major_final_output: "",
+        performance_indicators: "",
+        target_of_accomplishment: "",
+        actual_accomplishments: "",
+        rating_q: "",
+        rating_e: "",
+        rating_t: "",
+        remarks: "",
+        evaluations: [],
+      });
+    }
+  };
 
   return (
     <>
+      {watchField?.length <= 0 && !category_name.includes(".evaluations") && (
+        <aside className=" flex flex-wrap gap-2 justify-end">
+          <Button
+            appearance={"primary"}
+            onClick={() => appendHandler("subcategory")}
+          >
+            Add Sub Category
+          </Button>
+          <Button appearance={"primary"} onClick={() => appendHandler("item")}>
+            Add Item
+          </Button>
+        </aside>
+      )}
       {fields.map((field, indx) => (
         <SubCategoryItem
           field={field}
@@ -177,13 +218,11 @@ const SubCategoryItem = ({
           <h4 className=" font-bold text-red-2">
             {childNumber % 2 === 0 ? indx + 1 : convertToRoman(indx + 1)}
           </h4>
-          {(childNumber >= 2 ||
-            (fields.length > 1 && fields.length === indx + 1)) && (
-            <IoIosRemoveCircle
-              className=" cursor-pointer hover:text-red-1 text-2xl text-red-2 text-end"
-              onClick={() => remove(indx)}
-            />
-          )}
+
+          <IoIosRemoveCircle
+            className=" cursor-pointer hover:text-red-1 text-2xl text-red-2 text-end"
+            onClick={() => remove(indx)}
+          />
         </div>
         {watch(`${category_name}[${indx}].subcategory_id`) !== undefined ? (
           <ul className=" flex justify-between gap-5">
@@ -294,7 +333,6 @@ const SubCategoryItem = ({
             </li>
           </ul>
         )}
-
         <aside className=" w-full flex justify-end gap-3">
           <Button
             appearance="primary"

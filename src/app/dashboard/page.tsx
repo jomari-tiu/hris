@@ -8,7 +8,7 @@ import Tab from "@/components/Tab";
 import Ipcr from "./_component/IPCR/indx";
 import Tardines from "./_component/Tardines";
 
-function DashboardPage({ message }: any) {
+function DashboardPage() {
   const [isTab, setTab] = useState("Tardines");
   return (
     <section className=" space-y-5">
@@ -20,4 +20,4 @@ function DashboardPage({ message }: any) {
   );
 }
 
-export default UserAuth(DashboardPage);
+export default DashboardPage;

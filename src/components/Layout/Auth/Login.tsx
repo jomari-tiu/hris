@@ -1,25 +1,62 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
+import { setCookie } from "cookies-next";
+import { AnimatePresence } from "framer-motion";
+
 import Image from "next/image";
+
+import Link from "next/link";
+
+import { useRouter } from "next/navigation";
+
 import { Controller, useForm } from "react-hook-form";
 
-import Button from "../Button";
+import { usePost } from "@/util/api";
+
+import Button from "../../Button";
+import { useGlobalState } from "../../Context/AppMangement";
+import PromptMessage from "../../PromptMessage";
 
 function Login() {
+  const router = useRouter();
+  const { setNotification, notification } = useGlobalState();
+
+  const success = (response: any) => {
+    setNotification(true, "success", `Login successfully!, Hello there.`);
+    setCookie("user", response?.data?.data?.token);
+    router.refresh();
+  };
+
+  const error = (error: any) => {
+    setNotification(true, "error", error);
+  };
+
+  const { isLoading: loginLoading, mutate: Login } = usePost(
+    success,
+    error,
+    "/api/login",
+    false,
+    "",
+    true
+  );
+
   const {
     handleSubmit,
     control,
     setValue,
     formState: { errors },
-  } = useForm<{ username: string; password: string }>();
+  } = useForm<{ email: string; password: string }>();
 
   const submitHandler = (data: any) => {
-    console.log(data);
+    Login(data);
   };
 
   return (
     <section className=" h-screen w-screen bg-white flex justify-center items-center ">
+      <AnimatePresence mode="wait">
+        {notification.toggle && <PromptMessage />}
+      </AnimatePresence>
       <ul className=" w-8/12 h-10/12 1024px:w-11/12 grid grid-cols-2 640px:grid-cols-1">
         <li className=" flex justify-center items-center bg-white-0 py-10">
           <aside className=" flex flex-wrap items-center justify-center gap-5 w-full">
@@ -29,22 +66,16 @@ function Login() {
               width={200}
               alt="Logo"
             />
-            {/* <Image
-              src="/images/logo/logo-text.png"
-              height={200}
-              width={300}
-              alt="Logo"
-            /> */}
           </aside>
         </li>
-        <li className=" border-l p-10 px-20 1024px:px-10 space-y-10 1366px:space-y-5 bg-gradient-to-b from-[#e5fe00] to-[#b3c415]">
+        <li className=" border-l p-10 space-y-10 1366px:space-y-5 bg-gradient-to-b from-[#e5fe00] to-[#b3c415]">
           <div>
             <h2>User Login</h2>
             <p>Choose one of the option to go</p>
           </div>
           <form onSubmit={handleSubmit(submitHandler)} className=" space-y-5">
             <Controller
-              name="username"
+              name="email"
               control={control}
               rules={{
                 required: "required",
@@ -57,9 +88,9 @@ function Login() {
                     {...field}
                     className=" w-full"
                   />
-                  {errors?.username?.message && (
+                  {errors?.email?.message && (
                     <span className=" text-red-2">
-                      {errors?.username?.message}
+                      {errors?.email?.message}
                     </span>
                   )}
                 </aside>
@@ -74,7 +105,7 @@ function Login() {
               render={({ field }) => (
                 <aside>
                   <input
-                    type="text"
+                    type="password"
                     placeholder="Password"
                     {...field}
                     className=" w-full"
@@ -88,10 +119,12 @@ function Login() {
               )}
             />
             <div className=" flex justify-between items-center">
-              <p className=" cursor-pointer hover:underline">
-                {/* Forgot password? */}
-              </p>
-              <Button type="submit" appearance={"primary"}>
+              <Link href="/forgot-password"> Forgot password?</Link>
+              <Button
+                type="submit"
+                appearance={"primary"}
+                loading={loginLoading}
+              >
                 LOGIN
               </Button>
             </div>

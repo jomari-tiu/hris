@@ -7,12 +7,16 @@ import { useQueryClient } from "react-query";
 import DepartmentSelect from "@/app/dashboard/_component/DepartmentSelect";
 import Button from "@/components/Button";
 import { useGlobalState } from "@/components/Context/AppMangement";
+import ControllerFieldData from "@/components/ControllerFieldData";
+import Dropdown from "@/components/Dropdown";
 import Modal from "@/components/Modal";
 import PageTitle from "@/components/PageTitle";
 import RestoreButton from "@/components/RestoreButton";
 import Search from "@/components/Search";
 import Tab from "@/components/Tab";
+
 import Table, { TableColumnsType } from "@/components/Table";
+
 import { useFetch, restore } from "@/util/api";
 
 import IpcrForm from "./_components/IpcrForm";
@@ -24,6 +28,13 @@ function Ipcr() {
   const [page, setPage] = useState(1);
   const [isTab, setTab] = useState("IPCR");
   const [modal, setModal] = useState(false);
+  const [period, setPeriod] = useState({
+    value: "",
+    id: "",
+  });
+  const [isDepartmentIds, setDepartmentIds] = useState<
+    { name: string; id: string }[]
+  >([]);
 
   const emptyVal: ipcr = {
     id: undefined,
@@ -35,27 +46,9 @@ function Ipcr() {
     reviewed_by_name: "",
     recommending_approval: "",
     recommending_approval_name: "",
-    strategic_evaluations: [
-      {
-        subcategory_id: "",
-        subcategory_name: "",
-        evaluations: [],
-      },
-    ],
-    core_evaluations: [
-      {
-        subcategory_id: "",
-        subcategory_name: "",
-        evaluations: [],
-      },
-    ],
-    support_evaluations: [
-      {
-        subcategory_id: "",
-        subcategory_name: "",
-        evaluations: [],
-      },
-    ],
+    strategic_evaluations: [],
+    core_evaluations: [],
+    support_evaluations: [],
   };
 
   const [defaultValue, setDefaultValue] = useState(emptyVal);
@@ -63,30 +56,82 @@ function Ipcr() {
   const columns: TableColumnsType[] = [
     {
       title: "Name",
-      cellKey: "name",
+      cellKey: "",
       textAlign: "left",
+      render: (_, data) => {
+        return <div>{data?.employee?.full_name}</div>;
+      },
     },
     {
-      title: "Email",
-      cellKey: "email",
+      title: "Citizenship",
+      cellKey: "",
       textAlign: "left",
+      render: (_, data) => {
+        return <div>{data?.employee?.citizenship}</div>;
+      },
+    },
+    {
+      title: "Birth Place",
+      cellKey: "",
+      textAlign: "left",
+      render: (_, data) => {
+        return <div>{data?.employee?.birth_place}</div>;
+      },
+    },
+    {
+      title: "Average Mean",
+      cellKey: "",
+      textAlign: "left",
+      render: (_, data) => {
+        let av =
+          Number(data?.mean_score_core) +
+          Number(data?.mean_score_strategic) +
+          Number(data?.mean_score_support);
+        av = av / 3;
+        return <div>{av.toFixed(2)}</div>;
+      },
+    },
+    {
+      title: "Average Weight",
+      cellKey: "",
+      textAlign: "left",
+      render: (_, data) => {
+        let av =
+          Number(data?.weighted_average_core) +
+          Number(data?.weighted_average_strategic) +
+          Number(data?.weighted_average_support);
+        av = av / 3;
+        return <div>{av.toFixed(2)}</div>;
+      },
     },
   ];
   const { data, isLoading } = useFetch(
     "ipcr-list",
-    ["ipcr-list", search, page],
-    `/api/ipcr_evaluations?search=${search}&page=${page}`
+    [
+      "ipcr-list",
+      search,
+      page,
+      isDepartmentIds.map((item) => item.id),
+      period.id,
+    ],
+    `/api/ipcr_evaluations?search=${search}&page=${page}&period_id=${
+      period.id
+    }&department_ids=${isDepartmentIds.map((item) => item.id)}`
   );
 
   const { data: archive, isLoading: archiveLoading } = useFetch(
     "ipcr-list-archive",
-    ["ipcr-list-archive", search, page],
-    `/api/ipcr_evaluations/archive?search=${search}&page=${page}`
+    [
+      "ipcr-list-archive",
+      search,
+      page,
+      isDepartmentIds.map((item) => item.id),
+      period.id,
+    ],
+    `/api/ipcr_evaluations/archive?search=${search}&page=${page}&period_id=${
+      period.id
+    }&department_ids=${isDepartmentIds.map((item) => item.id)}`
   );
-
-  const [isDepartmentIds, setDepartmentIds] = useState<
-    { name: string; id: string }[]
-  >([]);
 
   const { setNotification } = useGlobalState();
   const queryClient = useQueryClient();
@@ -116,6 +161,13 @@ function Ipcr() {
           <DepartmentSelect
             selectedIDs={isDepartmentIds}
             setSelected={setDepartmentIds}
+          />
+          <Dropdown
+            value={period}
+            setValue={setPeriod}
+            endpoint={"/api/options/ipcr_periods"}
+            label={"Period"}
+            displayValueKey={"date_range"}
           />
         </aside>
 
@@ -181,65 +233,3 @@ function Ipcr() {
 }
 
 export default Ipcr;
-// {
-//   subcategory_id: "",
-//   subcategory_name: "",
-//   evaluations: [
-//     {
-//       name: "",
-//       order: "",
-//       major_final_output: "",
-//       performance_indicators: "",
-//       target_of_accomplishment: "",
-//       actual_accomplishments: "",
-//       rating_q: "",
-//       rating_e: "",
-//       rating_t: "",
-//       remarks: "",
-//       evaluations: [
-//         {
-//           subcategory_id: "",
-//           subcategory_name: "",
-//           evaluation: [],
-//         },
-//         {
-//           subcategory_id: "",
-//           subcategory_name: "",
-//           evaluation: [],
-//         },
-//       ],
-//     },
-//   ],
-// },
-// {
-//   subcategory_id: "",
-//   subcategory_name: "",
-//   evaluations: [
-//     {
-//       name: "",
-//       order: "",
-//       major_final_output: "",
-//       performance_indicators: "",
-//       target_of_accomplishment: "",
-//       actual_accomplishments: "",
-//       rating_q: "",
-//       rating_e: "",
-//       rating_t: "",
-//       remarks: "",
-//       evaluations: [],
-//     },
-//     {
-//       name: "",
-//       order: "",
-//       major_final_output: "",
-//       performance_indicators: "",
-//       target_of_accomplishment: "",
-//       actual_accomplishments: "",
-//       rating_q: "",
-//       rating_e: "",
-//       rating_t: "",
-//       remarks: "",
-//       evaluations: [],
-//     },
-//   ],
-// },

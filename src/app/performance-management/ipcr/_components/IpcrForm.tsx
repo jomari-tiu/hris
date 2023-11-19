@@ -17,12 +17,6 @@ type Props = {
 };
 
 function IpcrForm({ defaultValues, setModal }: Props) {
-  // const { data: ipcrCategory, isLoading: ipcrLoading } = useFetch(
-  //   "ipcr-category",
-  //   ["ipcr-category"],
-  //   `/api/options/ipcr_categories`
-  // );
-
   const { setNotification } = useGlobalState();
   const id = defaultValues?.id;
 

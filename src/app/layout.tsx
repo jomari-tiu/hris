@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
 
 import Layout from "@/components/Layout";
-import Login from "@/components/Layout/Login";
+import Authentication from "@/components/Layout/Auth/Authentication";
 import QueryProvider from "@/components/QueryProvider";
 
 import "./globals.css";
@@ -29,8 +29,12 @@ function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <QueryProvider>
-          <Layout>{children}</Layout>
-          {/* {token ? <Layout>{children}</Layout> : <Login />} */}
+          {/* <Layout>{children}</Layout> */}
+          {token ? (
+            <Layout>{children}</Layout>
+          ) : (
+            <Authentication>{children}</Authentication>
+          )}
         </QueryProvider>
       </body>
     </html>
