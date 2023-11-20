@@ -44,10 +44,6 @@ const SubCategory = ({
 
   const watchField = watch(category_name);
 
-  useEffect(() => {
-    console.log(category_name);
-  }, [watchField]);
-
   const appendHandler = (add: string) => {
     if (add === "subcategory") {
       append({

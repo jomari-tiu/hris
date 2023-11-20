@@ -62,7 +62,8 @@ function IpcrForm({ defaultValues, setModal }: Props) {
   );
 
   const SubmitHandler = (data: any) => {
-    mutate(data);
+    // mutate(data);
+    console.log(data);
   };
 
   return (

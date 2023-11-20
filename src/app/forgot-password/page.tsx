@@ -60,7 +60,7 @@ function ForgotPassword() {
             />
           </aside>
         </li>
-        <li className=" border-l p-10 space-y-10 1366px:space-y-5 bg-gradient-to-b from-[#e5fe00] to-[#b3c415]">
+        <li className=" flex flex-col justify-center border-l p-10 space-y-10 1366px:space-y-5 bg-gradient-to-b from-[#e5fe00] to-[#b3c415] min-h-[60vh]">
           <div>
             <h2>Enter new password</h2>
             <p>Please enter your account email</p>

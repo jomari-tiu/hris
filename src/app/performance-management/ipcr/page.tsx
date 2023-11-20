@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useQueryClient } from "react-query";
 
@@ -9,10 +9,12 @@ import Button from "@/components/Button";
 import { useGlobalState } from "@/components/Context/AppMangement";
 import ControllerFieldData from "@/components/ControllerFieldData";
 import Dropdown from "@/components/Dropdown";
+import { textDateFormat } from "@/components/helper";
 import Modal from "@/components/Modal";
 import PageTitle from "@/components/PageTitle";
 import RestoreButton from "@/components/RestoreButton";
 import Search from "@/components/Search";
+
 import Tab from "@/components/Tab";
 
 import Table, { TableColumnsType } from "@/components/Table";
@@ -21,6 +23,7 @@ import { useFetch, restore } from "@/util/api";
 
 import IpcrForm from "./_components/IpcrForm";
 import { ipcr } from "./_components/ipcrType";
+import ModifyForm from "./_components/ModifyForm";
 import SubCategoryForm from "./_components/SubCategoryForm";
 
 function Ipcr() {
@@ -35,6 +38,15 @@ function Ipcr() {
   const [isDepartmentIds, setDepartmentIds] = useState<
     { name: string; id: string }[]
   >([]);
+
+  useEffect(() => {
+    setPage(1);
+    setSearch("");
+    setPeriod({
+      value: "",
+      id: "",
+    });
+  }, [isTab]);
 
   const emptyVal: ipcr = {
     id: undefined,
@@ -51,7 +63,51 @@ function Ipcr() {
     support_evaluations: [],
   };
 
-  const [defaultValue, setDefaultValue] = useState(emptyVal);
+  const [defaultValue, setDefaultValue] = useState<any>(emptyVal);
+
+  const opcrColumns: any = [
+    {
+      title: "Department",
+      cellKey: "department_name",
+      textAlign: "left",
+    },
+    {
+      title: "Department Head",
+      cellKey: "",
+      textAlign: "left",
+      render: (_: any, data: any) => {
+        return <div>{data?.department_head_employee?.full_name}</div>;
+      },
+    },
+    {
+      title: "Date Hired",
+      cellKey: "",
+      textAlign: "left",
+      render: (_: any, data: any) => {
+        return (
+          <div>
+            {textDateFormat(data?.department_head_employee?.date_hired)}
+          </div>
+        );
+      },
+    },
+    {
+      title: "Email",
+      cellKey: "",
+      textAlign: "left",
+      render: (_: any, data: any) => {
+        return <div>{data?.department_head_employee?.email}</div>;
+      },
+    },
+    {
+      title: "Citizenship",
+      cellKey: "",
+      textAlign: "left",
+      render: (_: any, data: any) => {
+        return <div>{data?.department_head_employee?.citizenship}</div>;
+      },
+    },
+  ];
 
   const columns: TableColumnsType[] = [
     {
@@ -119,6 +175,12 @@ function Ipcr() {
     }&department_ids=${isDepartmentIds.map((item) => item.id)}`
   );
 
+  const { data: opcr, isLoading: opcrLoading } = useFetch(
+    "opcr-list",
+    ["opcr-list", search, page, period.id],
+    `/api/opcr?search=${search}&page=${page}&period_id=${period.id}`
+  );
+
   const { data: archive, isLoading: archiveLoading } = useFetch(
     "ipcr-list-archive",
     [
@@ -147,6 +209,7 @@ function Ipcr() {
   const restoreHandler = (id: any) => {
     restore(successRestore, errorRestore, `/api/ipcr/restore/${id}`);
   };
+
   return (
     <>
       <PageTitle title={["Performance Management"]} />
@@ -158,10 +221,12 @@ function Ipcr() {
       <div className=" flex items-center flex-wrap gap-3 justify-between">
         <aside className=" flex flex-wrap gap-2 items-center">
           <Search search={search} setSearch={setSearch} />
-          <DepartmentSelect
-            selectedIDs={isDepartmentIds}
-            setSelected={setDepartmentIds}
-          />
+          {isTab !== "OPCR" && (
+            <DepartmentSelect
+              selectedIDs={isDepartmentIds}
+              setSelected={setDepartmentIds}
+            />
+          )}
           <Dropdown
             value={period}
             setValue={setPeriod}
@@ -171,62 +236,87 @@ function Ipcr() {
           />
         </aside>
 
-        <aside className=" gap-2 flex items-center flex-wrap">
-          <Button
-            appearance={"primary"}
-            onClick={() => {
-              setDefaultValue(emptyVal);
-              setModal(true);
-            }}
-          >
-            Add
-          </Button>
-        </aside>
+        {isTab !== "OPCR" && (
+          <aside className=" gap-2 flex items-center flex-wrap">
+            <Button
+              appearance={"primary"}
+              onClick={() => {
+                setDefaultValue(emptyVal);
+                setModal(true);
+              }}
+            >
+              Add
+            </Button>
+          </aside>
+        )}
       </div>
-      <Table
-        isLoading={isTab === "IPCR" ? isLoading : archiveLoading}
-        columns={
-          isTab === "IPCR archive"
-            ? [
-                ...columns,
-                {
-                  title: "Action",
-                  cellKey: "date_period",
-                  textAlign: "left",
-                  render: (_, data) => (
-                    <div className=" flex ">
-                      <RestoreButton onClick={() => restoreHandler(data?.id)} />
-                    </div>
-                  ),
-                },
-              ]
-            : columns
-        }
-        data={
-          isTab === "IPCR" ? data?.data?.data?.data : archive?.data?.data?.data
-        }
-        onClickRow={(data) => {
-          if (isTab === "IPCR") {
-            setDefaultValue(data);
-            setModal(true);
+      {isTab !== "OPCR" ? (
+        <Table
+          isLoading={isTab === "IPCR" ? isLoading : archiveLoading}
+          columns={
+            isTab === "IPCR archive"
+              ? [
+                  ...columns,
+                  {
+                    title: "Action",
+                    cellKey: "date_period",
+                    textAlign: "left",
+                    render: (_, data) => (
+                      <div className=" flex ">
+                        <RestoreButton
+                          onClick={() => restoreHandler(data?.id)}
+                        />
+                      </div>
+                    ),
+                  },
+                ]
+              : columns
           }
-        }}
-        setPage={setPage}
-        page={page}
-        totalPage={
-          isTab === "IPCR"
-            ? data?.data?.data?.last_page
-            : archive?.data?.data?.last_page
-        }
-      />
+          data={
+            isTab === "IPCR"
+              ? data?.data?.data?.data
+              : archive?.data?.data?.data
+          }
+          onClickRow={(data) => {
+            if (isTab === "IPCR") {
+              setDefaultValue({
+                type: "modify",
+                id: data?.id,
+              });
+              setModal(true);
+            }
+          }}
+          setPage={setPage}
+          page={page}
+          totalPage={
+            isTab === "IPCR"
+              ? data?.data?.data?.last_page
+              : archive?.data?.data?.last_page
+          }
+        />
+      ) : (
+        <Table
+          isLoading={opcrLoading}
+          columns={opcrColumns}
+          data={opcr?.data?.data?.data}
+          setPage={setPage}
+          page={page}
+          totalPage={opcr?.data?.data?.last_page}
+        />
+      )}
       <Modal
         show={modal}
         onClose={() => {
           setModal(false);
         }}
         width="wide"
+        fromStart={true}
       >
-        <IpcrForm setModal={setModal} defaultValues={defaultValue} />
+        {defaultValue?.type === "modify" ? (
+          <ModifyForm id={defaultValue?.id} setModal={setModal} />
+        ) : (
+          <IpcrForm setModal={setModal} defaultValues={defaultValue} />
+        )}
       </Modal>
     </>
   );

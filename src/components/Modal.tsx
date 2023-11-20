@@ -6,9 +6,10 @@ type Props = {
   onClose: () => void;
   show: boolean;
   width: "narrow" | "wide" | "regular";
+  fromStart?: boolean;
 };
 
-function Modal({ children, onClose, show, width }: Props) {
+function Modal({ children, onClose, show, width, fromStart }: Props) {
   const elementRef: any = useRef(null);
   const [isSameHeight, setIsSameHeight] = useState(false);
 
@@ -34,7 +35,7 @@ function Modal({ children, onClose, show, width }: Props) {
         <div
           style={{ margin: 0 }}
           className={` bg-[#0000002f] z-50 fixed top-0 left-0 h-screen w-screen flex py-5 justify-center ${
-            isSameHeight ? " items-start" : "items-center"
+            isSameHeight || fromStart ? " items-start" : "items-center"
           } overflow-auto`}
         >
           <section
