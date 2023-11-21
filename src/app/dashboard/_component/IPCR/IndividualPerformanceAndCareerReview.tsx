@@ -15,6 +15,8 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
 import { Line, Bar } from "react-chartjs-2";
 import { AiOutlineArrowRight } from "react-icons/ai";
 
+import Dropdown from "@/components/Dropdown";
+
 import { useFetch } from "@/util/api";
 
 import DepartmentSelect from "../DepartmentSelect";
@@ -63,19 +65,24 @@ function IndividualPerformanceAndCareerReview() {
     labels: [],
     datasets: [],
   });
+  const [period, setPeriod] = useState({
+    value: "",
+    id: "3d7684a3-8f92-4d7c-82d8-fe38cdfb127a",
+  });
 
   const [from, setFrom] = useState("");
   const [end, setEnd] = useState("");
   const [isDepartmentIds, setDepartmentIds] = useState<
     { name: string; id: string }[]
   >([]);
-  const { data, isLoading } = useFetch(
-    "department-wise-tardiness",
-    ["department-wise-tardiness", from, end],
-    `/api/department-wise-tardiness`
+
+  const { data: graph, isLoading } = useFetch(
+    "ipcr-graph",
+    ["ipcr-graph", period.id],
+    `/api/ipcr-graph?ipcr_period_id=${period.id}`
   );
 
-  const departmentWise: departmentWiseType = data?.data?.data;
+  const departmentWise: departmentWiseType = graph?.data?.data;
 
   useEffect(() => {
     setLineChart({
@@ -115,6 +122,13 @@ function IndividualPerformanceAndCareerReview() {
           </h5>
         </li>
         <li className=" flex gap-2 flex-wrap items-center">
+          <Dropdown
+            value={period}
+            setValue={setPeriod}
+            endpoint={"/api/options/ipcr_periods"}
+            label={"Period"}
+            displayValueKey={"date_range"}
+          />
           <DepartmentSelect
             selectedIDs={isDepartmentIds}
             setSelected={setDepartmentIds}

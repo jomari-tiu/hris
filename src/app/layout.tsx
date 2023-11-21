@@ -29,7 +29,6 @@ function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <QueryProvider>
-          {/* <Layout>{children}</Layout> */}
           {token ? (
             <Layout>{children}</Layout>
           ) : (
