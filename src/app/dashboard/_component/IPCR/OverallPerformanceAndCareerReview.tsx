@@ -63,11 +63,13 @@ function OverallPerformanceAndCareerReview() {
           </h5>
         </li>
         <li className=" flex gap-2 flex-wrap items-center">
-          <aside className=" flex items-center flex-wrap gap-2">
-            <input type="date" onChange={(e) => setFrom(e.target.value)} />
-            <AiOutlineArrowRight className=" text-black" />
-            <input type="date" onChange={(e) => setEnd(e.target.value)} />
-          </aside>
+          <Dropdown
+            value={period}
+            setValue={setPeriod}
+            endpoint={"/api/options/ipcr_periods"}
+            label={"Period"}
+            displayValueKey={"date_range"}
+          />
         </li>
       </ul>
       <ul className=" grid gap-5">
