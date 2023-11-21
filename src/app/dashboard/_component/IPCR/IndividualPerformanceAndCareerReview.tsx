@@ -145,11 +145,6 @@ function IndividualPerformanceAndCareerReview() {
             label={"Department"}
             displayValueKey={"name"}
           />
-          <aside className=" flex items-center flex-wrap gap-2">
-            <input type="date" onChange={(e) => setFrom(e.target.value)} />
-            <AiOutlineArrowRight className=" text-black" />
-            <input type="date" onChange={(e) => setEnd(e.target.value)} />
-          </aside>
         </li>
       </ul>
       <ul className=" grid grid-cols-3 gap-5">
