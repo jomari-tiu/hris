@@ -44,7 +44,7 @@ export default function Pagination({
             disabled={1 === tablePage && true}
             onClick={() => setTablePage((page: number) => page - 1)}
           >
-            <RiArrowLeftSLine className="text-[24px] text-red-2 cursor-pointer" />
+            <RiArrowLeftSLine className="text-[24px] text-black cursor-pointer" />
           </button>
         </li>
 
@@ -54,7 +54,7 @@ export default function Pagination({
               onClick={() => SelectPage(item)}
               key={item}
               className={`${
-                tablePage === item ? " text-red-2" : ""
+                tablePage === item ? " text-black" : ""
               } font-bold h-8 aspect-square 1550px:h-5 480px:h-6 text-[15px] flex justify-center items-center border-r border-white cursor-pointer`}
             >
               {item}
@@ -68,7 +68,7 @@ export default function Pagination({
             onClick={() => setTablePage((page: number) => page)}
             disabled={tablePage === totalPage}
           >
-            <RiArrowRightSLine className=" text-[24px] text-red-2 cursor-pointer" />
+            <RiArrowRightSLine className=" text-[24px] text-black cursor-pointer" />
           </button>
         </li>
       </ul>

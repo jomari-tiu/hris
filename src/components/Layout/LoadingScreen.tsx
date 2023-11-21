@@ -26,7 +26,7 @@ function LoadingScreen({ isLoading }: Props) {
               height={100}
               className=" animate-spin-slow"
             />
-            <h3 className=" text-red-2 font-medium motion-safe:animate-pulse mt-2 tracking-widest">
+            <h3 className=" text-black font-medium motion-safe:animate-pulse mt-2 tracking-widest">
               Loading...
             </h3>
           </AnimationContainer>

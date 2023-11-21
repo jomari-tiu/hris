@@ -5,6 +5,7 @@ import Button from "@/components/Button";
 import { useGlobalState } from "@/components/Context/AppMangement";
 import ControllerField from "@/components/ControllerField";
 import { usePost, useRemove } from "@/util/api";
+import ControllerFieldData from "@/components/ControllerFieldData";
 
 type Props = {
   defaultValues: any;
@@ -18,6 +19,7 @@ function DepartmentForm({ defaultValues, setModal }: Props) {
     handleSubmit,
     control,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<any>({
     defaultValues: defaultValues,
@@ -80,6 +82,19 @@ function DepartmentForm({ defaultValues, setModal }: Props) {
           placeholder={"Description"}
           type={"textarea"}
         />
+        <ControllerFieldData
+            control={control}
+            errors={errors}
+            rules={{ required: "required" }}
+            name={"employee_id"}
+            keyID="id"
+            keyName="full_name_formal"
+            displayValue={watch("employee_name")}
+            displayValueKey={"employee_name"}
+            setDisplayValue={setValue}
+            placeholder={"Employee"}
+            endpoint={"/api/options/employees"}
+          />
 
         <div className=" flex justify-end items-center">
           {defaultValues?.id && (

@@ -96,7 +96,7 @@ function ChangePassword() {
                     className=" w-full"
                   />
                   {errors?.password?.message && (
-                    <span className=" text-red-2">
+                    <span className=" text-black">
                       {errors?.password?.message}
                     </span>
                   )}
@@ -118,7 +118,7 @@ function ChangePassword() {
                     className=" w-full"
                   />
                   {errors?.password_confirmation?.message && (
-                    <span className=" text-red-2">
+                    <span className=" text-black">
                       {errors?.password_confirmation?.message}
                     </span>
                   )}

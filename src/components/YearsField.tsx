@@ -42,7 +42,7 @@ function YearsField({ onChange }: props) {
           onChange={() => {}}
         />
         {toggle && (
-          <ul className="absolute top-full left-0 w-full bg-white shadow-md max-h-[200px] overflow-auto">
+          <ul className="absolute top-full left-0 w-full bg-ccbgsecondary shadow-md max-h-[200px] overflow-auto">
             {YearsSort.map((year: string, index: any) => (
               <li
                 key={index}
@@ -50,9 +50,9 @@ function YearsField({ onChange }: props) {
                   width: "100%",
                   marginBottom: "0",
                 }}
-                className={`py-1 px-2 text-[12px] cursor-pointer hover:bg-red-2 hover:text-white ${
+                className={`py-1 px-2 text-[13px] cursor-pointer border-b text-black hover:bg-cchovergray ${
                   currenYear === year
-                    ? " bg-red-2 text-white"
+                    ? " bg-cchovergray"
                     : "text-[#757575]"
                 }`}
                 onClick={() => {

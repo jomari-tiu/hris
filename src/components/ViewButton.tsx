@@ -10,9 +10,9 @@ function ViewButton({ onClick }: Props) {
   return (
     <div
       onClick={onClick}
-      className=" bg-green-400 hover:bg-green-500 duration-150 h-7 cursor-pointer w-7 flex justify-center items-center rounded-full"
+      className=" bg-ccgreen4 hover:bg-ccgreen2 duration-150 h-7 cursor-pointer w-7 flex justify-center items-center rounded-full"
     >
-      <AiOutlineFolderView className=" text-white" />
+      <AiOutlineFolderView className=" text-gray-500" />
     </div>
   );
 }

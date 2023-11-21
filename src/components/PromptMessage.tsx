@@ -35,7 +35,7 @@ function PromptMessage() {
       variants={fadeDown}
       className={`${
         notification.type === "success" && "bg-[#65c85c] flex flex-col"
-      } ${notification.type === "error" && "bg-red-2"} ${
+      } ${notification.type === "error" && "bg-ccred2"} ${
         notification.type === "warning" && "bg-[#cf9846]"
       } transition duration-75 min-w-[15rem] max-w-10/12 fixed top-10 right-10 480px:top-5 480px:right-5 z-[99999999] 820px:p-3 opacity-90 p-4 shadow-lg`}
     >

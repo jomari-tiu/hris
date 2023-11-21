@@ -11,7 +11,7 @@ function DeleteButton({ onClick, loading }: Props) {
   return (
     <div
       onClick={onClick}
-      className=" bg-red-2 hover:bg-red-1 duration-150 h-7 cursor-pointer w-7 flex justify-center items-center rounded-full"
+      className=" bg-ccred1 hover:bg-ccred2 duration-150 h-7 cursor-pointer w-7 flex justify-center items-center rounded-full"
     >
       {loading ? (
         <PuffLoader size={20} color={"white"} />

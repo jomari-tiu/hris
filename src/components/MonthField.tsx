@@ -50,7 +50,7 @@ function MonthField({ onChange }: props) {
           onChange={() => {}}
         />
         {toggle && (
-          <ul className="absolute top-full left-0 w-full bg-white shadow-md max-h-[200px] overflow-auto">
+          <ul className="absolute top-full left-0 w-full bg-ccbgsecondary shadow-md max-h-[200px] overflow-auto text-black">
             {Months.map((month, index) => (
               <li
                 key={index}
@@ -58,9 +58,9 @@ function MonthField({ onChange }: props) {
                   width: "100%",
                   marginBottom: "0",
                 }}
-                className={`py-1 px-2 text-[12px] border bordeer-black w-full cursor-pointer hover:bg-red-2 hover:text-white ${
+                className={`py-1 px-2 text-[13px] border-b w-full text-black cursor-pointer hover:bg-cchovergray ${
                   currentMonth === month
-                    ? " bg-red-2 text-white"
+                    ? " bg-cchovergray"
                     : "text-[#757575]"
                 }`}
                 onClick={() => {
