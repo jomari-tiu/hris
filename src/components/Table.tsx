@@ -38,18 +38,18 @@ function Table({
         {isLoading && (
           <>
             <aside className=" absolute top-0 gap-2 flex-col left-0 h-full w-full flex justify-center items-center bg-[#e6e6e652]">
-              <ClipLoader color="#520100" />
+              <ClipLoader color="#9ACC2F" />
               <h4 className=" font-bold animate-pulse">Loading...</h4>
             </aside>
           </>
         )}
         <table
-          className={`${className} w-full min-w-[800px] bg-white-0 border border-gray-200 mb-5`}
+          className={`${className} w-full min-w-[800px] bg-white-0  mb-5`}
         >
-          <thead className=" bg-gray-100 text-gray-400">
+          <thead className=" bg-ccbgsecondary text-gray-500">
             <tr>
               {columns.map((item, index) => (
-                <th key={index} className=" p-4 text-start uppercase">
+                <th key={index} className=" p-4 text-sm text-start capitalized font-semibold">
                   {item.title}
                 </th>
               ))}
@@ -69,7 +69,7 @@ function Table({
                 {columns.map((col, indexCol) => (
                   <td
                     key={indexCol}
-                    className={`border-t p-4 ${
+                    className={`border-t p-4 border-cchovergray ${
                       col.title !== "Action"
                         ? "min-w-[15rem]"
                         : "flex justify-center items-center "

@@ -15,8 +15,8 @@ function Tab({ tab, setTab, tabMenu }: Props) {
             onClick={() => setTab(item)}
             key={index}
             className={` ${
-              tab === item && "border-b-4 border-gold"
-            } px-5 cursor-pointer py-2 -mb-[2.5px] text-red-2 capitalize font-medium`}
+              tab === item && "border-b-4 border-ccgreen2"
+            } px-5 cursor-pointer py-2 -mb-[2.5px] text-black capitalize font-medium`}
           >
             {item}
           </li>

@@ -97,9 +97,9 @@ function Layout({ children }: Props) {
       <section
         className={` ${
           !menu && "ml-[-20rem] 820px:ml-[-15rem]"
-        }  duration-200 w-[20rem] 1024px:w-[15rem] relative h-full bg-white text-gray-400 flex flex-col items-center py-5 space-y-7`}
+        }  duration-200 w-[20rem] 1024px:w-[15rem] relative h-full bg-white0 text-gray-400 flex flex-col items-center py-5 space-y-7`}
       >
-        <aside className=" cursor-pointer duration-500 ease-in-out p-2 bg-red-2  text-white absolute top-0 left-full hover:shadow-lg hover:bg-red hover:text-red-2">
+        <aside className=" cursor-pointer duration-500 ease-in-out p-2 bg-ccgreen  text-white absolute top-0 left-full hover:shadow-lg hover:bg-ccgreen5 hover:text-black">
           <CgMenuRight onClick={() => setMenu(!menu)} />
         </aside>
         <Image src="/images/logo/logo.png" alt="logo" width={80} height={80} />
@@ -111,7 +111,7 @@ function Layout({ children }: Props) {
           </ul>
         </div>
       </section>
-      <section className=" h-full overflow-auto flex-1 border border-blue-500 p-10 820px:p-5 820px:pt-0 pt-0">
+      <section className=" h-full overflow-auto flex-1 border border-blue-500 p-10 820px:p-5 820px:pt-0 pt-0 bg-ccbgsecondary">
         <nav className=" flex justify-end py-5 820px:py-2 mb-5 820px:mb-3">
           <div
             className=" flex items-center gap-3 cursor-pointer relative"
@@ -128,9 +128,9 @@ function Layout({ children }: Props) {
             <div className=" flex items-center space-x-3 cursor-pointer">
               {isLoading ? (
                 <ul className=" text-lg animate-pulse flex gap-2">
-                  <li className=" w-2 h-2 animate-pulse rounded-full bg-red-2"></li>
-                  <li className=" w-2 h-2 animate-pulse rounded-full bg-red-2"></li>
-                  <li className=" w-2 h-2 animate-pulse rounded-full bg-red-2"></li>
+                  <li className=" w-2 h-2 animate-pulse rounded-full bg-ccgreen"></li>
+                  <li className=" w-2 h-2 animate-pulse rounded-full bg-ccgreen"></li>
+                  <li className=" w-2 h-2 animate-pulse rounded-full bg-ccgreen"></li>
                 </ul>
               ) : (
                 profile?.data?.data?.name
@@ -138,14 +138,14 @@ function Layout({ children }: Props) {
               <MdKeyboardArrowDown className=" text-xl" />
             </div>
             {profileMenu && (
-              <ul className=" absolute top-full right-0 w-[200px] shadow-md bg-white">
+              <ul className=" absolute top-full right-0 w-[200px] shadow-md bg-white0">
                 <Link href="/edit-profile">
-                  <li className=" px-3 py-2 hover:bg-red-2 hover:text-white duration-150 text-right">
+                  <li className=" px-3 py-2 hover:bg-cchovergray duration-150 text-right">
                     Change Password
                   </li>
                 </Link>
                 <li
-                  className=" px-3 py-2 hover:bg-red-2 hover:text-white duration-150  text-right cursor-pointer"
+                  className=" px-3 py-2 hover:bg-cchovergray duration-150  text-right cursor-pointer"
                   onClick={SignOutHandler}
                 >
                   Logout
@@ -180,14 +180,14 @@ const Menu = ({ itemMenu, isTab, setTab }: MenuProps) => {
               setTab(itemMenu.title);
             }
           }}
-          className={` cursor-pointer gap-3 flex items-center justify-between rounded-md w-full  text-gray-400 py-4 px-5 duration-200 ease-in-out ${
+          className={` cursor-pointer gap-3 flex items-center justify-between rounded-md w-full font-medium text-black py-4 px-5 duration-200 ease-in-out ${
             pathname.includes(itemMenu.url)
-              ? "bg-red text-red-2 font-bold"
-              : "hover:bg-red text-gray-400"
+              ? "bg-cchovergray text-black font-semibold"
+              : "hover:bg-cchovergray text-black"
           }`}
         >
           <div className=" flex items-start gap-3">
-            <div className=" aspect-square bg-red-2 text-white p-1 rounded-md">
+            <div className=" aspect-square bg-ccgreen text-white p-1 rounded-md">
               {itemMenu.icon}
             </div>
             {itemMenu.title}
@@ -201,13 +201,13 @@ const Menu = ({ itemMenu, isTab, setTab }: MenuProps) => {
       ) : (
         <Link href={itemMenu.url} className=" w-full inline-block">
           <div
-            className={` gap-3 flex items-center rounded-md w-full  text-gray-400 py-4 px-5 duration-200 ease-in-out ${
+            className={` gap-3 flex items-center rounded-md w-full  text-black py-4 px-5 duration-200 ease-in-out ${
               pathname.includes(itemMenu.url)
-                ? "bg-red text-red-2 font-bold"
-                : "hover:bg-red text-gray-400"
+                ? "bg-cchovergray text-black font-semibold"
+                : "hover:bg-cchovergray text-black"
             }`}
           >
-            <span className=" aspect-square bg-red-2 text-white p-1 rounded-md">
+            <span className=" aspect-square bg-ccgreen text-white p-1 rounded-md">
               {itemMenu.icon}
             </span>
             {itemMenu.title}
@@ -220,10 +220,10 @@ const Menu = ({ itemMenu, isTab, setTab }: MenuProps) => {
           {itemMenu?.submenu?.map((item, index) => (
             <Link href={item.url} key={index}>
               <motion.div
-                className={` mt-2 gap-3 flex items-center rounded-md w-full  text-gray-400 py-4 px-5 pl-[3.5rem] duration-200 ease-in-out ${
+                className={` mt-2 gap-3 flex items-center rounded-md w-full  text-black py-4 px-5 pl-[3.5rem] duration-200 ease-in-out ${
                   pathname.includes(item.url)
-                    ? "bg-red text-red-2 font-bold"
-                    : "hover:bg-red text-gray-400"
+                    ? "bg-cchovergray text-black font-semibold"
+                    : "hover:bg-cchovergray text-black"
                 }`}
               >
                 {item.title}

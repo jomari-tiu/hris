@@ -30,6 +30,16 @@ const config: Config = {
         primary: "#7fff00",
         secondary: "#dfff00",
         thirdary: "#d1e231",
+        ccgreen: "var(--ccgreen)", 
+        ccgreen1: "var(--ccgreen1)", 
+        ccgreen2: "var(--ccgreen2)",
+        ccgreen3: "var(--ccgreen3)",
+        ccgreen4: "var(--ccgreen4)",
+        ccgreen5: "var(--ccgreen5)",
+        ccred1: "var(--ccred1)",
+        ccred2: "var(--ccred2)",
+        cchovergray: "var(--cchovergray)",
+        ccbgsecondary: "var(--ccbgsecondary)"
       },
       screens: {
         "2500px": { max: "2500px" },

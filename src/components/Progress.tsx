@@ -20,7 +20,7 @@ function Progress({ progressList, progressActive }: Props) {
             <aside className=" flex items-center gap-3">
               <p
                 className={` font-bold ${
-                  index <= progressActive && "text-red-2"
+                  index <= progressActive && "text-black"
                 }`}
               >
                 Step {index + 1}
@@ -28,7 +28,7 @@ function Progress({ progressList, progressActive }: Props) {
               {progressList.length !== index + 1 && (
                 <div
                   className={` border  flex-1 ${
-                    index < progressActive && "border-red-2"
+                    index < progressActive && "border-ccgreen3"
                   }`}
                 ></div>
               )}

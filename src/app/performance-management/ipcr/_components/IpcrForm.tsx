@@ -139,10 +139,10 @@ function IpcrForm({ defaultValues, setModal }: Props) {
 
         <aside className=" w-full space-y-5">
           <div className=" w-full flex items-center gap-4">
-            <p className=" text-red-2 font-bold">
+            <p className=" text-gray-600 font-semibold">
               Strategic Functions {`(40%)`}
             </p>
-            <div className=" flex-1 h-[2px] bg-red-2"></div>
+            <div className=" flex-1 h-[2px] bg-gray-400"></div>
           </div>
           <SubCategory
             watch={watch}
@@ -155,8 +155,8 @@ function IpcrForm({ defaultValues, setModal }: Props) {
         </aside>
         <aside className=" w-full space-y-5">
           <div className=" w-full flex items-center gap-4">
-            <p className=" text-red-2 font-bold">Core Functions {`(40%)`}</p>
-            <div className=" flex-1 h-[2px] bg-red-2"></div>
+            <p className=" text-gray-600 font-semibold">Core Functions {`(40%)`}</p>
+            <div className=" flex-1 h-[2px] bg-gray-400"></div>
           </div>
           <SubCategory
             watch={watch}
@@ -170,8 +170,8 @@ function IpcrForm({ defaultValues, setModal }: Props) {
 
         <aside className=" w-full space-y-5">
           <div className=" w-full flex items-center gap-4">
-            <p className=" text-red-2 font-bold">Support Functions {`(20%)`}</p>
-            <div className=" flex-1 h-[2px] bg-red-2"></div>
+            <p className=" text-gray-600 font-semibold">Support Functions {`(20%)`}</p>
+            <div className=" flex-1 h-[2px] bg-gray-400"></div>
           </div>
           <SubCategory
             watch={watch}

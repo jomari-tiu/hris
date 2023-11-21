@@ -109,11 +109,11 @@ function DepartmentWise() {
   const plugins = [ChartDataLabels];
 
   return (
-    <div className=" space-y-5">
-      <h5 className="inline-block font-bold text-red-2 relative after:content-[''] after:absolute after:w-full after:bottom-0 after:left-0 after:h-[2px] after:bg-yellow-400">
-        Department Wise Tardines
+    <div className=" space-y-5 ">
+      <h5 className="inline-block font-bold text-black relative underline-ccgreen">
+        Department Wise Tardiness
       </h5>
-      <ul className=" flex items-center justify-between gap-3 flex-wrap w-full">
+      <ul className=" flex items-center justify-between gap-3 flex-wrap w-full ">
         <li>
           <select
             className=" capitalize"
@@ -130,7 +130,7 @@ function DepartmentWise() {
         {type === "specific date" && (
           <li className=" flex items-center flex-wrap gap-2">
             <input type="date" onChange={(e) => setFrom(e.target.value)} />
-            <AiOutlineArrowRight className=" text-red-2" />
+            <AiOutlineArrowRight className=" text-black" />
             <input type="date" onChange={(e) => setEnd(e.target.value)} />
           </li>
         )}
@@ -139,7 +139,7 @@ function DepartmentWise() {
         <li>Average</li>
         <li>
           <p className=" text-center">Minutes</p>
-          <h3 className=" font-bold text-red-2 text-center">
+          <h3 className=" font-bold text-black text-center">
             {departmentWise?.average_minutes
               ? departmentWise?.average_minutes
               : "0mins"}
@@ -147,7 +147,7 @@ function DepartmentWise() {
         </li>
         <li>
           <p className=" text-center">Occurences</p>
-          <h3 className=" font-bold text-red-2 text-center">
+          <h3 className=" font-bold text-black text-center">
             {departmentWise?.average_occurrences}
           </h3>
         </li>

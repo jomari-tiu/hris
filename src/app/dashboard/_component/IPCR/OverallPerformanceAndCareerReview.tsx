@@ -52,33 +52,33 @@ function OverallPerformanceAndCareerReview() {
     <div className=" space-y-5">
       <ul className=" flex justify-between flex-wrap gap-3 items-center">
         <li>
-          <h5 className="inline-block font-bold text-red-2 relative after:content-[''] after:absolute after:w-full after:bottom-0 after:left-0 after:h-[2px] after:bg-yellow-400">
+          <h5 className="inline-block font-bold text-black relative underline-ccgreen">
             Overall Performance and Career Review
           </h5>
         </li>
         <li className=" flex gap-2 flex-wrap items-center">
           <aside className=" flex items-center flex-wrap gap-2">
             <input type="date" onChange={(e) => setFrom(e.target.value)} />
-            <AiOutlineArrowRight className=" text-red-2" />
+            <AiOutlineArrowRight className=" text-black" />
             <input type="date" onChange={(e) => setEnd(e.target.value)} />
           </aside>
         </li>
       </ul>
       <ul className=" grid gap-5">
-        <li className=" shadow-md 1280px:col-span-3 col-span-2 rounded-md p-5 h-auto">
+        <li className=" shadow-md 1280px:col-span-3 col-span-2 rounded-md p-5 h-auto bg-white-0 ">
           <div className="max-h-[400px] relative min-h-[10rem] overflow-auto w-full">
             <table className=" w-full font-medium">
               <thead>
                 <tr>
-                  <th className=" text-center text-sm text-red-2">Name</th>
-                  <th className=" text-center text-sm text-red-2">
+                  <th className=" text-center text-sm text-black">Name</th>
+                  <th className=" text-center text-sm text-black">
                     Office/College
                   </th>
-                  <th className=" text-center text-sm text-red-2">
+                  <th className=" text-center text-sm text-black">
                     Final Average
                   </th>
 
-                  <th className=" text-center text-sm text-red-2">
+                  <th className=" text-center text-sm text-black">
                     Adjectival Rating
                   </th>
                 </tr>

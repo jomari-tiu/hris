@@ -29,7 +29,7 @@ export const SideMenuLinks: SideMenuLinksType[] = [
     icon: <LuLayoutDashboard />,
   },
   {
-    title: "Employee Management",
+    title: "Employee",
     url: "/employee-management",
     icon: <BsPersonVcard />,
     submenu: [

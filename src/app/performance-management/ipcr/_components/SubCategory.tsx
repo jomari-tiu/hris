@@ -211,12 +211,12 @@ const SubCategoryItem = ({
         className={`p-5 border-2 border-gray-300 border-dashed rounded-md space-y-5 `}
       >
         <div className=" w-full flex justify-between">
-          <h4 className=" font-bold text-red-2">
+          <h4 className=" font-bold text-black">
             {childNumber % 2 === 0 ? indx + 1 : convertToRoman(indx + 1)}
           </h4>
 
           <IoIosRemoveCircle
-            className=" cursor-pointer hover:text-red-1 text-2xl text-red-2 text-end"
+            className=" cursor-pointer hover:text-red-1 text-2xl text-black text-end"
             onClick={() => remove(indx)}
           />
         </div>

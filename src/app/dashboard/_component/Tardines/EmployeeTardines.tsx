@@ -59,8 +59,8 @@ function EmployeeTardines() {
   return (
     <div className=" space-y-5">
       <div className=" flex items-center justify-between flex-wrap gap-2">
-        <h5 className="inline-block font-bold text-red-2 relative after:content-[''] after:absolute after:w-full after:bottom-0 after:left-0 after:h-[2px] after:bg-yellow-400">
-          Employee Tardines
+        <h5 className="inline-block font-bold text-black relative underline-ccgreen">
+          Employee Tardiness
         </h5>
         <aside className=" gap-2 flex flex-wrap">
           <DepartmentSelect
@@ -84,7 +84,7 @@ function EmployeeTardines() {
         {isLoading && (
           <>
             <aside className=" absolute top-0 gap-2 flex-col left-0 h-full w-full flex justify-center items-center bg-[#e6e6e652]">
-              <ClipLoader color="#520100" />
+              <ClipLoader color="#9ACC2F" />
               <h4 className=" font-bold animate-pulse">Loading...</h4>
             </aside>
           </>
@@ -102,7 +102,7 @@ function EmployeeTardines() {
                 <th key={indx} className=" min-w-[10rem]">
                   <div className=" flex flex-col items-center justify-center">
                     <p className=" text-[12px]">{format(day, "MMM")}</p>
-                    <p className=" border-b-2 border-red-2 ">
+                    <p className=" border-b-2 border-ccgreen3 ">
                       {format(day, "dd")}
                     </p>
                     <p className=" text-[12px]">{format(day, "eee")}</p>

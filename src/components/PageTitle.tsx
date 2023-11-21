@@ -11,7 +11,7 @@ function PageTitle({ title }: Props) {
       {title.map((item, index) => (
         <span
           key={index}
-          className="flex text-red-2 items-center gap-2 font-bold"
+          className="flex text-black items-center gap-2 font-bold"
         >
           {item} {title.length !== index + 1 && <IoIosArrowForward />}
         </span>
