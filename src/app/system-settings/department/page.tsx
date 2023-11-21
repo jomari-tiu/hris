@@ -38,6 +38,14 @@ function DepartmentPage() {
       cellKey: "description",
       textAlign: "left",
     },
+    {
+      title: "Head Employee",
+      cellKey: "",
+      textAlign: "left",
+      render: (_, data) => {
+        return <div>{data?.head_employee?.full_name_formal}</div>
+      }
+    },
   ];
 
   const { data, isLoading } = useFetch(

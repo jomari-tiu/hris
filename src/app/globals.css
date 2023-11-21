@@ -30,6 +30,16 @@
   --red1: #6f1817;
   --red2: #520100;
   --gold: #ffcc00;
+  --ccgreen1: #7cfe00;
+  --ccgreen2: #dfff00;
+  --ccgreen3: #d0e232;
+  --ccgreen4: #adfe31;
+  --ccgreen5: #9bcd31;
+  --ccgreen: #84bd38;
+  --ccred1: #f97d7e;
+  --ccred2: #e44f4e;
+  --cchovergray: #f3f5f4;
+  --ccbgsecondary: #f9f9f9;
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -68,7 +78,7 @@ input[type="email"],
 select,
 textarea,
 input[type="date"] {
-  @apply border rounded-md px-2 py-2 h-10 outline-red-2;
+  @apply border rounded-md px-2 py-2 h-10 outline-ccgreen1;
 }
 
 button {
@@ -89,7 +99,7 @@ button {
 
 *::-webkit-scrollbar-thumb {
   cursor: pointer !important;
-  background-color: var(--red2);
+  background-color: var(--ccgreen);
   border-radius: 10px;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
@@ -100,4 +110,10 @@ button {
 
 .no-scroll-bar::-webkit-scrollbar-thumb {
   background: transparent !important;
+}
+
+@layer utilities {
+  .underline-ccgreen {
+    border-bottom: 4px solid var(--ccgreen2); /* Change the number to the shade you prefer */
+  }
 }

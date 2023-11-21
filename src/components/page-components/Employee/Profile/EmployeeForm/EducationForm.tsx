@@ -31,7 +31,7 @@ function EducationForm({ control, errors }: Props) {
             {fields.length > 1 && (
               <div className=" w-full flex justify-end">
                 <IoIosRemoveCircle
-                  className=" cursor-pointer hover:text-red-1 text-2xl text-red-2 text-end"
+                  className=" cursor-pointer hover:text-red-1 text-2xl text-black text-end"
                   onClick={() => remove(indx)}
                 />
               </div>

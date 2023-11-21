@@ -126,7 +126,7 @@ function IndividualPerformanceAndCareerReview() {
     <div className=" space-y-5">
       <ul className=" flex justify-between flex-wrap gap-3 items-center">
         <li>
-          <h5 className="inline-block font-bold text-red-2 relative after:content-[''] after:absolute after:w-full after:bottom-0 after:left-0 after:h-[2px] after:bg-yellow-400">
+          <h5 className="inline-block font-bold text-black relative underline-ccgreen">
             Individual Performance and Career Review
           </h5>
         </li>
@@ -148,10 +148,10 @@ function IndividualPerformanceAndCareerReview() {
         </li>
       </ul>
       <ul className=" grid grid-cols-3 gap-5">
-        <li className=" shadow-md 1280px:col-span-3 rounded-md p-5 h-auto">
+        <li className=" shadow-md 1280px:col-span-3 rounded-md bg-white-0 p-5 h-auto">
           <Bar data={LineChart} options={options} plugins={plugins} />
         </li>
-        <li className=" shadow-md 1280px:col-span-3 col-span-2 rounded-md p-5 h-auto">
+        <li className=" shadow-md 1280px:col-span-3 col-span-2 rounded-md bg-white-0 p-5 h-auto">
           <div className="max-h-[400px] relative min-h-[10rem] overflow-auto w-full">
             {ipcrSummaryLoading && (
               <>
@@ -164,11 +164,17 @@ function IndividualPerformanceAndCareerReview() {
             <table className=" w-full font-medium">
               <thead>
                 <tr>
-                  <th className=" text-sm text-red-2 py-2">Employee</th>
-                  <th className="r text-sm text-red- py-2">Email</th>
-                  <th className="  text-sm text-red-2 py-2">Date Hired</th>
-                  <th className="  text-sm text-red-2 py-2">Average Mean</th>
-                  <th className="  text-sm text-red-2 py-2">Average Weight</th>
+                  <th className=" text-center text-sm text-black">Employee</th>
+                  <th className=" text-center text-sm text-black">
+                    Office/College
+                  </th>
+                  <th className=" text-center text-sm text-black">
+                    Avg Rating
+                  </th>
+                  <th className=" text-center text-sm text-black">Overall</th>
+                  <th className=" text-center text-sm text-black">
+                    Adjectival
+                  </th>
                 </tr>
               </thead>
               <tbody>

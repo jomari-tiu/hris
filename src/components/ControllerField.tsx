@@ -42,7 +42,7 @@ function ControllerField({
       rules={rules}
       render={({ field }) => (
         <aside>
-          <label htmlFor={name} className=" text-[.9rem] text-red-2">
+          <label htmlFor={name} className=" text-[.9rem] text-black">
             {placeholder}
           </label>
           {type !== "select" &&
@@ -54,7 +54,7 @@ function ControllerField({
                 type={type}
                 //   placeholder={placeholder}
                 {...field}
-                className=" w-full"
+                className=" w-full "
               />
             )}
           {type === "checkbox" && (
@@ -73,7 +73,7 @@ function ControllerField({
               id={name}
               //   placeholder={placeholder}
               {...field}
-              className=" w-full"
+              className=" w-full "
             ></textarea>
           )}
           {type === "select" && selectOptions && (

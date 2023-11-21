@@ -5,7 +5,7 @@ import { AiOutlineRollback } from "react-icons/ai";
 function BackButton({ url }: { url: string }) {
   return (
     <Link href={url}>
-      <AiOutlineRollback className=" text-red-2 hover:text-red duration-150 text-4xl" />
+      <AiOutlineRollback className=" text-black hover:text-red duration-150 text-4xl" />
     </Link>
   );
 }

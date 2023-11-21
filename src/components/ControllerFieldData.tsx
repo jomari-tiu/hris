@@ -101,7 +101,7 @@ const Field = ({
 
   return (
     <aside ref={element}>
-      <label htmlFor={name} className=" text-[.9rem] text-red-2">
+      <label htmlFor={name} className=" text-[.9rem] text-black">
         {placeholder}
       </label>
 
@@ -124,13 +124,13 @@ const Field = ({
           className=" w-full"
         />
         {open && (
-          <ul className=" absolute top-[110%] z-10 left-0 bg-white w-full shadow-md max-h-[10rem] overflow-auto">
+          <ul className=" absolute top-[110%] z-10 left-0 bg-cchovergray w-full shadow-md max-h-[10rem] overflow-auto">
             {FourData ? (
               <>
                 {data?.data?.data?.data.map((item: any, indx: number) => (
                   <li
                     key={indx}
-                    className=" px-2 py-1 hover:bg-red-2 hover:text-white duration-150 cursor-pointer"
+                    className=" px-2 py-1 hover:bg-ccbgsecondary duration-150 cursor-pointer"
                     onClick={() => {
                       field.onChange(keyID ? item[keyID] : item?.id);
                       setDisplayValue(
@@ -149,7 +149,7 @@ const Field = ({
                 {data?.data?.data.map((item: any, indx: number) => (
                   <li
                     key={indx}
-                    className=" px-2 py-1 hover:bg-red-2 hover:text-white duration-150 cursor-pointer"
+                    className=" px-2 py-1 hover:bg-ccbgsecondary duration-150 cursor-pointer"
                     onClick={() => {
                       field.onChange(keyID ? item[keyID] : item?.id);
                       setDisplayValue(
