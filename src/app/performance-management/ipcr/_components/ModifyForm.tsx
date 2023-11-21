@@ -17,7 +17,7 @@ const ModifyForm = ({ id, setModal }: { id: string; setModal: Function }) => {
       <div className=" w-full flex justify-center items-center">
         <aside className=" flex flex-col items-center">
           <RotateLoader className=" my-10" color="#9acd32" />
-          <h3 className=" animate-pulse text-red-2">Fetching Data...</h3>
+          <h3 className=" animate-pulse text-black">Fetching Data...</h3>
         </aside>
       </div>
     );

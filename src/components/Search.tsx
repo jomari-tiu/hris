@@ -8,7 +8,7 @@ type Props = {
 
 function Search({ search, setSearch }: Props) {
   return (
-    <div className=" flex items-center gap-1 border border-gray-200 px-2 py-1 rounded-md">
+    <div className=" flex items-center gap-1 border border-gray-200 px-2 py-1 rounded-md bg-white-0 ">
       <CiSearch />
       <input
         type="text"

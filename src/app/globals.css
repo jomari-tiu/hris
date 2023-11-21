@@ -30,6 +30,16 @@
   --red1: #6f1817;
   --red2: #520100;
   --gold: #ffcc00;
+  --ccgreen1: #7CFE00;
+  --ccgreen2: #dfff00;
+  --ccgreen3: #D0E232;
+  --ccgreen4: #ADFE31;
+  --ccgreen5: #9BCD31;
+  --ccgreen: #84BD38;
+  --ccred1: #F97D7E;
+  --ccred2: #E44F4E;
+  --cchovergray: #F3F5F4;
+  --ccbgsecondary: #f9f9f9;
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -89,7 +99,7 @@ button {
 
 *::-webkit-scrollbar-thumb {
   cursor: pointer !important;
-  background-color: var(--red2);
+  background-color: var(--ccgreen);
   border-radius: 10px;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
@@ -100,4 +110,10 @@ button {
 
 .no-scroll-bar::-webkit-scrollbar-thumb {
   background: transparent !important;
+}
+
+@layer utilities {
+  .underline-ccgreen {
+    border-bottom: 4px solid var(--ccgreen2); /* Change the number to the shade you prefer */
+  }
 }

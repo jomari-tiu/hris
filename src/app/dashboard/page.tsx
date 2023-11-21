@@ -9,12 +9,12 @@ import Ipcr from "./_component/IPCR/indx";
 import Tardines from "./_component/Tardines";
 
 function DashboardPage() {
-  const [isTab, setTab] = useState("Tardines");
+  const [isTab, setTab] = useState("Tardiness");
   return (
     <section className=" space-y-5">
       <PageTitle title={["Dashboard"]} />
-      <Tab tab={isTab} setTab={setTab} tabMenu={["Tardines", "IPCR"]} />
-      {isTab === "Tardines" && <Tardines />}
+      <Tab tab={isTab} setTab={setTab} tabMenu={["Tardiness", "IPCR"]} />
+      {isTab === "Tardiness" && <Tardines />}
       {isTab === "IPCR" && <Ipcr />}
     </section>
   );

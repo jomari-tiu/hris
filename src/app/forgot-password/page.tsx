@@ -81,7 +81,7 @@ function ForgotPassword() {
                     className=" w-full"
                   />
                   {errors?.email?.message && (
-                    <span className=" text-red-2">
+                    <span className=" text-black">
                       {errors?.email?.message}
                     </span>
                   )}

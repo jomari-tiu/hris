@@ -30,7 +30,7 @@ function TopHabitualLateComers() {
 
   return (
     <div className=" space-y-5 flex flex-col items-start h-full">
-      <h5 className="inline-block font-bold text-red-2 relative after:content-[''] after:absolute after:w-full after:bottom-0 after:left-0 after:h-[2px] after:bg-yellow-400">
+      <h5 className="inline-block font-bold text-black relative underline-ccgreen">
         Top Habitual Latecomers
       </h5>
       <ul className=" flex items-center justify-between gap-3 flex-wrap w-full">
@@ -50,7 +50,7 @@ function TopHabitualLateComers() {
         {type === "specific date" && (
           <li className=" flex items-center flex-wrap gap-2">
             <input type="date" onChange={(e) => setFrom(e.target.value)} />
-            <AiOutlineArrowRight className=" text-red-2" />
+            <AiOutlineArrowRight className=" text-black" />
             <input type="date" onChange={(e) => setEnd(e.target.value)} />
           </li>
         )}
@@ -59,7 +59,7 @@ function TopHabitualLateComers() {
         {isLoading && (
           <>
             <aside className=" absolute top-0 gap-2 flex-col left-0 h-full w-full flex justify-center items-center bg-[#e6e6e652]">
-              <ClipLoader color="#520100" />
+              <ClipLoader color="#9ACC2F" />
               <h4 className=" font-bold animate-pulse">Loading...</h4>
             </aside>
           </>

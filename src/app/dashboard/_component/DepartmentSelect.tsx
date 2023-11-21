@@ -61,13 +61,13 @@ function DepartmentSelect({ selectedIDs, setSelected }: Props) {
         placeholder="Select Departments"
       />
       {show && (
-        <ul className=" absolute top-[110%] left-0 border shadow-md rounded-md bg-white w-full overflow-auto max-h-[20rem] z-10">
+        <ul className=" absolute top-[110%] left-0 border shadow-md rounded-md bg-ccbgsecondary w-full overflow-auto max-h-[20rem] z-10">
           {isLoading && (
             <li className=" py-2 flex justify-center">
-              <PulseLoader color="#520100" size={10} />
+              <PulseLoader color="#9ACC2F" size={10} />
             </li>
           )}
-          <li className=" px-2 py-1 border-b flex items-start cursor-pointer hover:bg-red-2 hover:text-white ">
+          <li className=" px-2 py-1 border-b flex items-start cursor-pointer hover:bg-cchovergray ">
             <input
               type="checkbox"
               id={`department-all`}
@@ -86,7 +86,7 @@ function DepartmentSelect({ selectedIDs, setSelected }: Props) {
             (item: { name: string; id: string }, indx: number) => (
               <li
                 key={indx}
-                className=" px-2 py-1 border-b flex items-start cursor-pointer hover:bg-red-2 hover:text-white "
+                className=" px-2 py-1 border-b flex items-start cursor-pointer hover:bg-cchovergray "
               >
                 <input
                   type="checkbox"
