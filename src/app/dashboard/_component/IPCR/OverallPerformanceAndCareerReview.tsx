@@ -4,6 +4,10 @@ import React, { useState } from "react";
 
 import { AiOutlineArrowRight } from "react-icons/ai";
 
+import { ClipLoader } from "react-spinners";
+
+import Dropdown from "@/components/Dropdown";
+import { textDateFormat } from "@/components/helper";
 import { useFetch } from "@/util/api";
 
 type departmentWiseType = {
@@ -37,16 +41,18 @@ type departmentWiseType = {
 };
 
 function OverallPerformanceAndCareerReview() {
-  const [from, setFrom] = useState("");
-  const [end, setEnd] = useState("");
+  const [period, setPeriod] = useState({
+    value: "",
+    id: "",
+  });
 
-  const { data, isLoading } = useFetch(
-    "department-wise-tardiness",
-    ["department-wise-tardiness", from, end],
-    `/api/department-wise-tardiness`
+  const { data, isLoading: opcrSummaryLoading } = useFetch(
+    "opcr-summary",
+    ["opcr-summary", period.id],
+    `/api/opcr-summary?ipcr_period_id=${period.id}`
   );
 
-  const departmentWise: departmentWiseType = data?.data?.data;
+  const opcrSummary = data?.data?.data;
 
   return (
     <div className=" space-y-5">
@@ -57,46 +63,57 @@ function OverallPerformanceAndCareerReview() {
           </h5>
         </li>
         <li className=" flex gap-2 flex-wrap items-center">
-          <aside className=" flex items-center flex-wrap gap-2">
-            <input type="date" onChange={(e) => setFrom(e.target.value)} />
-            <AiOutlineArrowRight className=" text-red-2" />
-            <input type="date" onChange={(e) => setEnd(e.target.value)} />
-          </aside>
+          <Dropdown
+            value={period}
+            setValue={setPeriod}
+            endpoint={"/api/options/ipcr_periods"}
+            label={"Period"}
+            displayValueKey={"date_range"}
+          />
         </li>
       </ul>
       <ul className=" grid gap-5">
         <li className=" shadow-md 1280px:col-span-3 col-span-2 rounded-md p-5 h-auto">
           <div className="max-h-[400px] relative min-h-[10rem] overflow-auto w-full">
+            {opcrSummaryLoading && (
+              <>
+                <aside className=" absolute top-0 gap-2 flex-col left-0 h-full w-full flex justify-center items-center bg-[#e6e6e652]">
+                  <ClipLoader color="#9acd32" />
+                  <h4 className=" font-bold animate-pulse">Loading...</h4>
+                </aside>
+              </>
+            )}
             <table className=" w-full font-medium">
               <thead>
                 <tr>
-                  <th className=" text-center text-sm text-red-2">Name</th>
-                  <th className=" text-center text-sm text-red-2">
-                    Office/College
-                  </th>
-                  <th className=" text-center text-sm text-red-2">
-                    Final Average
-                  </th>
+                  <th className=" text-sm text-red-2">Department Head</th>
+                  <th className=" text-sm text-red-2">Date Hired</th>
+                  <th className=" text-sm text-red-2">Email</th>
 
-                  <th className=" text-center text-sm text-red-2">
-                    Adjectival Rating
-                  </th>
+                  <th className=" text-sm text-red-2">Citizenship</th>
                 </tr>
               </thead>
               <tbody>
-                {/* {topHabitual?.map((item, indx) => (
-              <tr key={indx}>
-                <td>{item?.employee_name}</td>
-                <td>{item?.department_name}</td>
-                <td>{item?.total_tardiness}</td>
-              </tr>
-            ))} */}
+                {opcrSummary?.map((item: any, indx: any) => (
+                  <tr key={indx}>
+                    <td>{item?.department_head_employee?.full_name}</td>
+                    <td>
+                      {textDateFormat(
+                        item?.department_head_employee?.date_hired
+                      )}
+                    </td>
+                    <td>{item?.department_head_employee?.email}</td>
+                    <td>{item?.department_head_employee?.citizenship}</td>
+                  </tr>
+                ))}
 
-                <tr>
-                  <td colSpan={5}>
-                    <h3 className=" text-center py-5">NO RECORD FOUND</h3>
-                  </td>
-                </tr>
+                {opcrSummary?.length === 0 && (
+                  <tr>
+                    <td colSpan={5}>
+                      <h3 className=" text-center py-5">NO RECORD FOUND</h3>
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

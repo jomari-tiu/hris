@@ -15,7 +15,11 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
 import { Line, Bar } from "react-chartjs-2";
 import { AiOutlineArrowRight } from "react-icons/ai";
 
+import { ClipLoader } from "react-spinners";
+
 import Dropdown from "@/components/Dropdown";
+
+import { textDateFormat } from "@/components/helper";
 
 import { useFetch } from "@/util/api";
 
@@ -67,34 +71,39 @@ function IndividualPerformanceAndCareerReview() {
   });
   const [period, setPeriod] = useState({
     value: "",
-    id: "3d7684a3-8f92-4d7c-82d8-fe38cdfb127a",
+    id: "",
   });
 
-  const [from, setFrom] = useState("");
-  const [end, setEnd] = useState("");
-  const [isDepartmentIds, setDepartmentIds] = useState<
-    { name: string; id: string }[]
-  >([]);
+  const [department, setDepartment] = useState({
+    value: "",
+    id: "",
+  });
 
-  const { data: graph, isLoading } = useFetch(
+  const { data: graph, isLoading: graphLoading } = useFetch(
     "ipcr-graph",
     ["ipcr-graph", period.id],
-    `/api/ipcr-graph?ipcr_period_id=${period.id}`
+    `/api/ipcr-graph?ipcr_period_id=${period.id}&department_id=${department.id}`
   );
 
-  const departmentWise: departmentWiseType = graph?.data?.data;
+  const { data: ipcrSummary, isLoading: ipcrSummaryLoading } = useFetch(
+    "ipcr-summary",
+    ["ipcr-summary", period.id, department.id],
+    `/api/ipcr-summary?ipcr_period_id=${period.id}&department_id=${department.id}`
+  );
+
+  const graphData: { rate: number; count: number }[] = graph?.data?.data?.data;
 
   useEffect(() => {
     setLineChart({
-      labels: [1, 2, 3, 4, 5], // x-axis
+      labels: graphData?.map((item) => item?.rate), // x-axis
       datasets: [
         {
-          data: [5, 20, 90, 15, 45],
+          data: graphData?.map((item) => item?.count),
           backgroundColor: "#9acd32",
         },
       ],
     });
-  }, [departmentWise?.data]);
+  }, [graphData]);
 
   const options = {
     responsive: true,
@@ -129,15 +138,13 @@ function IndividualPerformanceAndCareerReview() {
             label={"Period"}
             displayValueKey={"date_range"}
           />
-          <DepartmentSelect
-            selectedIDs={isDepartmentIds}
-            setSelected={setDepartmentIds}
+          <Dropdown
+            value={department}
+            setValue={setDepartment}
+            endpoint={"/api/options/departments"}
+            label={"Department"}
+            displayValueKey={"name"}
           />
-          <aside className=" flex items-center flex-wrap gap-2">
-            <input type="date" onChange={(e) => setFrom(e.target.value)} />
-            <AiOutlineArrowRight className=" text-red-2" />
-            <input type="date" onChange={(e) => setEnd(e.target.value)} />
-          </aside>
         </li>
       </ul>
       <ul className=" grid grid-cols-3 gap-5">
@@ -146,36 +153,56 @@ function IndividualPerformanceAndCareerReview() {
         </li>
         <li className=" shadow-md 1280px:col-span-3 col-span-2 rounded-md p-5 h-auto">
           <div className="max-h-[400px] relative min-h-[10rem] overflow-auto w-full">
+            {ipcrSummaryLoading && (
+              <>
+                <aside className=" absolute top-0 gap-2 flex-col left-0 h-full w-full flex justify-center items-center bg-[#e6e6e652]">
+                  <ClipLoader color="#9acd32" />
+                  <h4 className=" font-bold animate-pulse">Loading...</h4>
+                </aside>
+              </>
+            )}
             <table className=" w-full font-medium">
               <thead>
                 <tr>
-                  <th className=" text-center text-sm text-red-2">Employee</th>
-                  <th className=" text-center text-sm text-red-2">
-                    Office/College
-                  </th>
-                  <th className=" text-center text-sm text-red-2">
-                    Avg Rating
-                  </th>
-                  <th className=" text-center text-sm text-red-2">Overall</th>
-                  <th className=" text-center text-sm text-red-2">
-                    Adjectival
-                  </th>
+                  <th className=" text-sm text-red-2 py-2">Employee</th>
+                  <th className="r text-sm text-red- py-2">Email</th>
+                  <th className="  text-sm text-red-2 py-2">Date Hired</th>
+                  <th className="  text-sm text-red-2 py-2">Average Mean</th>
+                  <th className="  text-sm text-red-2 py-2">Average Weight</th>
                 </tr>
               </thead>
               <tbody>
-                {/* {topHabitual?.map((item, indx) => (
-              <tr key={indx}>
-                <td>{item?.employee_name}</td>
-                <td>{item?.department_name}</td>
-                <td>{item?.total_tardiness}</td>
-              </tr>
-            ))} */}
+                {ipcrSummary?.data?.data?.map((item: any, indx: number) => (
+                  <tr key={indx}>
+                    <td>{item?.employee?.full_name}</td>
+                    <td>{item?.employee?.email}</td>
+                    <td>{textDateFormat(item?.employee?.date_hired)}</td>
+                    <td className=" text-end">
+                      {(
+                        (Number(item?.mean_score_strategic) +
+                          Number(item?.mean_score_core) +
+                          Number(item?.mean_score_support)) /
+                        3
+                      ).toFixed(2)}
+                    </td>
+                    <td className=" text-end">
+                      {(
+                        (Number(item?.weighted_average_strategic) +
+                          Number(item?.weighted_average_core) +
+                          Number(item?.weighted_average_support)) /
+                        3
+                      ).toFixed(2)}
+                    </td>
+                  </tr>
+                ))}
 
-                <tr>
-                  <td colSpan={5}>
-                    <h3 className=" text-center py-5">NO RECORD FOUND</h3>
-                  </td>
-                </tr>
+                {ipcrSummary?.data?.data?.length === 0 && (
+                  <tr>
+                    <td colSpan={5}>
+                      <h3 className=" text-center py-5">NO RECORD FOUND</h3>
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

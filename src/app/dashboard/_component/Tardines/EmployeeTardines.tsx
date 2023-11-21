@@ -84,7 +84,7 @@ function EmployeeTardines() {
         {isLoading && (
           <>
             <aside className=" absolute top-0 gap-2 flex-col left-0 h-full w-full flex justify-center items-center bg-[#e6e6e652]">
-              <ClipLoader color="#520100" />
+              <ClipLoader color="#9acd32" />
               <h4 className=" font-bold animate-pulse">Loading...</h4>
             </aside>
           </>

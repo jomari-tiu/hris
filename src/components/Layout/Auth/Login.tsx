@@ -52,6 +52,8 @@ function Login() {
     Login(data);
   };
 
+  const googleLoginHandler = () => {};
+
   return (
     <section className=" h-screen w-screen bg-white flex justify-center items-center ">
       <AnimatePresence mode="wait">
@@ -137,6 +139,7 @@ function Login() {
           <Button
             appearance={"default"}
             className=" w-full flex items-center justify-center"
+            onClick={googleLoginHandler}
           >
             <div>
               <Image
