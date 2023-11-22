@@ -134,6 +134,7 @@ const SubCategoryItem = ({
   append,
   update,
   setValue,
+  parentCategoryId,
 }: SubCategoryItemType) => {
   const [isModalSubCategoryForm, setModalSubCategoryForm] = useState(false);
   const q = watch(`${category_name}[${indx}].rating_q`);
@@ -237,7 +238,7 @@ const SubCategoryItem = ({
                 setDisplayValue={setValue}
                 placeholder={"Select Sub-Category"}
                 endpoint={`/api/options/ipcr_subcategories`}
-                parentFilter={`?parent_id=${parentSubCategoryId}`}
+                parentFilter={`?parent_id=${parentCategoryId}`}
               />
             </li>
           </ul>
