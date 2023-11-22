@@ -26,9 +26,9 @@ export type itemEvaluations = {
   performance_indicators: string;
   target_of_accomplishment: string;
   actual_accomplishments: string;
-  rating_q: string;
-  rating_e: string;
-  rating_t: string;
+  rating_q: number;
+  rating_e: number;
+  rating_t: number;
   remarks: string;
   evaluations?: itemEvaluations[];
 };
