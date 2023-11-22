@@ -1,11 +1,8 @@
 import React from "react";
+import { redirect } from "next/navigation";
 
-import UserAuthentication from "@/components/HOC/UserAuth";
-import UserAuth from "@/components/HOC/UserAuth";
-
-function SamplePage({ profile }: any) {
-  console.log(profile);
-  return <div>dashboard asdasdsad</div>;
+function SamplePage() {
+  redirect("/dashboard");
 }
 
-export default UserAuth(SamplePage);
+export default SamplePage;

@@ -8,9 +8,9 @@ export type ipcr = {
   reviewed_by_name: string;
   recommending_approval: string;
   recommending_approval_name: string;
-  strategic_evaluations?: subCategory[];
-  core_evaluations?: subCategory[];
-  support_evaluations?: subCategory[];
+  strategic_evaluations?: subCategory[] | itemEvaluations[];
+  core_evaluations?: subCategory[] | itemEvaluations[];
+  support_evaluations?: subCategory[] | itemEvaluations[];
 };
 
 export type subCategory = {
