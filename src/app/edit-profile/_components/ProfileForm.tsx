@@ -60,39 +60,44 @@ function ProfileForm({ defaultValues }: Props) {
   return (
     <div className=" space-y-5">
       <PageTitle title={["Update Profile"]} />
-      <form onSubmit={handleSubmit(SubmitHandler)} className=" space-y-5">
-        <ControllerField
-          control={control}
-          errors={errors}
-          rules={{ required: "required" }}
-          name={"name"}
-          placeholder={"Name"}
-          type={"text"}
-        />
-        <ControllerField
-          control={control}
-          errors={errors}
-          name={"password"}
-          rules={{ required: "required" }}
-          placeholder={"Password"}
-          type={"password"}
-        />
-        <ControllerField
-          control={control}
-          errors={errors}
-          name={"password_confirmation"}
-          rules={{ required: "required" }}
-          placeholder={"Password Confirmation"}
-          type={"password"}
-        />
-        <ControllerField
-          control={control}
-          errors={errors}
-          name={"current_password"}
-          rules={{ required: "required" }}
-          placeholder={"Current Password"}
-          type={"password"}
-        />
+      <form onSubmit={handleSubmit(SubmitHandler)} className=" space-y-10">
+        <aside className=" space-y-5">
+          <ControllerField
+            control={control}
+            errors={errors}
+            rules={{ required: "required" }}
+            name={"name"}
+            placeholder={"Name"}
+            type={"text"}
+          />
+          <ControllerField
+            control={control}
+            errors={errors}
+            name={"current_password"}
+            rules={{ required: "required" }}
+            placeholder={"Current Password"}
+            type={"password"}
+          />
+        </aside>
+        <aside className=" space-y-5">
+          <ControllerField
+            control={control}
+            errors={errors}
+            name={"password"}
+            rules={{ required: "required" }}
+            placeholder={"Password"}
+            type={"password"}
+          />
+          <ControllerField
+            control={control}
+            errors={errors}
+            name={"password_confirmation"}
+            rules={{ required: "required" }}
+            placeholder={"Password Confirmation"}
+            type={"password"}
+          />
+        </aside>
+
         <div className=" flex justify-end items-center">
           <Button type="submit" appearance={"primary"} loading={isLoading}>
             Update

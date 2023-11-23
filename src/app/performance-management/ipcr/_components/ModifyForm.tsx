@@ -25,7 +25,15 @@ const ModifyForm = ({ id, setModal }: { id: string; setModal: Function }) => {
     );
   }
 
-  return <IpcrForm defaultValues={data?.data?.data} setModal={setModal} />;
+  return (
+    <IpcrForm
+      defaultValues={{
+        ...data?.data?.data,
+        id: id,
+      }}
+      setModal={setModal}
+    />
+  );
 };
 
 export default ModifyForm;

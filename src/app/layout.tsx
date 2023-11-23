@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 
 import Layout from "@/components/Layout";
 import Authentication from "@/components/Layout/Auth/Authentication";
+import LoadingScreen from "@/components/Layout/LoadingScreen";
 import QueryProvider from "@/components/QueryProvider";
 
 import "./globals.css";
@@ -28,7 +29,6 @@ function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        \
         <QueryProvider>
           {token ? (
             <Layout>{children}</Layout>
@@ -36,7 +36,6 @@ function RootLayout({
             <Authentication>{children}</Authentication>
           )}
         </QueryProvider>
-        \
       </body>
     </html>
   );

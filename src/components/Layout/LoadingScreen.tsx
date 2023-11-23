@@ -17,7 +17,7 @@ function LoadingScreen({ isLoading }: Props) {
         {isLoading && (
           <AnimationContainer
             variants={fadeIn}
-            className=" fixed top-0 left-0 h-screen w-screen m-0 bg-white z-50 flex justify-center items-center flex-col"
+            className=" fixed top-0 left-0 bg-ccbgsecondary h-screen w-screen m-0 z-50 flex justify-center items-center flex-col"
           >
             <Image
               src="/images/logo/logo.png"
@@ -26,7 +26,7 @@ function LoadingScreen({ isLoading }: Props) {
               height={100}
               className=" animate-spin-slow"
             />
-            <h3 className=" text-black font-medium motion-safe:animate-pulse mt-2 tracking-widest">
+            <h3 className="text-ccgreen font-medium motion-safe:animate-pulse mt-2 tracking-widest">
               Loading...
             </h3>
           </AnimationContainer>
