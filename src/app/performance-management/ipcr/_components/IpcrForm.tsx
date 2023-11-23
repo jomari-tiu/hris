@@ -18,7 +18,13 @@ type Props = {
 
 function IpcrForm({ defaultValues, setModal }: Props) {
   const { setNotification } = useGlobalState();
+  const [isDefaultValue, setDefaultValue] = React.useState(defaultValues);
   const id = defaultValues?.id;
+
+  useEffect(() => {
+    console.log(defaultValues);
+    setDefaultValue(defaultValues);
+  }, [defaultValues]);
 
   const {
     handleSubmit,
@@ -27,7 +33,7 @@ function IpcrForm({ defaultValues, setModal }: Props) {
     watch,
     formState: { errors },
   } = useForm<ipcr>({
-    defaultValues: defaultValues,
+    defaultValues: isDefaultValue,
   });
 
   const successDelete = () => {
@@ -154,7 +160,9 @@ function IpcrForm({ defaultValues, setModal }: Props) {
         </aside>
         <aside className=" w-full space-y-5">
           <div className=" w-full flex items-center gap-4">
-            <p className=" text-gray-600 font-semibold">Core Functions {`(40%)`}</p>
+            <p className=" text-gray-600 font-semibold">
+              Core Functions {`(40%)`}
+            </p>
             <div className=" flex-1 h-[2px] bg-gray-400"></div>
           </div>
           <SubCategory
@@ -169,7 +177,9 @@ function IpcrForm({ defaultValues, setModal }: Props) {
 
         <aside className=" w-full space-y-5">
           <div className=" w-full flex items-center gap-4">
-            <p className=" text-gray-600 font-semibold">Support Functions {`(20%)`}</p>
+            <p className=" text-gray-600 font-semibold">
+              Support Functions {`(20%)`}
+            </p>
             <div className=" flex-1 h-[2px] bg-gray-400"></div>
           </div>
           <SubCategory

@@ -28,6 +28,7 @@ function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        \
         <QueryProvider>
           {token ? (
             <Layout>{children}</Layout>
@@ -35,6 +36,7 @@ function RootLayout({
             <Authentication>{children}</Authentication>
           )}
         </QueryProvider>
+        \
       </body>
     </html>
   );
