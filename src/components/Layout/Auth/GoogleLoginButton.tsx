@@ -9,16 +9,7 @@ import Button from "@/components/Button";
 const GoogleLoginButton = () => {
   const router = useRouter();
   const googleLoginHandler = async () => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/login/google`)
-      .then((res) => {
-        router.push(
-          `/redirect/google?token=${res?.data?.token}&id=${res?.data?.id}`
-        );
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    router.push(`${process.env.NEXT_PUBLIC_API_URL}/api/login/google`);
   };
   return (
     <Button
