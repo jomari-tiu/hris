@@ -67,45 +67,27 @@ function Ipcr() {
 
   const opcrColumns: any = [
     {
-      title: "Department",
+      title: "Name",
       cellKey: "department_name",
-      textAlign: "left",
-    },
-    {
-      title: "Department Head",
-      cellKey: "",
       textAlign: "left",
       render: (_: any, data: any) => {
         return <div>{data?.department_head_employee?.full_name}</div>;
       },
     },
     {
-      title: "Date Hired",
-      cellKey: "",
+      title: "Office / College",
+      cellKey: "department_name",
       textAlign: "left",
-      render: (_: any, data: any) => {
-        return (
-          <div>
-            {textDateFormat(data?.department_head_employee?.date_hired)}
-          </div>
-        );
-      },
     },
     {
-      title: "Email",
-      cellKey: "",
+      title: "Final Average",
+      cellKey: "final_average_rating",
       textAlign: "left",
-      render: (_: any, data: any) => {
-        return <div>{data?.department_head_employee?.email}</div>;
-      },
     },
     {
-      title: "Citizenship",
-      cellKey: "",
+      title: "Adjectival Rating",
+      cellKey: "adjectival_rating",
       textAlign: "left",
-      render: (_: any, data: any) => {
-        return <div>{data?.department_head_employee?.citizenship}</div>;
-      },
     },
   ];
 
