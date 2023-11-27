@@ -33,14 +33,10 @@ function EmployeeTardines() {
 
   const [isYear, setYear] = useState(format(today, "yyyy"));
 
-  let days = eachDayOfInterval({
-    start: startOfMonth(
-      isValid(parse(isMonth, "M", new Date()))
-        ? parse(isMonth, "M", new Date())
-        : today
-    ),
-    end: endOfMonth(today),
-  });
+  const startDate = startOfMonth(parse(isMonth, "M", new Date()));
+  const endDate = endOfMonth(parse(isMonth, "M", new Date()));
+
+  let days = eachDayOfInterval({ start: startDate, end: endDate });
 
   const { data, isLoading } = useFetch(
     "employee-tardines-list",
