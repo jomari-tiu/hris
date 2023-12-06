@@ -65,14 +65,21 @@ function DepartmentWise() {
   const [type, setType] = useState("monthly");
   const [from, setFrom] = useState("");
   const [end, setEnd] = useState("");
+
+
+  const frequencyParam = type === "specific date" ? "specific_date" : type;
+  const specificDateParams = type === "specific date" ? `&start_date=${from}&end_date=${end}` : '';
+
+  const url = `/api/department-wise-tardiness?frequency=${frequencyParam}${specificDateParams}`;
+  
+  console.log(url)
+
   const { data, isLoading } = useFetch(
     "department-wise-tardiness",
     ["department-wise-tardiness", type, from, end],
-    `/api/department-wise-tardiness?frequency=${
-      type === "specific date" ? "specific_date" : type
-    }${type === "specific date" && `&start_date=${from}&end_date=${end}`}`
+    url
   );
-
+  
   const departmentWise: departmentWiseType = data?.data?.data;
 
   useEffect(() => {
