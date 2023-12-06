@@ -13,6 +13,7 @@ type Props = {
   setPage: Function;
   page: number;
   totalPage: number;
+  noCursor?: boolean;
 };
 
 export type TableColumnsType = {
@@ -31,6 +32,7 @@ function Table({
   setPage,
   page,
   totalPage,
+  noCursor,
 }: Props) {
   return (
     <>
@@ -43,13 +45,14 @@ function Table({
             </aside>
           </>
         )}
-        <table
-          className={`${className} w-full min-w-[800px] bg-white-0  mb-5`}
-        >
+        <table className={`${className} w-full min-w-[800px] bg-white-0  mb-5`}>
           <thead className=" bg-ccbgsecondary text-gray-500">
             <tr>
               {columns.map((item, index) => (
-                <th key={index} className=" p-4 text-sm text-start capitalized font-semibold">
+                <th
+                  key={index}
+                  className=" p-4 text-sm text-start capitalized font-semibold"
+                >
                   {item.title}
                 </th>
               ))}
@@ -63,7 +66,8 @@ function Table({
                   onClickRow && onClickRow(item, data);
                 }}
                 className={` ${
-                  onClickRow && " cursor-pointer hover:bg-gray-100"
+                  onClickRow &&
+                  `${!noCursor && "cursor-pointer hover:bg-gray-100"}`
                 } duration-200 `}
               >
                 {columns.map((col, indexCol) => (

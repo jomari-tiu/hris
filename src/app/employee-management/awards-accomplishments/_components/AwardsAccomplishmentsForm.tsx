@@ -7,12 +7,20 @@ import ControllerField from "@/components/ControllerField";
 import ControllerFieldData from "@/components/ControllerFieldData";
 import { usePost, useRemove } from "@/util/api";
 
+type awards = {
+  employee_name: string;
+  employee_id: string;
+  award_name: string;
+  date: string;
+  id?: string;
+};
+
 type Props = {
-  defaultValues: any;
+  defaultValues: awards;
   setModal: Function;
 };
 
-function DepartmentForm({ defaultValues, setModal }: Props) {
+function AwardsAccomplishmentsForm({ defaultValues, setModal }: Props) {
   const { setNotification } = useGlobalState();
   const id = defaultValues?.id;
   const {
@@ -21,20 +29,20 @@ function DepartmentForm({ defaultValues, setModal }: Props) {
     setValue,
     watch,
     formState: { errors },
-  } = useForm<any>({
+  } = useForm<awards>({
     defaultValues: defaultValues,
   });
 
   const successDelete = () => {
     setModal(false);
-    setNotification(true, "success", `Department successfully deleted!`);
+    setNotification(true, "success", `user Successfully deleted!`);
   };
   const success = () => {
     setModal(false);
     setNotification(
       true,
       "success",
-      `Department successfully ${defaultValues?.id ? "updated" : "registered"}!`
+      `user Successfully ${defaultValues?.id ? "updated" : "registered"}!`
     );
   };
   const error = (error: any) => {
@@ -44,16 +52,16 @@ function DepartmentForm({ defaultValues, setModal }: Props) {
   const { isLoading: DeleteLoading, mutate: Delete } = useRemove(
     successDelete,
     error,
-    "/api/departments",
-    "departments-list"
+    "/api/users",
+    "users-list"
   );
 
   const { isLoading, mutate } = usePost(
     success,
     error,
-    "/api/departments",
+    "/api/users",
     defaultValues?.id ? defaultValues?.id : false,
-    "departments-list"
+    "users-list"
   );
 
   const SubmitHandler = (data: any) => {
@@ -64,24 +72,8 @@ function DepartmentForm({ defaultValues, setModal }: Props) {
 
   return (
     <div className=" space-y-5">
-      <p>{id ? "Update" : "Create"} - Department</p>
+      <p>{id ? "Update" : "Create"} - Awards and Accomplishments</p>
       <form onSubmit={handleSubmit(SubmitHandler)} className=" space-y-2">
-        <ControllerField
-          control={control}
-          errors={errors}
-          rules={{ required: "required" }}
-          name={"name"}
-          placeholder={"Name"}
-          type={"text"}
-        />
-        <ControllerField
-          control={control}
-          errors={errors}
-          name={"description"}
-          rules={{ required: "required" }}
-          placeholder={"Description"}
-          type={"textarea"}
-        />
         <ControllerFieldData
           control={control}
           errors={errors}
@@ -95,41 +87,39 @@ function DepartmentForm({ defaultValues, setModal }: Props) {
           placeholder={"Employee"}
           endpoint={"/api/options/employees"}
         />
-        <div className=" flex justify-between items-center">
-          <aside className=" flex items-center gap-2">
-            <ControllerField
-              control={control}
-              errors={errors}
-              name={"non_teaching"}
-              rules={{ required: "required" }}
-              placeholder={""}
-              type={"checkbox"}
-            />
-            <label
-              htmlFor="non_teaching"
-              className=" text-[.9rem] cursor-pointer"
+        <ControllerField
+          control={control}
+          errors={errors}
+          name={"award_name"}
+          rules={{ required: "required" }}
+          placeholder={"Awards / Accomplishments"}
+          type={"text"}
+        />
+        <ControllerField
+          control={control}
+          errors={errors}
+          name={"date"}
+          rules={{ required: "required" }}
+          placeholder={"Date"}
+          type={"date"}
+        />
+        <div className=" flex justify-end items-center">
+          {defaultValues?.id && (
+            <Button
+              appearance={"primary"}
+              loading={DeleteLoading}
+              onClick={() => Delete(defaultValues?.id)}
             >
-              Admin / Non-Teaching
-            </label>
-          </aside>
-          <div>
-            {defaultValues?.id && (
-              <Button
-                appearance={"primary"}
-                loading={DeleteLoading}
-                onClick={() => Delete(defaultValues?.id)}
-              >
-                Delete
-              </Button>
-            )}
-            <Button type="submit" appearance={"primary"} loading={isLoading}>
-              Save
+              Delete
             </Button>
-          </div>
+          )}
+          <Button type="submit" appearance={"primary"} loading={isLoading}>
+            Save
+          </Button>
         </div>
       </form>
     </div>
   );
 }
 
-export default DepartmentForm;
+export default AwardsAccomplishmentsForm;
