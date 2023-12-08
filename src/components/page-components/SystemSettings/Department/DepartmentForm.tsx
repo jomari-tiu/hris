@@ -77,6 +77,14 @@ function DepartmentForm({ defaultValues, setModal }: Props) {
         <ControllerField
           control={control}
           errors={errors}
+          rules={{ required: "required" }}
+          name={"acronym"}
+          placeholder={"Acronym"}
+          type={"text"}
+        />
+        <ControllerField
+          control={control}
+          errors={errors}
           name={"description"}
           rules={{ required: "required" }}
           placeholder={"Description"}
