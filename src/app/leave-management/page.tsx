@@ -8,8 +8,6 @@ import Button from "@/components/Button";
 import { useGlobalState } from "@/components/Context/AppMangement";
 import { textDateFormat } from "@/components/helper";
 import Modal from "@/components/Modal";
-import UserForm from "@/components/page-components/AdminSettings/Users/UserForm";
-import TrainingForm from "@/components/page-components/Employee/TrainingRecord/TrainingForm";
 import LeaveForm, {
   LeaveDefaultValue,
   LeaveResponse,
@@ -78,7 +76,7 @@ function LeaveMangement() {
       },
     },
     {
-      title: "Status",
+      title: "Remarks",
       cellKey: "status",
       textAlign: "left",
     },

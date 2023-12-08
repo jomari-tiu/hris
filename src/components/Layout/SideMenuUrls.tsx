@@ -41,6 +41,10 @@ export const SideMenuLinks: SideMenuLinksType[] = [
         title: "Training Records",
         url: "/employee-management/training-records",
       },
+      {
+        title: "Awards / Accomplishments",
+        url: "/employee-management/awards-accomplishments",
+      },
     ],
   },
   {
@@ -62,31 +66,8 @@ export const SideMenuLinks: SideMenuLinksType[] = [
         title: "IPCR",
         url: "/performance-management/ipcr",
       },
-      // {
-      //   title: "OPCR",
-      //   url: "/performance-management/opcr",
-      // },
     ],
   },
-  // {
-  //   title: "HR Analytics and Reports",
-  //   url: "/hr-analytics-and-report",
-  //   icon: <MdPeopleAlt />,
-  //   submenu: [
-  //     {
-  //       title: "Data Analysis to compute habitual tardiness",
-  //       url: "/hr-analytics-and-report/data-analysis-to-compute-habitual-tardiness",
-  //     },
-  //     {
-  //       title: "Report Generation",
-  //       url: "/hr-analytics-and-report/report-Generation",
-  //     },
-  //     {
-  //       title: "Data Visualization",
-  //       url: "/hr-analytics-and-report/data-visualization",
-  //     },
-  //   ],
-  // },
   {
     title: "Admin Settings",
     url: "/admin-settings",

@@ -4,8 +4,8 @@ import { useForm } from "react-hook-form";
 import Button from "@/components/Button";
 import { useGlobalState } from "@/components/Context/AppMangement";
 import ControllerField from "@/components/ControllerField";
-import { usePost, useRemove } from "@/util/api";
 import ControllerFieldData from "@/components/ControllerFieldData";
+import { usePost, useRemove } from "@/util/api";
 
 type Props = {
   defaultValues: any;
@@ -91,32 +91,49 @@ function DepartmentForm({ defaultValues, setModal }: Props) {
           type={"textarea"}
         />
         <ControllerFieldData
-            control={control}
-            errors={errors}
-            rules={{ required: "required" }}
-            name={"employee_id"}
-            keyID="id"
-            keyName="full_name_formal"
-            displayValue={watch("employee_name")}
-            displayValueKey={"employee_name"}
-            setDisplayValue={setValue}
-            placeholder={"Employee"}
-            endpoint={"/api/options/employees"}
-          />
-
-        <div className=" flex justify-end items-center">
-          {defaultValues?.id && (
-            <Button
-              appearance={"primary"}
-              loading={DeleteLoading}
-              onClick={() => Delete(defaultValues?.id)}
+          control={control}
+          errors={errors}
+          rules={{ required: "required" }}
+          name={"employee_id"}
+          keyID="id"
+          keyName="full_name_formal"
+          displayValue={watch("employee_name")}
+          displayValueKey={"employee_name"}
+          setDisplayValue={setValue}
+          placeholder={"Employee"}
+          endpoint={"/api/options/employees"}
+        />
+        <div className=" flex justify-between items-center">
+          <aside className=" flex items-center gap-2">
+            <ControllerField
+              control={control}
+              errors={errors}
+              name={"non_teaching"}
+              rules={{ required: "required" }}
+              placeholder={""}
+              type={"checkbox"}
+            />
+            <label
+              htmlFor="non_teaching"
+              className=" text-[.9rem] cursor-pointer"
             >
-              Delete
+              Admin / Non-Teaching
+            </label>
+          </aside>
+          <div>
+            {defaultValues?.id && (
+              <Button
+                appearance={"primary"}
+                loading={DeleteLoading}
+                onClick={() => Delete(defaultValues?.id)}
+              >
+                Delete
+              </Button>
+            )}
+            <Button type="submit" appearance={"primary"} loading={isLoading}>
+              Save
             </Button>
-          )}
-          <Button type="submit" appearance={"primary"} loading={isLoading}>
-            Save
-          </Button>
+          </div>
         </div>
       </form>
     </div>
