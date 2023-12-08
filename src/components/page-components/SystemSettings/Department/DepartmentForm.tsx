@@ -103,8 +103,7 @@ function DepartmentForm({ defaultValues, setModal }: Props) {
           placeholder={"Employee"}
           endpoint={"/api/options/employees"}
         />
-        <div className=" flex justify-between items-center">
-          <aside className=" flex items-center gap-2">
+        <aside className=" flex items-center gap-2 py-2">
             <ControllerField
               control={control}
               errors={errors}
@@ -120,7 +119,8 @@ function DepartmentForm({ defaultValues, setModal }: Props) {
               Admin / Non-Teaching
             </label>
           </aside>
-          <div>
+        <div className=" flex justify-end items-center space-x-4">
+          
             {defaultValues?.id && (
               <Button
                 appearance={"primary"}
@@ -133,7 +133,6 @@ function DepartmentForm({ defaultValues, setModal }: Props) {
             <Button type="submit" appearance={"primary"} loading={isLoading}>
               Save
             </Button>
-          </div>
         </div>
       </form>
     </div>
