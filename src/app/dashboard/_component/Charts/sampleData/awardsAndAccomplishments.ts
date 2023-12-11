@@ -2,7 +2,7 @@ export const awardsAndAccomplishmentsData = {
   years: [2021, 2022, 2023, 2024, 2025, 2026],
   data: [
     {
-      label: "Department 1",
+      label: "ACAD",
       count: [
         {
           id: 1,
@@ -29,10 +29,10 @@ export const awardsAndAccomplishmentsData = {
           value: 19,
         },
       ],
-      backgroundColor: "#7cfe00",
+      backgroundColor: "#7bc0f7",
     },
     {
-      label: "Department 2",
+      label: "CAS",
       count: [
         {
           id: 1,
@@ -59,10 +59,10 @@ export const awardsAndAccomplishmentsData = {
           value: 16,
         },
       ],
-      backgroundColor: "#84bd38",
+      backgroundColor: "#3b8ad9",
     },
     {
-      label: "Department 3",
+      label: "CJE",
       count: [
         {
           id: 1,
@@ -89,7 +89,67 @@ export const awardsAndAccomplishmentsData = {
           value: 10,
         },
       ],
-      backgroundColor: "#d0e232",
+      backgroundColor: "#f18227",
+    },
+    {
+      label: "CBE",
+      count: [
+        {
+          id: 1,
+          value: 5,
+        },
+        {
+          id: 2,
+          value: 10,
+        },
+        {
+          id: 3,
+          value: 20,
+        },
+        {
+          id: 4,
+          value: 17,
+        },
+        {
+          id: 5,
+          value: 8,
+        },
+        {
+          id: 6,
+          value: 15,
+        },
+      ],
+      backgroundColor: "#ffdb69",
+    },
+    {
+      label: "CTE",
+      count: [
+        {
+          id: 1,
+          value: 10,
+        },
+        {
+          id: 2,
+          value: 10,
+        },
+        {
+          id: 3,
+          value: 15,
+        },
+        {
+          id: 4,
+          value: 8,
+        },
+        {
+          id: 5,
+          value: 20,
+        },
+        {
+          id: 6,
+          value: 3,
+        },
+      ],
+      backgroundColor: "#e24b26",
     },
   ],
 };
