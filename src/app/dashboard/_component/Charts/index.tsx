@@ -100,7 +100,7 @@ const ChartComponent = ({ chartData, type, options, chartName }: PropsType) => {
   });
 
   return (
-    <>
+    <div className=" flex flex-col w-full h-full">
       <div className=" w-full flex justify-end relative">
         <button
           className=" hover:bg-gray-100 duration-150"
@@ -109,7 +109,7 @@ const ChartComponent = ({ chartData, type, options, chartName }: PropsType) => {
           <IoIosMenu />
         </button>
         {menu && (
-          <ul className=" absolute top-[110%] right-0 border bg-white-0">
+          <ul className=" absolute top-[110%] right-0 bg-white-0">
             <li
               className=" p-2 hover:bg-gray-100 duration-150 cursor-pointer"
               onClick={() => setFullScreen(!fullScreen)}
@@ -156,21 +156,10 @@ const ChartComponent = ({ chartData, type, options, chartName }: PropsType) => {
         )}
       </div>
 
-      {type === "bar" && (
-        <div className=" w-full print:w-11/12">
-          <Bar
-            ref={chartRef}
-            data={data}
-            options={options}
-            plugins={plugins}
-            onClick={onClickHandler}
-          />
-        </div>
-      )}
-      {type === "pie" && (
-        <div className=" flex w-full items-center justify-center">
-          <div className=" w-11/12 max-w-[20rem]">
-            <Pie
+      <div className=" flex-1 h-full w-full">
+        {type === "bar" && (
+          <div className=" w-full print:w-11/12">
+            <Bar
               ref={chartRef}
               data={data}
               options={options}
@@ -178,12 +167,25 @@ const ChartComponent = ({ chartData, type, options, chartName }: PropsType) => {
               onClick={onClickHandler}
             />
           </div>
-        </div>
-      )}
+        )}
+        {type === "pie" && (
+          <div className=" flex w-full items-center justify-center">
+            <div className=" w-11/12 max-w-[20rem]">
+              <Pie
+                ref={chartRef}
+                data={data}
+                options={options}
+                plugins={plugins}
+                onClick={onClickHandler}
+              />
+            </div>
+          </div>
+        )}
+      </div>
 
       {fullScreen && (
         <section className="fixed top-0 left-0 bg-[#00000074] z-50 h-full w-full flex justify-center items-center">
-          <div className=" w-10/12 h-[90%] border bg-white-0 p-5 rounded-lg">
+          <div className=" w-10/12 h-[90%] bg-white-0 p-5 rounded-lg">
             {type === "bar" && (
               <Bar
                 ref={chartRef}
@@ -241,7 +243,7 @@ const ChartComponent = ({ chartData, type, options, chartName }: PropsType) => {
           </div>
         )}
       </section>
-    </>
+    </div>
   );
 };
 

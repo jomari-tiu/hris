@@ -50,7 +50,7 @@ const AwardsAndAccomplishmentsChart = () => {
 
   return (
     <>
-      <div className=" flex flex-col items-center w-full">
+      <div className=" flex flex-col items-start w-full">
         <h5 className="inline-block font-bold text-black relative underline-ccgreen mb-5">
           Awards and Accomplishments
         </h5>

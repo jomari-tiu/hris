@@ -43,7 +43,7 @@ const EmployeeChart = () => {
       labels: ["Male", "Female"], // x-axis
       datasets: [
         {
-          data: [20, 30], // y-axis
+          data: [60, 40], // y-axis
           backgroundColor: ["#8cc6f0", "#ffc7c2"],
         },
       ],
@@ -51,7 +51,7 @@ const EmployeeChart = () => {
   }, []);
 
   return (
-    <div className=" h-full flex flex-col items-start justify-start gap-5">
+    <div className=" h-full flex flex-col items-start justify-start">
       <h5 className="inline-block font-bold text-black relative underline-ccgreen">
         Employees
       </h5>
