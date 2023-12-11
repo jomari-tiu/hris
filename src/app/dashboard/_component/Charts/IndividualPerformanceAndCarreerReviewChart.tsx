@@ -82,7 +82,7 @@ const IndividualPerformanceAndCarreerReviewChart = () => {
           />
         </li>
       </ul>
-      <div className=" flex-1 flex items-center w-full">
+      <div className=" w-full">
         <div className=" w-full">
           <ChartComponent
             chartData={data}

@@ -56,15 +56,13 @@ const EmployeeChart = () => {
         Employees
       </h5>
 
-      <div className=" flex-1 flex items-center w-full">
-        <div className=" w-full">
-          <ChartComponent
-            chartData={data}
-            type={"pie"}
-            options={options}
-            chartName={"Employee"}
-          />
-        </div>
+      <div className=" w-full">
+        <ChartComponent
+          chartData={data}
+          type={"pie"}
+          options={options}
+          chartName={"Employee"}
+        />
       </div>
     </div>
   );
