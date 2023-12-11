@@ -16,21 +16,21 @@ function DashboardPage() {
   const [isTab, setTab] = useState("Tardiness");
   return (
     <>
-      <ul className=" w-full grid grid-cols-2 gap-5">
-        <li className=" shadow-md 1280px:col-span-2 rounded-md p-5 h-auto bg-white-0 ">
+      <ul className=" w-full grid grid-cols-6 gap-5">
+        <li className=" shadow-md 1280px:col-span-6 col-span-2 rounded-md p-5 h-auto bg-white-0 ">
           <IndividualPerformanceAndCarreerReviewChart />
         </li>
-        <li className=" shadow-md 1280px:col-span-2 rounded-md p-5 h-auto bg-white-0 ">
+        <li className=" shadow-md 1280px:col-span-6  col-span-2 rounded-md p-5 h-auto bg-white-0 ">
           <EmployeeChart />
         </li>
-        <li className=" shadow-md 1280px:col-span-2 rounded-md p-5 h-auto bg-white-0 ">
-          <AwardsAndAccomplishmentsChart />
+        <li className=" shadow-md 1280px:col-span-6 col-span-2 rounded-md p-5 h-auto bg-white-0 ">
+          <DepartmentWise />
         </li>
-        <li className=" shadow-md 1280px:col-span-2 rounded-md p-5 h-auto bg-white-0 ">
+        <li className=" shadow-md 1280px:col-span-6 col-span-3  rounded-md p-5 h-auto bg-white-0 ">
           <TrainingChart />
         </li>
-        <li className=" shadow-md col-span-2 rounded-md p-5 h-auto bg-white-0 ">
-          <DepartmentWise />
+        <li className=" shadow-md 1280px:col-span-6 col-span-3 rounded-md p-5 h-auto bg-white-0 ">
+          <AwardsAndAccomplishmentsChart />
         </li>
       </ul>
       {/* <PageTitle title={["Dashboard"]} />
