@@ -52,12 +52,15 @@ function LeaveMangement() {
       title: "Name",
       cellKey: "last_name",
       textAlign: "left",
-      render: (_, data) => (
-        <div>
-          {data.employee.first_name} {data.employee.last_name}{" "}
-          {data.employee.middle_name}
-        </div>
-      ),
+      render: (_, data) => <div>{data.employee.full_name}</div>,
+    },
+    {
+      title: "Type",
+      cellKey: "type",
+      textAlign: "left",
+      render: (value) => {
+        return <div>SL</div>;
+      },
     },
     {
       title: "Date Start",
@@ -76,9 +79,70 @@ function LeaveMangement() {
       },
     },
     {
+      title: "Credit",
+      cellKey: "credit",
+      textAlign: "left",
+      render: (value) => {
+        return <div>10</div>;
+      },
+    },
+    {
+      title: "States",
+      cellKey: "status",
+      textAlign: "left",
+      render: (value) => {
+        return <div>Late-filing</div>;
+      },
+    },
+    {
       title: "Remarks",
       cellKey: "status",
       textAlign: "left",
+    },
+  ];
+
+  const balancesColumns: TableColumnsType[] = [
+    {
+      title: "Name",
+      cellKey: "last_name",
+      textAlign: "left",
+      render: (_, data) => <div>{data.employee.full_name}</div>,
+    },
+    {
+      title: "Department",
+      cellKey: "",
+      textAlign: "left",
+      render: (_, data) => <div>{data.employee.department_id}</div>,
+    },
+    {
+      title: "Position",
+      cellKey: "",
+      textAlign: "left",
+      render: (_, data) => <div>{data.employee.position_id}</div>,
+    },
+    {
+      title: "Remaining VL",
+      cellKey: "date_end",
+      textAlign: "left",
+      render: (value) => {
+        return <div>{10}</div>;
+      },
+    },
+    {
+      title: "Remaining SL",
+      cellKey: "date_end",
+      textAlign: "left",
+      render: (value) => {
+        return <div>{5}</div>;
+      },
+    },
+    {
+      title: "Year",
+      cellKey: "",
+      textAlign: "left",
+      render: (value) => {
+        return <div>{2023}</div>;
+      },
     },
   ];
   const { data, isLoading } = useFetch(
@@ -110,7 +174,11 @@ function LeaveMangement() {
   return (
     <>
       <PageTitle title={["Leave Management"]} />
-      <Tab tab={isTab} setTab={setTab} tabMenu={["leaves", "archive"]} />
+      <Tab
+        tab={isTab}
+        setTab={setTab}
+        tabMenu={["leaves", "archive", "balances"]}
+      />
       <div className=" flex items-center flex-wrap gap-3 justify-between">
         <div className=" flex items-center gap-2">
           <Search search={search} setSearch={setSearch} />
@@ -148,6 +216,8 @@ function LeaveMangement() {
                   ),
                 },
               ]
+            : isTab === "balances"
+            ? balancesColumns
             : columns
         }
         data={

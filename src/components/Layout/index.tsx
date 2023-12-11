@@ -97,9 +97,9 @@ function Layout({ children }: Props) {
       <section
         className={` ${
           !menu && "ml-[-20rem] 820px:ml-[-15rem]"
-        }  duration-200 w-[20rem] 1024px:w-[15rem] relative h-full bg-white0 text-gray-400 flex flex-col items-center py-5 space-y-7`}
+        }  duration-200 w-[20rem] bg-white-0 1024px:w-[15rem] relative h-full bg-white0 text-gray-400 flex flex-col items-center py-5 space-y-7`}
       >
-        <aside className=" cursor-pointer duration-500 ease-in-out p-2 bg-ccgreen  text-white absolute top-0 left-full hover:shadow-lg hover:bg-ccgreen5 hover:text-black">
+        <aside className=" 820px:block hidden cursor-pointer duration-500 ease-in-out p-2 bg-ccgreen  text-white absolute top-0 left-full hover:shadow-lg hover:bg-ccgreen5 hover:text-black">
           <CgMenuRight onClick={() => setMenu(!menu)} />
         </aside>
         <Image src="/images/logo/logo.png" alt="logo" width={80} height={80} />
