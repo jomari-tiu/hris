@@ -59,6 +59,7 @@ const AwardsAndAccomplishmentsChart = () => {
           type={"bar"}
           options={options}
           chartName={"awards-and-accomplishments"}
+          redirectTo="/employee-management/awards-accomplishments"
         />
       </div>
     </>

@@ -165,6 +165,7 @@ function DepartmentWise() {
           type={"bar"}
           options={options}
           chartName={"department-wise-tardiness-chart"}
+          redirectTo={"/dashboard-tardiness"}
         />
         <h5 className=" font-bold">DEPARTMENT</h5>
       </aside>

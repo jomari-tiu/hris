@@ -62,6 +62,7 @@ const EmployeeChart = () => {
           type={"pie"}
           options={options}
           chartName={"Employee"}
+          redirectTo={"/employee-management/profile"}
         />
       </div>
     </div>

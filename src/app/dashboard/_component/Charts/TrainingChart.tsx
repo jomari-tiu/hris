@@ -59,6 +59,7 @@ const TrainingChart = () => {
           type={"bar"}
           options={options}
           chartName={"traning-chart"}
+          redirectTo={"/employee-management/training-records"}
         />
       </div>
     </>

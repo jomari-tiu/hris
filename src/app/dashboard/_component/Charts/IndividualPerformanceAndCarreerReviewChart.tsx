@@ -89,6 +89,7 @@ const IndividualPerformanceAndCarreerReviewChart = () => {
             type={"bar"}
             options={options}
             chartName={"Individual-Performance-and-Career-Review"}
+            redirectTo={"/performance-management/ipcr"}
           />
         </div>
       </div>

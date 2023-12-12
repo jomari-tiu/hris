@@ -11,13 +11,8 @@ import {
   ArcElement,
 } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
-import {
-  Bar,
-  Pie,
-  getDatasetAtEvent,
-  getElementAtEvent,
-  getElementsAtEvent,
-} from "react-chartjs-2";
+import { useRouter } from "next/navigation";
+import { Bar, Pie, getDatasetAtEvent } from "react-chartjs-2";
 import { IoIosMenu } from "react-icons/io";
 import { useReactToPrint } from "react-to-print";
 
@@ -44,9 +39,17 @@ type PropsType = {
   type: "bar" | "pie";
   options: any;
   chartName: string;
+  redirectTo: string;
 };
 
-const ChartComponent = ({ chartData, type, options, chartName }: PropsType) => {
+const ChartComponent = ({
+  chartData,
+  type,
+  options,
+  chartName,
+  redirectTo,
+}: PropsType) => {
+  const router = useRouter();
   const [menu, setMenu] = useState(false);
   const [fullScreen, setFullScreen] = useState(false);
   const [data, setData] = useState<any>({
@@ -63,27 +66,18 @@ const ChartComponent = ({ chartData, type, options, chartName }: PropsType) => {
 
   const printDatasetAtEvent = (dataset: InteractionItem[]) => {
     if (!dataset.length) return;
-    const datasetIndex = dataset[0].datasetIndex;
+    const { datasetIndex, index } = dataset[0];
     console.log(data.datasets[datasetIndex].label);
+    console.log(dataset.length);
+    console.log(data.labels[index], data.datasets[index].data[index]);
   };
-  const printElementsAtEvent = (elements: InteractionItem[]) => {
-    if (!elements.length) return;
-    console.log(elements.length);
-  };
-  const printElementAtEvent = (element: InteractionItem[]) => {
-    if (!element.length) return;
-    const { datasetIndex, index } = element[0];
-    console.log(data.labels[index], data.datasets[datasetIndex].data[index]);
-  };
-
   const onClickHandler = (event: any) => {
     const { current: chart } = chartRef;
     if (!chart) {
       return;
     }
-    printDatasetAtEvent(getDatasetAtEvent(chart, event));
-    printElementAtEvent(getElementAtEvent(chart, event));
-    printElementsAtEvent(getElementsAtEvent(chart, event));
+    router.push(redirectTo);
+    // printDatasetAtEvent(getDatasetAtEvent(chart, event));
   };
 
   const downloadChartHandler = (name: string, fileType: string) => {

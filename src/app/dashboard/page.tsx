@@ -1,19 +1,13 @@
 "use client";
-import React, { useState } from "react";
-
-import PageTitle from "@/components/PageTitle";
-import Tab from "@/components/Tab";
+import React from "react";
 
 import AwardsAndAccomplishmentsChart from "./_component/Charts/AwardsAndAccomplishmentsChart";
 import EmployeeChart from "./_component/Charts/EmployeesChart";
 import IndividualPerformanceAndCarreerReviewChart from "./_component/Charts/IndividualPerformanceAndCarreerReviewChart";
 import TrainingChart from "./_component/Charts/TrainingChart";
-import Ipcr from "./_component/IPCR/indx";
-import Tardines from "./_component/Tardines";
 import DepartmentWise from "./_component/Tardines/DepartmentWise";
 
 function DashboardPage() {
-  const [isTab, setTab] = useState("Tardiness");
   return (
     <>
       <ul className=" w-full grid grid-cols-6 gap-5">
