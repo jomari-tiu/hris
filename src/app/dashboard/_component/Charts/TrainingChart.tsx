@@ -51,7 +51,7 @@ const TrainingChart = () => {
   return (
     <>
       <div className=" flex flex-col items-start w-full">
-        <h5 className="inline-block font-bold text-black relative underline-ccgreen mb-5">
+        <h5 className="inline-block font-bold text-black relative underline-ccgreen">
           Training
         </h5>
         <ChartComponent

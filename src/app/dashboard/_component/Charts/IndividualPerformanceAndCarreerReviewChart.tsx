@@ -51,7 +51,7 @@ const IndividualPerformanceAndCarreerReviewChart = () => {
       datasets: [
         {
           data: graphData?.map((item) => item?.count),
-          backgroundColor: "#9acd32",
+          backgroundColor: "#f18227",
         },
       ],
     });
