@@ -89,7 +89,7 @@ function DepartmentWise() {
           data: departmentWise?.data.map(
             (item) => item?.average_tardiness_minutes
           ),
-          backgroundColor: "#9acd32",
+          backgroundColor: "#ffdb69",
         },
       ],
     });
@@ -141,7 +141,7 @@ function DepartmentWise() {
           </li>
         )}
       </ul>
-      <ul className=" flex gap-3 items-center flex-wrap">
+      {/* <ul className=" flex gap-3 items-center flex-wrap">
         <li>Average</li>
         <li>
           <p className=" text-center">Minutes</p>
@@ -157,7 +157,7 @@ function DepartmentWise() {
             {departmentWise?.average_occurrences}
           </h3>
         </li>
-      </ul>
+      </ul> */}
       <aside className=" flex flex-col items-center gap-2">
         {/* <Bar data={LineChart} options={options} /> */}
         <ChartComponent
@@ -167,7 +167,7 @@ function DepartmentWise() {
           chartName={"department-wise-tardiness-chart"}
           redirectTo={"/dashboard-tardiness"}
         />
-        <h5 className=" font-bold">DEPARTMENT</h5>
+        <span className="text-sm font-bold">DEPARTMENT</span>
       </aside>
     </div>
   );

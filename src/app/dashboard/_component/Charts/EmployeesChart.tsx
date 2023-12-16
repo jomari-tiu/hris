@@ -44,7 +44,7 @@ const EmployeeChart = () => {
       datasets: [
         {
           data: [60, 40], // y-axis
-          backgroundColor: ["#8cc6f0", "#ffc7c2"],
+          backgroundColor: ["#3b8ad9", "#e24b26"],
         },
       ],
     });
