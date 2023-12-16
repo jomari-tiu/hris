@@ -17,6 +17,8 @@ import { usePost } from "@/util/api";
 import Button from "../../Button";
 import { useGlobalState } from "../../Context/AppMangement";
 import PromptMessage from "../../PromptMessage";
+import GoogleLogin from "./GoogleLoginButton";
+import GoogleLoginButton from "./GoogleLoginButton";
 
 function Login() {
   const router = useRouter();
@@ -51,8 +53,6 @@ function Login() {
   const submitHandler = (data: any) => {
     Login(data);
   };
-
-  const googleLoginHandler = () => {};
 
   return (
     <section className=" h-screen w-screen bg-white flex justify-center items-center ">
@@ -136,21 +136,7 @@ function Login() {
             <p>Or continue with</p>
           </div>
 
-          <Button
-            appearance={"default"}
-            className=" w-full flex items-center justify-center"
-            onClick={googleLoginHandler}
-          >
-            <div>
-              <Image
-                src="/images/logo/google-1.png"
-                height={100}
-                width={100}
-                alt="google"
-              />
-            </div>
-            Sign in with Google
-          </Button>
+          <GoogleLoginButton />
         </li>
       </ul>
     </section>

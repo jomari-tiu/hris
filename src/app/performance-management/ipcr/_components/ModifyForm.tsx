@@ -5,6 +5,7 @@ import { CircleLoader, ClimbingBoxLoader, RotateLoader } from "react-spinners";
 import { useFetch } from "@/util/api";
 
 import IpcrForm from "./IpcrForm";
+import { ipcr } from "./ipcrType";
 
 const ModifyForm = ({ id, setModal }: { id: string; setModal: Function }) => {
   const { data, isLoading } = useFetch(
@@ -12,6 +13,7 @@ const ModifyForm = ({ id, setModal }: { id: string; setModal: Function }) => {
     ["ipcr-detail", id],
     `/api/ipcr_evaluations/${id}`
   );
+
   if (isLoading) {
     return (
       <div className=" w-full flex justify-center items-center">
@@ -22,7 +24,16 @@ const ModifyForm = ({ id, setModal }: { id: string; setModal: Function }) => {
       </div>
     );
   }
-  return <IpcrForm defaultValues={data?.data?.data} setModal={setModal} />;
+
+  return (
+    <IpcrForm
+      defaultValues={{
+        ...data?.data?.data,
+        id: id,
+      }}
+      setModal={setModal}
+    />
+  );
 };
 
 export default ModifyForm;

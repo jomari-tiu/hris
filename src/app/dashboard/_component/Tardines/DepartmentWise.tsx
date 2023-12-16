@@ -10,12 +10,13 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { Chart } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { Line, Bar } from "react-chartjs-2";
 import { AiOutlineArrowRight } from "react-icons/ai";
 
 import { useFetch } from "@/util/api";
+
+import ChartComponent from "../Charts";
 
 ChartJS.register(
   CategoryScale,
@@ -65,12 +66,17 @@ function DepartmentWise() {
   const [type, setType] = useState("monthly");
   const [from, setFrom] = useState("");
   const [end, setEnd] = useState("");
+
+  const frequencyParam = type === "specific date" ? "specific_date" : type;
+  const specificDateParams =
+    type === "specific date" ? `&start_date=${from}&end_date=${end}` : "";
+
+  const url = `/api/department-wise-tardiness?frequency=${frequencyParam}${specificDateParams}`;
+
   const { data, isLoading } = useFetch(
     "department-wise-tardiness",
     ["department-wise-tardiness", type, from, end],
-    `/api/department-wise-tardiness?frequency=${
-      type === "specific date" ? "specific_date" : type
-    }${type === "specific date" && `&start_date=${from}&end_date=${end}`}`
+    url
   );
 
   const departmentWise: departmentWiseType = data?.data?.data;
@@ -83,7 +89,7 @@ function DepartmentWise() {
           data: departmentWise?.data.map(
             (item) => item?.average_tardiness_minutes
           ),
-          backgroundColor: "#9acd32",
+          backgroundColor: "#ffdb69",
         },
       ],
     });
@@ -135,7 +141,7 @@ function DepartmentWise() {
           </li>
         )}
       </ul>
-      <ul className=" flex gap-3 items-center flex-wrap">
+      {/* <ul className=" flex gap-3 items-center flex-wrap">
         <li>Average</li>
         <li>
           <p className=" text-center">Minutes</p>
@@ -151,9 +157,16 @@ function DepartmentWise() {
             {departmentWise?.average_occurrences}
           </h3>
         </li>
-      </ul>
-      <aside>
-        <Bar data={LineChart} options={options} plugins={plugins} />
+      </ul> */}
+      <aside className=" flex flex-col items-center gap-2">
+        {/* <Bar data={LineChart} options={options} /> */}
+        <ChartComponent
+          chartData={LineChart}
+          type={"bar"}
+          options={options}
+          chartName={"department-wise-tardiness-chart"}
+        />
+        <span className="text-sm font-bold">DEPARTMENT</span>
       </aside>
     </div>
   );

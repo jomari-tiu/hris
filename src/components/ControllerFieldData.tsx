@@ -71,7 +71,7 @@ const Field = ({
   endpoint,
   placeholder,
   errors,
-  parentFilter,
+  parentID,
   displayValue,
   keyID,
   keyName,
@@ -82,8 +82,8 @@ const Field = ({
   const [open, setOpen] = useState(false);
   const { isLoading, isError, data } = useFetch(
     name,
-    [name, field.value, parentFilter],
-    `${endpoint}${parentFilter ? `${parentFilter}` : ""}`
+    [name, field.value, parentID],
+    `${endpoint}${parentID ? `${parentID}` : ""}`
   );
 
   const element = useRef<any>();
@@ -119,7 +119,7 @@ const Field = ({
           value={displayValue}
           onChange={() => {}}
           disabled={
-            isLoading || parentFilter === "" || parentFilter === null || isError
+            isLoading || parentID === "" || parentID === null || isError
           }
           className=" w-full"
         />

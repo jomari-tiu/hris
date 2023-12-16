@@ -30,15 +30,15 @@
   --red1: #6f1817;
   --red2: #520100;
   --gold: #ffcc00;
-  --ccgreen1: #7CFE00;
+  --ccgreen1: #7cfe00;
   --ccgreen2: #dfff00;
-  --ccgreen3: #D0E232;
-  --ccgreen4: #ADFE31;
-  --ccgreen5: #9BCD31;
-  --ccgreen: #84BD38;
-  --ccred1: #F97D7E;
-  --ccred2: #E44F4E;
-  --cchovergray: #F3F5F4;
+  --ccgreen3: #d0e232;
+  --ccgreen4: #adfe31;
+  --ccgreen5: #9bcd31;
+  --ccgreen: #84bd38;
+  --ccred1: #f97d7e;
+  --ccred2: #e44f4e;
+  --cchovergray: #f3f5f4;
   --ccbgsecondary: #f9f9f9;
 }
 
@@ -78,7 +78,7 @@ input[type="email"],
 select,
 textarea,
 input[type="date"] {
-  @apply border rounded-md px-2 py-2 h-10 outline-red-2;
+  @apply border rounded-md px-2 py-2 h-10 outline-ccgreen1;
 }
 
 button {

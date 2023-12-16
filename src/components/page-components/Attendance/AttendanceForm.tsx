@@ -99,12 +99,12 @@ function AttendanceForm({ setModal }: Props) {
       <aside
         onDragOver={dragOverHandler}
         onDrop={(e) => dropHandler(e, "drop")}
-        className=" bg-red w-full space-y-3 aspect-[2/1] border-2 border-red-1 border-dashed rounded-md flex flex-col items-center justify-center"
+        className=" bg-ccbgsecondary w-full space-y-3 aspect-[2/1] border-2 border-ccgreen border-dashed rounded-md flex flex-col items-center justify-center"
       >
         {xlsxLoading || datLoading ? (
-          <RotateLoader color="#6f1817" className="mb-5" />
+          <RotateLoader color="#84bd38" className="mb-5" />
         ) : (
-          <LuImport className=" text-[4rem] text-red-1" />
+          <LuImport className=" text-[4rem] text-ccgreen" />
         )}
 
         <p>

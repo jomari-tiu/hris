@@ -60,9 +60,9 @@ const SubCategory = ({
         performance_indicators: "",
         target_of_accomplishment: "",
         actual_accomplishments: "",
-        rating_q: "",
-        rating_e: "",
-        rating_t: "",
+        rating_q: 0,
+        rating_e: 0,
+        rating_t: 0,
         remarks: "",
         evaluations: [],
       });
@@ -134,6 +134,7 @@ const SubCategoryItem = ({
   append,
   update,
   setValue,
+  parentCategoryId,
 }: SubCategoryItemType) => {
   const [isModalSubCategoryForm, setModalSubCategoryForm] = useState(false);
   const q = watch(`${category_name}[${indx}].rating_q`);
@@ -155,9 +156,9 @@ const SubCategoryItem = ({
       performance_indicators: "",
       target_of_accomplishment: "",
       actual_accomplishments: "",
-      rating_q: "",
-      rating_e: "",
-      rating_t: "",
+      rating_q: 0,
+      rating_e: 0,
+      rating_t: 0,
       remarks: "",
       evaluations: [],
     };
@@ -195,9 +196,9 @@ const SubCategoryItem = ({
         performance_indicators: "",
         target_of_accomplishment: "",
         actual_accomplishments: "",
-        rating_q: "",
-        rating_e: "",
-        rating_t: "",
+        rating_q: 0,
+        rating_e: 0,
+        rating_t: 0,
         remarks: "",
         evaluations: [],
       };
@@ -237,7 +238,7 @@ const SubCategoryItem = ({
                 setDisplayValue={setValue}
                 placeholder={"Select Sub-Category"}
                 endpoint={`/api/options/ipcr_subcategories`}
-                parentFilter={`?parent_id=${parentSubCategoryId}`}
+                parentFilter={`?parent_id=${parentCategoryId}`}
               />
             </li>
           </ul>

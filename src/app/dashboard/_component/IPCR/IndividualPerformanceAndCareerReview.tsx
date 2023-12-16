@@ -10,10 +10,8 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { Chart } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
-import { Line, Bar } from "react-chartjs-2";
-import { AiOutlineArrowRight } from "react-icons/ai";
+import { Bar } from "react-chartjs-2";
 
 import { ClipLoader } from "react-spinners";
 
@@ -22,8 +20,6 @@ import Dropdown from "@/components/Dropdown";
 import { textDateFormat } from "@/components/helper";
 
 import { useFetch } from "@/util/api";
-
-import DepartmentSelect from "../DepartmentSelect";
 
 ChartJS.register(
   CategoryScale,

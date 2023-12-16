@@ -8,9 +8,9 @@ export type ipcr = {
   reviewed_by_name: string;
   recommending_approval: string;
   recommending_approval_name: string;
-  strategic_evaluations?: subCategory[];
-  core_evaluations?: subCategory[];
-  support_evaluations?: subCategory[];
+  strategic_evaluations?: subCategory[] | itemEvaluations[];
+  core_evaluations?: subCategory[] | itemEvaluations[];
+  support_evaluations?: subCategory[] | itemEvaluations[];
 };
 
 export type subCategory = {
@@ -26,9 +26,9 @@ export type itemEvaluations = {
   performance_indicators: string;
   target_of_accomplishment: string;
   actual_accomplishments: string;
-  rating_q: string;
-  rating_e: string;
-  rating_t: string;
+  rating_q: number;
+  rating_e: number;
+  rating_t: number;
   remarks: string;
   evaluations?: itemEvaluations[];
 };
