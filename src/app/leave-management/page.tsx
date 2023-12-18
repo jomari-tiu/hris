@@ -43,6 +43,7 @@ function LeaveMangement() {
     approved_for: "",
     approved_for_type: "",
     commutation: "",
+    remarks: "",
   };
 
   const [defaultValue, setDefaultValue] = useState(emptyVal);
@@ -244,6 +245,7 @@ function LeaveMangement() {
               approved_for: data?.approved_for,
               approved_for_type: data?.approved_for_type,
               commutation: data?.commutation,
+              remarks: data?.remarks,
             });
             setModal(true);
           }

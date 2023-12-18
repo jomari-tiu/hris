@@ -8,7 +8,13 @@ import ControllerFieldData from "@/components/ControllerFieldData";
 import { usePost, useRemove } from "@/util/api";
 
 type Props = {
-  defaultValues: any;
+  defaultValues: {
+    name: string;
+    description: string;
+    department_name: string;
+    department_id: string;
+    id?: string;
+  };
   setModal: Function;
 };
 
@@ -19,6 +25,7 @@ function PositionForm({ defaultValues, setModal }: Props) {
     handleSubmit,
     control,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<any>({
     defaultValues: defaultValues,
@@ -86,11 +93,11 @@ function PositionForm({ defaultValues, setModal }: Props) {
           errors={errors}
           rules={{ required: "required" }}
           name={"department_id"}
-          displayValue={defaultValues?.department?.name}
-          placeholder={"Department"}
-          endpoint={"/api/options/departments"}
+          displayValue={watch("department_name")}
           displayValueKey={"department_name"}
           setDisplayValue={setValue}
+          placeholder={"Department"}
+          endpoint={"/api/options/departments"}
         />
 
         <div className=" flex justify-end items-center">

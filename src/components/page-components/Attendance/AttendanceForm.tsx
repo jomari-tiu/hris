@@ -7,7 +7,6 @@ import { RotateLoader } from "react-spinners";
 
 import Button from "@/components/Button";
 import { useGlobalState } from "@/components/Context/AppMangement";
-import ControllerField from "@/components/ControllerField";
 import { usePost, useRemove } from "@/util/api";
 
 type user = {

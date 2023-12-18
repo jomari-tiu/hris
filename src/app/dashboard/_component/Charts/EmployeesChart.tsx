@@ -30,25 +30,26 @@ const EmployeeChart = () => {
       },
     },
   };
-  //   const { data: graph, isLoading: graphLoading } = useFetch(
-  //     "ipcr-graph",
-  //     ["ipcr-graph", period.id],
-  //     `/api/ipcr-graph?ipcr_period_id=${period.id}&department_id=${department.id}`
-  //   );
+  const { data: graph, isLoading: graphLoading } = useFetch(
+    "employee-pie-chart",
+    ["employee-pie-chart"],
+    `/api/dashboard/employees`
+  );
 
-  //   const graphData: { rate: number; count: number }[] = graph?.data?.data?.data;
+  const graphData: { label: string; count: number; backgroundColor: string }[] =
+    graph?.data?.data;
 
   useEffect(() => {
     setData({
-      labels: ["Male", "Female"], // x-axis
+      labels: graphData ? graphData?.map((item) => item.label) : ["", ""], // x-axis
       datasets: [
         {
-          data: [60, 40], // y-axis
+          data: graphData ? graphData?.map((item) => item.count) : [0, 0], // y-axis
           backgroundColor: ["#3b8ad9", "#e24b26"],
         },
       ],
     });
-  }, []);
+  }, [graphData]);
 
   return (
     <div className=" h-full flex flex-col items-start justify-start">

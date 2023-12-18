@@ -53,6 +53,8 @@ function ProfilePage() {
     sex: "",
     last_name: "",
     tel_no: "",
+    employment_status_id: "",
+    employment_status_name: "",
     is_flexible: false,
     educational_backgrounds: [
       {

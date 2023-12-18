@@ -19,7 +19,7 @@ type Props = {
 function Info({ control, errors, watch, setValue }: Props) {
   return (
     <div className=" space-y-5">
-      <LayoutColumn colNumber={3}>
+      <LayoutColumn colNumber={4}>
         <ControllerFieldData
           control={control}
           errors={errors}
@@ -42,6 +42,17 @@ function Info({ control, errors, watch, setValue }: Props) {
           setDisplayValue={setValue}
           endpoint={"/api/options/positions"}
           parentFilter={`?department_id=${watch("department_id")}`}
+        />
+        <ControllerFieldData
+          control={control}
+          errors={errors}
+          rules={{ required: "required" }}
+          name={"employment_status_id"}
+          placeholder={"Employment Status"}
+          displayValue={watch("employment_status_name")}
+          displayValueKey={"employment_status_name"}
+          setDisplayValue={setValue}
+          endpoint={"/api/options/employment_statuses"}
         />
         <ControllerField
           control={control}

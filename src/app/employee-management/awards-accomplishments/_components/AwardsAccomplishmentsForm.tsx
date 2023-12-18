@@ -11,7 +11,8 @@ type awards = {
   employee_name: string;
   employee_id: string;
   award_name: string;
-  date: string;
+  date_awarded: string;
+  remarks: string;
   id?: string;
 };
 
@@ -35,7 +36,7 @@ function AwardsAccomplishmentsForm({ defaultValues, setModal }: Props) {
 
   const successDelete = () => {
     setModal(false);
-    setNotification(true, "success", `user Successfully deleted!`);
+    setNotification(true, "success", `Awards Successfully deleted!`);
   };
   const success = () => {
     setModal(false);
@@ -52,21 +53,21 @@ function AwardsAccomplishmentsForm({ defaultValues, setModal }: Props) {
   const { isLoading: DeleteLoading, mutate: Delete } = useRemove(
     successDelete,
     error,
-    "/api/users",
-    "users-list"
+    "/api/awards",
+    "awards-list"
   );
 
   const { isLoading, mutate } = usePost(
     success,
     error,
-    "/api/users",
+    "/api/awards",
     defaultValues?.id ? defaultValues?.id : false,
-    "users-list"
+    "awards-list"
   );
 
   const SubmitHandler = (data: any) => {
-    delete data.deleted_at;
-    delete data.user_id;
+    delete data.employee_name;
+    delete data.id;
     mutate(data);
   };
 
@@ -98,10 +99,18 @@ function AwardsAccomplishmentsForm({ defaultValues, setModal }: Props) {
         <ControllerField
           control={control}
           errors={errors}
-          name={"date"}
+          name={"date_awarded"}
           rules={{ required: "required" }}
           placeholder={"Date"}
           type={"date"}
+        />
+        <ControllerField
+          control={control}
+          errors={errors}
+          name={"remarks"}
+          rules={{ required: "required" }}
+          placeholder={"Remarks"}
+          type={"text"}
         />
         <div className=" flex justify-end items-center">
           {defaultValues?.id && (

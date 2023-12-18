@@ -6,9 +6,7 @@ import { useQueryClient } from "react-query";
 
 import Button from "@/components/Button";
 import { useGlobalState } from "@/components/Context/AppMangement";
-import { textDateFormat } from "@/components/helper";
 import Modal from "@/components/Modal";
-import UserForm from "@/components/page-components/AdminSettings/Users/UserForm";
 import PageTitle from "@/components/PageTitle";
 import RestoreButton from "@/components/RestoreButton";
 import Search from "@/components/Search";
@@ -21,29 +19,19 @@ import DataForm, { DataType } from "./_components/DataForm";
 
 const columns: TableColumnsType[] = [
   {
-    title: "Employee",
-    cellKey: "employee_name",
-    textAlign: "left",
-  },
-  {
-    title: "Department",
-    cellKey: "department_name",
-    textAlign: "left",
-  },
-  {
     title: "Award",
     cellKey: "award_name",
     textAlign: "left",
   },
 
   {
-    title: "Frequency",
-    cellKey: "frequency",
+    title: "Date Awarded",
+    cellKey: "date_awarded",
     textAlign: "left",
   },
   {
-    title: "Date Awarded",
-    cellKey: "date_awarded",
+    title: "Remarks",
+    cellKey: "remarks",
     textAlign: "left",
   },
 ];
@@ -53,11 +41,19 @@ const columnsData: TableColumnsType[] = [
     title: "Employee",
     cellKey: "employee_name",
     textAlign: "left",
+    render: (_, value) => {
+      return (
+        <div>
+          {value?.employee.last_name} {value?.employee.first_name}{" "}
+          {value?.employee.middle_name}
+        </div>
+      );
+    },
   },
   {
     title: "Department",
-    cellKey: "department_name",
-    textAlign: "left",
+    cellKey: "",
+    render: (_, value) => <div>{value?.employee?.department?.name}</div>,
   },
   {
     title: "Award",
@@ -68,50 +64,6 @@ const columnsData: TableColumnsType[] = [
     title: "Date Awarded",
     cellKey: "date_awarded",
     textAlign: "left",
-  },
-];
-
-const sampleData = [
-  {
-    id: 1,
-    employee_name: "Gerhold, Tristian B.",
-    employee_id: "qweqwasd",
-    department_name: "Admin/Non-Teaching",
-    department_id: "qweqe",
-    award_name: "Employee of the month",
-    frequency: "3",
-    date_awarded: "2022-12-12",
-  },
-  {
-    id: 2,
-    employee_name: "Huels, Gaetano",
-    employee_id: "12312",
-    department_name: "Criminal Justice Education",
-    department_id: "123qwe",
-    award_name: "Leadership Awards",
-    frequency: "1",
-    date_awarded: "2022-12-12",
-  },
-];
-
-const sampleDAwardData: DataType[] = [
-  {
-    id: 1,
-    employee_name: "Gerhold, Tristian B.",
-    employee_id: "qweqwasd",
-    department_name: "Admin/Non-Teaching",
-    department_id: "qweqe",
-    award_name: "Employee of the month",
-    date_awarded: "2022-12-12",
-  },
-  {
-    id: 2,
-    employee_name: "Huels, Gaetano",
-    employee_id: "12312",
-    department_name: "Criminal Justice Education",
-    department_id: "123qwe",
-    award_name: "Leadership Awards",
-    date_awarded: "2022-12-12",
   },
 ];
 
@@ -123,15 +75,15 @@ function AwardsAccomplishmentsPage() {
   const [modalData, setModalData] = useState(false);
 
   const emptyValAward = {
+    remarks: "",
     employee_name: "",
     employee_id: "",
     award_name: "",
-    frequency: "",
-    date: "",
+    date_awarded: "",
     id: undefined,
   };
 
-  const emptyValData = {
+  const emptyValData: DataType = {
     employee_name: "",
     employee_id: "",
     department_name: "",
@@ -146,36 +98,36 @@ function AwardsAccomplishmentsPage() {
   const [defaultValueData, setDefaultValueData] = useState(emptyValData);
 
   const { data, isLoading } = useFetch(
-    "users-list",
-    ["users-list", search, page],
-    `/api/users?search=${search}&page=${page}`
+    "awards-list",
+    ["awards-list", search, page],
+    `/api/awards?search=${search}&page=${page}`
   );
 
   const { data: archive, isLoading: archiveLoading } = useFetch(
-    "users-list-archive",
-    ["users-list-archive", search, page],
-    `/api/users/archive?search=${search}&page=${page}`
+    "awards-list-archive",
+    ["awards-list-archive", search, page],
+    `/api/awards/archive?search=${search}&page=${page}`
   );
 
-  const { data: awardsData, isLoading: dataArchive } = useFetch(
-    "users-list-archive",
-    ["users-list-archive", search, page],
-    `/api/users/archive?search=${search}&page=${page}`
+  const { data: awardsData, isLoading: dataLoading } = useFetch(
+    "awards-list-data",
+    ["awards-list-data", search, page],
+    `/api/awards/details?search=${search}&page=${page}`
   );
 
   const { setNotification } = useGlobalState();
   const queryClient = useQueryClient();
   const successRestore = () => {
-    queryClient.invalidateQueries("users-list");
-    queryClient.invalidateQueries("users-list-archive");
+    queryClient.invalidateQueries("awards-list");
+    queryClient.invalidateQueries("awards-list-archive");
     setModal(false);
-    setNotification(true, "success", `User successfully restored!`);
+    setNotification(true, "success", `Award successfully restored!`);
   };
   const errorRestore = (error: any) => {
     setNotification(true, "error", "Something went wrong");
   };
   const restoreHandler = (id: any) => {
-    restore(successRestore, errorRestore, `/api/users/restore/${id}`);
+    restore(successRestore, errorRestore, `/api/awards/restore/${id}`);
   };
   return (
     <>
@@ -183,24 +135,20 @@ function AwardsAccomplishmentsPage() {
       <Tab tab={isTab} setTab={setTab} tabMenu={["lists", "archive", "data"]} />
       <div className=" flex items-center flex-wrap gap-3 justify-between">
         <Search search={search} setSearch={setSearch} />
-        <Button
-          appearance={"primary"}
-          onClick={() => {
-            if (isTab === "lists") {
-              setDefaultValue(emptyValAward);
-              setModal(true);
-            }
-            if (isTab === "data") {
+        {isTab === "data" && (
+          <Button
+            appearance={"primary"}
+            onClick={() => {
               setDefaultValueData(emptyValData);
               setModalData(true);
-            }
-          }}
-        >
-          Add
-        </Button>
+            }}
+          >
+            Add
+          </Button>
+        )}
       </div>
       <Table
-        isLoading={isTab === "users" ? isLoading : archiveLoading}
+        isLoading={isTab === "awards" ? isLoading : archiveLoading}
         columns={
           isTab === "archive"
             ? [
@@ -221,12 +169,23 @@ function AwardsAccomplishmentsPage() {
             : columns
         }
         data={
-          // isTab === "users" ? data?.data?.data?.data : archive?.data?.data?.data
-          isTab === "data" ? sampleDAwardData : sampleData
+          isTab === "archive"
+            ? archive?.data?.data?.data
+            : isTab === "data"
+            ? awardsData?.data?.data?.data
+            : data?.data?.data?.data
         }
         onClickRow={(data) => {
           if (isTab === "data") {
-            setDefaultValueData(data);
+            setDefaultValueData({
+              employee_id: data?.employee?.id,
+              employee_name: `${data?.employee.last_name} ${data?.employee.first_name} ${data?.employee.middle_name}`,
+              department_id: data?.employee?.department?.id,
+              department_name: data?.employee?.department?.name,
+              award_name: data?.award_name,
+              date_awarded: data?.date_awarded,
+              id: data?.id,
+            });
             setModalData(true);
           }
         }}
@@ -234,10 +193,11 @@ function AwardsAccomplishmentsPage() {
         setPage={setPage}
         page={page}
         totalPage={
-          1
-          // isTab === "users"
-          //   ? data?.data?.data?.last_page
-          //   : archive?.data?.data?.last_page
+          isTab === "archive"
+            ? archive?.data?.data?.last_page
+            : isTab === "data"
+            ? awardsData?.data?.data?.last_page
+            : data?.data?.data?.last_page
         }
       />
       <Modal

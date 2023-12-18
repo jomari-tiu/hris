@@ -35,8 +35,6 @@ function DataForm({ defaultValues, setModal }: Props) {
     defaultValues: defaultValues,
   });
 
-  console.log(defaultValues);
-
   const successDelete = () => {
     setModal(false);
     setNotification(true, "success", `user Successfully deleted!`);
@@ -56,21 +54,21 @@ function DataForm({ defaultValues, setModal }: Props) {
   const { isLoading: DeleteLoading, mutate: Delete } = useRemove(
     successDelete,
     error,
-    "/api/users",
-    "users-list"
+    "/api/awards",
+    "awards-list-data"
   );
 
   const { isLoading, mutate } = usePost(
     success,
     error,
-    "/api/users",
+    "/api/awards",
     defaultValues?.id ? defaultValues?.id : false,
-    "users-list"
+    "awards-list-data"
   );
 
   const SubmitHandler = (data: any) => {
-    delete data.deleted_at;
-    delete data.user_id;
+    delete data.department_name;
+    delete data.employee_name;
     mutate(data);
   };
 
@@ -96,14 +94,13 @@ function DataForm({ defaultValues, setModal }: Props) {
           errors={errors}
           rules={{ required: "required" }}
           name={"department_id"}
-          keyID="id"
-          keyName="department_name"
           displayValue={watch("department_name")}
           displayValueKey={"department_name"}
           setDisplayValue={setValue}
           placeholder={"Department"}
           endpoint={"/api/options/departments"}
         />
+
         <ControllerField
           control={control}
           errors={errors}

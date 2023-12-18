@@ -19,6 +19,8 @@ export type employeeinfo = {
   position_id?: string;
   position_name?: string;
   is_flexible: boolean;
+  employment_status_id: string;
+  employment_status_name: string;
 };
 
 export type employeeinfoResponse = {

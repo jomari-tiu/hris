@@ -24,9 +24,14 @@ function PositionPage() {
   const [isTab, setTab] = useState("positions");
   const [modal, setModal] = useState(false);
 
-  const emptyVal = {};
+  const emptyVal = {
+    name: "",
+    description: "",
+    department_id: "",
+    department_name: "",
+  };
 
-  const [defaultValue, setDefaultValue] = useState(emptyVal);
+  const [defaultValue, setDefaultValue] = useState<any>(emptyVal);
 
   const columns: TableColumnsType[] = [
     {
@@ -115,7 +120,13 @@ function PositionPage() {
         }
         onClickRow={(data) => {
           if (isTab === "positions") {
-            setDefaultValue(data);
+            setDefaultValue({
+              id: data?.id,
+              name: data?.name,
+              description: data?.description,
+              department_id: data?.department?.id,
+              department_name: data?.department?.name,
+            });
             setModal(true);
           }
         }}

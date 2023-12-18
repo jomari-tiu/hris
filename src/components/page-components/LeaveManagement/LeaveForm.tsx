@@ -24,6 +24,7 @@ export type LeaveDefaultValue = {
   approved_for: string;
   approved_for_type: string;
   commutation: string;
+  remarks: string;
   id?: any;
 };
 
@@ -42,9 +43,7 @@ export type LeaveResponse = {
   approved_for: string;
   approved_for_type: any;
   commutation: any;
-  created_at: string;
-  updated_at: string;
-  deleted_at: null;
+  remarks: string;
   employee: {
     last_name: string;
     first_name: string;
@@ -121,35 +120,27 @@ function LeaveForm({ defaultValues, setModal }: Props) {
           rules={{ required: "required" }}
           name={"employee_id"}
           placeholder={"Name"}
-          displayValue={defaultValues?.employee_name}
+          displayValue={watch("employee_name")}
           endpoint={"/api/employees"}
           keyName={"first_name"}
           FourData={true}
           displayValueKey={"employee_name"}
           setDisplayValue={setValue}
         />
-        <LayoutColumn colNumber={3}>
+        <LayoutColumn colNumber={2}>
           <ControllerFieldData
             control={control}
             errors={errors}
             rules={{ required: "required" }}
             name={"leave_type_id"}
             placeholder={"Leave Type"}
-            displayValue={defaultValues?.leave_type_name}
+            displayValue={watch("leave_type_name")}
             endpoint={"/api/leave_types"}
             FourData={true}
             displayValueKey={"leave_type_name"}
             setDisplayValue={setValue}
           />
-          <ControllerField
-            control={control}
-            errors={errors}
-            name={"status"}
-            rules={{ required: "required" }}
-            placeholder={"Status"}
-            type={"select"}
-            selectOptions={["pending", "approved", "disapproved"]}
-          />
+
           <ControllerField
             control={control}
             errors={errors}
@@ -215,8 +206,8 @@ function LeaveForm({ defaultValues, setModal }: Props) {
             type={"textarea"}
           />
         )}
-        <LayoutColumn colNumber={2}>
-          {watch("status") === "approved" && (
+        {watch("status") === "approved" && (
+          <LayoutColumn colNumber={2}>
             <aside className=" space-y-2">
               <ControllerField
                 control={control}
@@ -240,21 +231,41 @@ function LeaveForm({ defaultValues, setModal }: Props) {
                 ]}
               />
             </aside>
-          )}
-          <aside className=" space-y-2">
-            <ControllerField
-              control={control}
-              errors={errors}
-              name={"commutation"}
-              rules={{ required: "required" }}
-              placeholder={"Commutation"}
-              type={"radio"}
-              radioOptions={[
-                { label: "Not Requested", value: 0 },
-                { label: "Requested", value: 1 },
-              ]}
-            />
-          </aside>
+          </LayoutColumn>
+        )}
+        <LayoutColumn colNumber={3}>
+          <ControllerField
+            control={control}
+            errors={errors}
+            name={"commutation"}
+            rules={{ required: "required" }}
+            placeholder={"Commutation"}
+            type={"radio"}
+            radioOptions={[
+              { label: "Not Requested", value: 0 },
+              { label: "Requested", value: 1 },
+            ]}
+          />
+          <ControllerField
+            control={control}
+            errors={errors}
+            name={"status"}
+            rules={{ required: "required" }}
+            placeholder={"Status"}
+            type={"radio"}
+            radioOptions={[
+              { label: "On Time", value: 0 },
+              { label: "Late Filling", value: 1 },
+            ]}
+          />
+          <ControllerField
+            control={control}
+            errors={errors}
+            name={"remarks"}
+            rules={{ required: "required" }}
+            placeholder={"Remarks"}
+            type={"text"}
+          />
         </LayoutColumn>
 
         <div className=" flex justify-end items-center">
