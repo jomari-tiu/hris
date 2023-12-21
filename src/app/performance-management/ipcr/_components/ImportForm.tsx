@@ -50,7 +50,7 @@ function ImportIPCRForm({ setModal }: Props) {
     error,
     "/api/ipcr/import-dat",
     false,
-    "ipcr"
+    "ipcr-list"
   );
 
   const dragOverHandler = (event: any) => {
