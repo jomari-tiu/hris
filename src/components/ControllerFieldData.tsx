@@ -127,6 +127,11 @@ const Field = ({
           <ul className=" absolute top-[110%] z-10 left-0 bg-cchovergray w-full shadow-md max-h-[10rem] overflow-auto">
             {FourData ? (
               <>
+                {data?.data?.data?.data.length <= 0 && (
+                  <li className=" px-2 py-1 hover:bg-ccbgsecondary duration-150 cursor-pointer">
+                    No record found
+                  </li>
+                )}
                 {data?.data?.data?.data.map((item: any, indx: number) => (
                   <li
                     key={indx}
@@ -146,6 +151,11 @@ const Field = ({
               </>
             ) : (
               <>
+                {data?.data?.data.length <= 0 && (
+                  <li className=" px-2 py-1 hover:bg-ccbgsecondary duration-150 cursor-pointer">
+                    No record found
+                  </li>
+                )}
                 {data?.data?.data.map((item: any, indx: number) => (
                   <li
                     key={indx}

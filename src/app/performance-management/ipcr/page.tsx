@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 
+import { LuImport } from "react-icons/lu";
+
 import { useQueryClient } from "react-query";
 
 import DepartmentSelect from "@/app/dashboard/_component/DepartmentSelect";
@@ -13,6 +15,7 @@ import { textDateFormat } from "@/components/helper";
 import Modal from "@/components/Modal";
 import PageTitle from "@/components/PageTitle";
 import RestoreButton from "@/components/RestoreButton";
+
 import Search from "@/components/Search";
 
 import Tab from "@/components/Tab";
@@ -21,6 +24,7 @@ import Table, { TableColumnsType } from "@/components/Table";
 
 import { useFetch, restore } from "@/util/api";
 
+import ImportIPCRForm from "./_components/ImportForm";
 import IpcrForm from "./_components/IpcrForm";
 import { ipcr } from "./_components/ipcrType";
 import ModifyForm from "./_components/ModifyForm";
@@ -31,6 +35,7 @@ function Ipcr() {
   const [page, setPage] = useState(1);
   const [isTab, setTab] = useState("IPCR");
   const [modal, setModal] = useState(false);
+  const [modalImport, setModalImport] = useState(false);
   const [period, setPeriod] = useState({
     value: "",
     id: "",
@@ -222,6 +227,16 @@ function Ipcr() {
           <aside className=" gap-2 flex items-center flex-wrap">
             <Button
               appearance={"primary"}
+              className="flex items-center gap-2"
+              onClick={() => {
+                setModalImport(true);
+              }}
+            >
+              <LuImport />
+              Import
+            </Button>
+            <Button
+              appearance={"primary"}
               onClick={() => {
                 setDefaultValue(emptyVal);
                 setModal(true);
@@ -299,6 +314,16 @@ function Ipcr() {
         ) : (
           <IpcrForm setModal={setModal} defaultValues={defaultValue} />
         )}
+      </Modal>
+
+      <Modal
+        show={modalImport}
+        onClose={() => {
+          setModalImport(false);
+        }}
+        width="narrow"
+      >
+        <ImportIPCRForm setModal={setModalImport} />
       </Modal>
     </>
   );

@@ -56,6 +56,16 @@ export const SideMenuLinks: SideMenuLinksType[] = [
     title: "Leave Management",
     url: "/leave-management",
     icon: <BsRecordCircleFill />,
+    submenu: [
+      {
+        title: "Leaves",
+        url: "/leave-management/leaves",
+      },
+      {
+        title: "Balances",
+        url: "/leave-management/balances",
+      },
+    ],
   },
   {
     title: "Performance Management",

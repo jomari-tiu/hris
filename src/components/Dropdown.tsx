@@ -52,7 +52,7 @@ function Dropdown({
   });
 
   return (
-    <div className=" relative" ref={element}>
+    <div className=" relative inline-block" ref={element}>
       <input
         type="text"
         onClick={() => setShow(true)}
@@ -66,6 +66,11 @@ function Dropdown({
           {isLoading && (
             <li className=" py-2 flex justify-center">
               <PulseLoader color="#9ACC2F" size={10} />
+            </li>
+          )}
+          {data?.data?.data.length <= 0 && (
+            <li className=" px-2 py-1 border-b flex items-start cursor-pointer hover:bg-cchovergray ">
+              No record found
             </li>
           )}
           {data?.data?.data.map((item: any, indx: number) => (

@@ -174,7 +174,7 @@ function LeaveMangement() {
   };
   return (
     <>
-      <PageTitle title={["Leave Management"]} />
+      <PageTitle title={["Leave Management", "Leaves"]} />
       <Tab
         tab={isTab}
         setTab={setTab}
