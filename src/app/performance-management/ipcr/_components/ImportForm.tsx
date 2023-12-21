@@ -58,11 +58,20 @@ function ImportIPCRForm({ setModal }: Props) {
   };
 
   const dropHandler = (event: any, typeEvent: string) => {
+    if (!period.id) {
+      setNotification(true, "warning", `Please select period first!`);
+      return;
+    }
     event.preventDefault();
     const file =
       typeEvent === "drop"
         ? event.dataTransfer.files[0]
         : event.target.files[0];
+
+    if (!file) {
+      return;
+    }
+
     if (file.length > 1) {
       setNotification(true, "warning", `Can't import multiple file!`);
       return;
@@ -90,11 +99,7 @@ function ImportIPCRForm({ setModal }: Props) {
     } else if (extension === "dat") {
       datMutate(formData);
     } else {
-      setNotification(
-        true,
-        "warning",
-        `Invalid File, Must be xlsx or dat file!`
-      );
+      setNotification(true, "warning", `Invalid File, Must be xlsx only!`);
       return;
     }
   };
@@ -106,37 +111,40 @@ function ImportIPCRForm({ setModal }: Props) {
         value={period}
         setValue={setPeriod}
         endpoint={"/api/options/ipcr_periods"}
-        label={"Period"}
+        label={"Select Period"}
         displayValueKey={"date_range"}
       />
-      <aside
-        onDragOver={dragOverHandler}
-        onDrop={(e) => dropHandler(e, "drop")}
-        className=" bg-ccbgsecondary w-full space-y-3 aspect-[2/1] border-2 border-ccgreen border-dashed rounded-md flex flex-col items-center justify-center"
-      >
-        {xlsxLoading || datLoading ? (
-          <RotateLoader color="#84bd38" className="mb-5" />
-        ) : (
-          <LuImport className=" text-[4rem] text-ccgreen" />
-        )}
+      <div>
+        <p className=" mb-1">Import Excel</p>
+        <aside
+          onDragOver={dragOverHandler}
+          onDrop={(e) => dropHandler(e, "drop")}
+          className=" bg-ccbgsecondary w-full space-y-3 aspect-[2/1] border-2 border-ccgreen border-dashed rounded-md flex flex-col items-center justify-center"
+        >
+          {xlsxLoading || datLoading ? (
+            <RotateLoader color="#84bd38" className="mb-5" />
+          ) : (
+            <LuImport className=" text-[4rem] text-ccgreen" />
+          )}
 
-        <p>
-          Drag and drop file or{" "}
-          <label
-            htmlFor="uploadFile"
-            className="  text-red-1 underline cursor-pointer"
-          >
-            Browse
-          </label>
-          <input
-            id="uploadFile"
-            type="file"
-            className=" absolute opacity-0 z-[-9999]"
-            multiple={false}
-            onChange={(e) => dropHandler(e, "onChange")}
-          />
-        </p>
-      </aside>
+          <p>
+            Drag and drop file or{" "}
+            <label
+              htmlFor="uploadFile"
+              className="  text-red-1 underline cursor-pointer"
+            >
+              Browse
+            </label>
+            <input
+              id="uploadFile"
+              type="file"
+              className=" absolute opacity-0 z-[-9999]"
+              multiple={false}
+              onChange={(e) => dropHandler(e, "onChange")}
+            />
+          </p>
+        </aside>
+      </div>
     </div>
   );
 }

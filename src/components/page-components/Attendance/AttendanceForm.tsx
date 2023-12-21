@@ -56,6 +56,10 @@ function AttendanceForm({ setModal }: Props) {
       typeEvent === "drop"
         ? event.dataTransfer.files[0]
         : event.target.files[0];
+
+    if (!file) {
+      return;
+    }
     if (file.length > 1) {
       setNotification(true, "warning", `Can't import multiple file!`);
       return;

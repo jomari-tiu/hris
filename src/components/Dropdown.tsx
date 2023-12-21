@@ -52,7 +52,7 @@ function Dropdown({
   });
 
   return (
-    <div className=" relative inline-block" ref={element}>
+    <div className=" relative" ref={element}>
       <input
         type="text"
         onClick={() => setShow(true)}
@@ -60,6 +60,7 @@ function Dropdown({
         value={value.value}
         readOnly
         placeholder={label}
+        className=" w-full"
       />
       {show && (
         <ul className=" absolute top-[110%] left-0 border shadow-md rounded-md bg-ccbgsecondary w-full overflow-auto max-h-[20rem] z-10">
