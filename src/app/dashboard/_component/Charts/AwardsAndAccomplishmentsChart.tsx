@@ -1,29 +1,62 @@
 import React, { useEffect, useState } from "react";
 
+import { useRouter } from "next/navigation";
+
+import { useFetch } from "@/util/api";
+
 import ChartComponent from ".";
-import { awardsAndAccomplishmentsData } from "./sampleData/awardsAndAccomplishments";
+
+export type AwardsDataType = {
+  years: number[];
+  data: {
+    backgroundColor: "#c8ddf9";
+    label: "CAS";
+    count: {
+      year: number;
+      value: number;
+    }[];
+  }[];
+};
 
 const AwardsAndAccomplishmentsChart = () => {
-  const [data, setData] = useState<any>({
+  const router = useRouter();
+
+  const [barChartData, setBarChartData] = useState<any>({
     labels: [],
     datasets: [],
   });
 
+  const { data, isLoading } = useFetch(
+    "dashboard-awards-accomplishments",
+    ["dashboard-awards-accomplishments"],
+    "/api/dashboard/trainings"
+  );
+
+  const awardsData: AwardsDataType = data?.data?.data;
+
   useEffect(() => {
-    setData({
-      labels: awardsAndAccomplishmentsData?.years, // x-axis
-      datasets: awardsAndAccomplishmentsData.data.map((item) => {
+    setBarChartData({
+      labels: awardsData?.years, // x-axis
+      datasets: awardsData?.data.map((item) => {
         return {
-          id: item?.count.map((item) => item.id),
+          id: item?.count.map((item) => item.year),
           label: item?.label,
           data: item?.count.map((item) => item.value),
           backgroundColor: item.backgroundColor,
         };
       }),
     });
-  }, [awardsAndAccomplishmentsData]);
+  }, [awardsData]);
 
   const options = {
+    onClick: (event: any, elements: any) => {
+      // Handle click on the chart itself
+      if (elements.length > 0) {
+        router.push("/employee-management/awards-accomplishments");
+        // const clickedElement = elements[0];
+        // console.log("Chart Element Clicked:", clickedElement);
+      }
+    },
     responsive: true,
     plugins: {
       legend: {
@@ -33,7 +66,7 @@ const AwardsAndAccomplishmentsChart = () => {
       datalabels: {
         color: "#fff",
         formatter: function (value: any, context: any) {
-          const hrValue = value;
+          const hrValue = value <= 0 ? "" : value;
           return hrValue;
         },
       },
@@ -55,11 +88,10 @@ const AwardsAndAccomplishmentsChart = () => {
           Awards and Accomplishments
         </h5>
         <ChartComponent
-          chartData={data}
+          chartData={barChartData}
           type={"bar"}
           options={options}
-          chartName={"awards-and-accomplishments"}
-          redirectTo="/employee-management/awards-accomplishments"
+          chartName={"awards-accomplishments-chart"}
         />
       </div>
     </>

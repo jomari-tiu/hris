@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -7,12 +7,10 @@ import {
   Title,
   Tooltip,
   Legend,
-  InteractionItem,
   ArcElement,
 } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
-import { useRouter } from "next/navigation";
-import { Bar, Pie, getDatasetAtEvent } from "react-chartjs-2";
+import { Bar, Pie } from "react-chartjs-2";
 import { IoIosMenu } from "react-icons/io";
 import { useReactToPrint } from "react-to-print";
 
@@ -39,17 +37,9 @@ type PropsType = {
   type: "bar" | "pie";
   options: any;
   chartName: string;
-  redirectTo: string;
 };
 
-const ChartComponent = ({
-  chartData,
-  type,
-  options,
-  chartName,
-  redirectTo,
-}: PropsType) => {
-  const router = useRouter();
+const ChartComponent = ({ chartData, type, options, chartName }: PropsType) => {
   const [menu, setMenu] = useState(false);
   const [fullScreen, setFullScreen] = useState(false);
   const [data, setData] = useState<any>({
@@ -63,22 +53,6 @@ const ChartComponent = ({
   const chartRef: any = useRef(null);
 
   const printRef: any = useRef(null);
-
-  const printDatasetAtEvent = (dataset: InteractionItem[]) => {
-    if (!dataset.length) return;
-    const { datasetIndex, index } = dataset[0];
-    console.log(data.datasets[datasetIndex].label);
-    console.log(dataset.length);
-    console.log(data.labels[index], data.datasets[index].data[index]);
-  };
-  const onClickHandler = (event: any) => {
-    const { current: chart } = chartRef;
-    if (!chart) {
-      return;
-    }
-    router.push(redirectTo);
-    // printDatasetAtEvent(getDatasetAtEvent(chart, event));
-  };
 
   const downloadChartHandler = (name: string, fileType: string) => {
     const link = document.createElement("a");
@@ -158,7 +132,6 @@ const ChartComponent = ({
               data={data}
               options={options}
               plugins={plugins}
-              onClick={onClickHandler}
             />
           </div>
         )}
@@ -170,7 +143,6 @@ const ChartComponent = ({
                 data={data}
                 options={options}
                 plugins={plugins}
-                onClick={onClickHandler}
               />
             </div>
           </div>
@@ -186,7 +158,6 @@ const ChartComponent = ({
                 data={data}
                 options={options}
                 plugins={plugins}
-                onClick={onClickHandler}
               />
             )}
 
@@ -198,7 +169,6 @@ const ChartComponent = ({
                     data={data}
                     options={options}
                     plugins={plugins}
-                    onClick={onClickHandler}
                   />
                 </div>
               </div>
@@ -221,7 +191,6 @@ const ChartComponent = ({
               data={data}
               options={options}
               plugins={plugins}
-              onClick={onClickHandler}
             />
           </div>
         )}
@@ -232,7 +201,6 @@ const ChartComponent = ({
               data={data}
               options={options}
               plugins={plugins}
-              onClick={onClickHandler}
             />
           </div>
         )}

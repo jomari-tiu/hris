@@ -11,7 +11,9 @@ import {
   Legend,
 } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
+import { useRouter } from "next/navigation";
 import { Line, Bar } from "react-chartjs-2";
+
 import { AiOutlineArrowRight } from "react-icons/ai";
 
 import { useFetch } from "@/util/api";
@@ -58,6 +60,8 @@ type departmentWiseType = {
 };
 
 function DepartmentWise() {
+  const router = useRouter();
+
   const [LineChart, setLineChart] = useState<any>({
     labels: [],
     datasets: [],
@@ -96,6 +100,14 @@ function DepartmentWise() {
   }, [departmentWise?.data]);
 
   const options = {
+    onClick: (event: any, elements: any) => {
+      // Handle click on the chart itself
+      if (elements.length > 0) {
+        router.push("/dashboard-tardiness");
+        // const clickedElement = elements[0];
+        // console.log("Chart Element Clicked:", clickedElement);
+      }
+    },
     responsive: true,
     plugins: {
       legend: {
@@ -165,7 +177,6 @@ function DepartmentWise() {
           type={"bar"}
           options={options}
           chartName={"department-wise-tardiness-chart"}
-          redirectTo={"/dashboard-tardiness"}
         />
         <span className="text-sm font-bold">DEPARTMENT</span>
       </aside>

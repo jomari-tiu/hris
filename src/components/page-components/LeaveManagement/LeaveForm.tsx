@@ -1,4 +1,6 @@
 import React from "react";
+import { addMinutes, format, startOfDay } from "date-fns";
+
 import { useForm } from "react-hook-form";
 
 import Button from "@/components/Button";
@@ -72,6 +74,8 @@ function LeaveForm({ defaultValues, setModal }: Props) {
   } = useForm<LeaveDefaultValue>({
     defaultValues: defaultValues,
   });
+
+  const timeSlots = generateTimeSlots();
 
   const successDelete = () => {
     setModal(false);
@@ -177,7 +181,8 @@ function LeaveForm({ defaultValues, setModal }: Props) {
             name={"time_start"}
             rules={{ required: "required" }}
             placeholder={"Start Time"}
-            type={"text"}
+            type={"select"}
+            selectOptions={timeSlots}
           />
           <ControllerField
             control={control}
@@ -185,7 +190,8 @@ function LeaveForm({ defaultValues, setModal }: Props) {
             name={"time_end"}
             rules={{ required: "required" }}
             placeholder={"End Time"}
-            type={"text"}
+            type={"select"}
+            selectOptions={timeSlots}
           />
         </LayoutColumn>
         <ControllerField
@@ -288,3 +294,16 @@ function LeaveForm({ defaultValues, setModal }: Props) {
 }
 
 export default LeaveForm;
+
+export function generateTimeSlots() {
+  // 480; // 8:00 AM in minutes (8 * 60)
+  // 1440; // 6:00 PM in minutes (24 * 60)
+  // 30; // 30 minutes
+  const timeSlots = [];
+  let currentDate: any = startOfDay(new Date());
+  while (currentDate < addMinutes(startOfDay(new Date()), 1440)) {
+    timeSlots.push(format(currentDate, "hh:mm a"));
+    currentDate = addMinutes(currentDate, 30);
+  }
+  return timeSlots;
+}

@@ -1,29 +1,62 @@
 import React, { useEffect, useState } from "react";
 
+import { useRouter } from "next/navigation";
+
+import { useFetch } from "@/util/api";
+
 import ChartComponent from ".";
-import { traningData } from "./sampleData/traning";
+
+export type TrainingDataType = {
+  years: number[];
+  data: {
+    backgroundColor: "#c8ddf9";
+    label: "CAS";
+    count: {
+      year: number;
+      value: number;
+    }[];
+  }[];
+};
 
 const TrainingChart = () => {
-  const [data, setData] = useState<any>({
+  const router = useRouter();
+
+  const [barChartData, setBarChartData] = useState<any>({
     labels: [],
     datasets: [],
   });
 
+  const { data, isLoading } = useFetch(
+    "dashboard-training",
+    ["dashboard-training"],
+    "/api/dashboard/trainings"
+  );
+
+  const trainingData: TrainingDataType = data?.data?.data;
+
   useEffect(() => {
-    setData({
-      labels: traningData?.years, // x-axis
-      datasets: traningData.data.map((item) => {
+    setBarChartData({
+      labels: trainingData?.years, // x-axis
+      datasets: trainingData?.data.map((item) => {
         return {
-          id: item?.count.map((item) => item.id),
+          id: item?.count.map((item) => item.year),
           label: item?.label,
           data: item?.count.map((item) => item.value),
           backgroundColor: item.backgroundColor,
         };
       }),
     });
-  }, [traningData]);
+  }, [trainingData]);
 
   const options = {
+    onClick: (event: any, elements: any) => {
+      // Handle click on the chart itself
+      if (elements.length > 0) {
+        router.push("/employee-management/training-records");
+        // const clickedElement = elements[0];
+        // console.log("Chart Element Clicked:", clickedElement);
+      }
+    },
     responsive: true,
     plugins: {
       legend: {
@@ -33,7 +66,7 @@ const TrainingChart = () => {
       datalabels: {
         color: "#fff",
         formatter: function (value: any, context: any) {
-          const hrValue = value;
+          const hrValue = value <= 0 ? "" : value;
           return hrValue;
         },
       },
@@ -55,11 +88,10 @@ const TrainingChart = () => {
           Training
         </h5>
         <ChartComponent
-          chartData={data}
+          chartData={barChartData}
           type={"bar"}
           options={options}
           chartName={"traning-chart"}
-          redirectTo={"/employee-management/training-records"}
         />
       </div>
     </>

@@ -1,17 +1,29 @@
 import React, { useEffect, useState } from "react";
 
+import { useRouter } from "next/navigation";
+
 import Dropdown from "@/components/Dropdown";
+
 import { useFetch } from "@/util/api";
 
 import ChartComponent from ".";
 
 const EmployeeChart = () => {
+  const router = useRouter();
   const [data, setData] = useState<any>({
     labels: [],
     datasets: [],
   });
 
   const options = {
+    onClick: (event: any, elements: any) => {
+      // Handle click on the chart itself
+      if (elements.length > 0) {
+        router.push("/employee-management/profile");
+        // const clickedElement = elements[0];
+        // console.log("Chart Element Clicked:", clickedElement);
+      }
+    },
     responsive: true,
     plugins: {
       legend: {
@@ -63,7 +75,6 @@ const EmployeeChart = () => {
           type={"pie"}
           options={options}
           chartName={"Employee"}
-          redirectTo={"/employee-management/profile"}
         />
       </div>
     </div>

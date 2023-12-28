@@ -62,5 +62,4 @@ export const traningData = {
       backgroundColor: "#e24b26",
     },
   ],
-
 };
