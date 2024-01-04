@@ -40,7 +40,7 @@ function ImportIPCRForm({ setModal }: Props) {
   const { isLoading: xlsxLoading, mutate: xlsxMutate } = usePost(
     success,
     error,
-    "/api/ipcr/import-xlsx",
+    "/api/ipcr_evaluations/import",
     false,
     "ipcr"
   );
@@ -80,6 +80,7 @@ function ImportIPCRForm({ setModal }: Props) {
     const extension = filearray[filearray.length - 1];
     const payload: any = {
       file: file,
+      ipcr_period_id: period.id
     };
 
     const formData: any = new FormData();

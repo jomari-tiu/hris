@@ -29,7 +29,7 @@ const AwardsAndAccomplishmentsChart = () => {
   const { data, isLoading } = useFetch(
     "dashboard-awards-accomplishments",
     ["dashboard-awards-accomplishments"],
-    "/api/dashboard/trainings"
+    "/api/dashboard/awards"
   );
 
   const awardsData: AwardsDataType = data?.data?.data;
