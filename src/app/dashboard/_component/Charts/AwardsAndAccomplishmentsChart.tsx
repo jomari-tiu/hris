@@ -29,7 +29,7 @@ const AwardsAndAccomplishmentsChart = () => {
   const { data, isLoading } = useFetch(
     "dashboard-awards-accomplishments",
     ["dashboard-awards-accomplishments"],
-    "/api/dashboard/trainings"
+    "/api/dashboard/awards"
   );
 
   const awardsData: AwardsDataType = data?.data?.data;
@@ -37,7 +37,7 @@ const AwardsAndAccomplishmentsChart = () => {
   useEffect(() => {
     setBarChartData({
       labels: awardsData?.years, // x-axis
-      datasets: awardsData?.data.map((item) => {
+      datasets: awardsData?.data?.map((item) => {
         return {
           id: item?.count.map((item) => item.year),
           label: item?.label,

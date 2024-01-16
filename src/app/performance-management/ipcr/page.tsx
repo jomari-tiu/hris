@@ -105,46 +105,36 @@ function Ipcr() {
         return <div>{data?.employee?.full_name}</div>;
       },
     },
+    // {
+    //   title: "Citizenship",
+    //   cellKey: "",
+    //   textAlign: "left",
+    //   render: (_, data) => {
+    //     return <div>{data?.employee?.citizenship}</div>;
+    //   },
+    // },
+    // {
+    //   title: "Birth Place",
+    //   cellKey: "",
+    //   textAlign: "left",
+    //   render: (_, data) => {
+    //     return <div>{data?.employee?.birth_place}</div>;
+    //   },
+    // },
     {
-      title: "Citizenship",
+      title: "Final Rating",
       cellKey: "",
       textAlign: "left",
       render: (_, data) => {
-        return <div>{data?.employee?.citizenship}</div>;
+        return <div>{data?.final_average_rating}</div>;
       },
     },
     {
-      title: "Birth Place",
+      title: "Adjectival Rating",
       cellKey: "",
       textAlign: "left",
       render: (_, data) => {
-        return <div>{data?.employee?.birth_place}</div>;
-      },
-    },
-    {
-      title: "Average Mean",
-      cellKey: "",
-      textAlign: "left",
-      render: (_, data) => {
-        let av =
-          Number(data?.mean_score_core) +
-          Number(data?.mean_score_strategic) +
-          Number(data?.mean_score_support);
-        av = av / 3;
-        return <div>{av.toFixed(2)}</div>;
-      },
-    },
-    {
-      title: "Average Weight",
-      cellKey: "",
-      textAlign: "left",
-      render: (_, data) => {
-        let av =
-          Number(data?.weighted_average_core) +
-          Number(data?.weighted_average_strategic) +
-          Number(data?.weighted_average_support);
-        av = av / 3;
-        return <div>{av.toFixed(2)}</div>;
+        return <div>{data?.adjectival_rating}</div>;
       },
     },
   ];
