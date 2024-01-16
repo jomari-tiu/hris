@@ -102,50 +102,6 @@ function LeaveMangement() {
     },
   ];
 
-  const balancesColumns: TableColumnsType[] = [
-    {
-      title: "Name",
-      cellKey: "last_name",
-      textAlign: "left",
-      render: (_, data) => <div>{data.employee.full_name}</div>,
-    },
-    {
-      title: "Department",
-      cellKey: "",
-      textAlign: "left",
-      render: (_, data) => <div>{data.employee.department_id}</div>,
-    },
-    {
-      title: "Position",
-      cellKey: "",
-      textAlign: "left",
-      render: (_, data) => <div>{data.employee.position_id}</div>,
-    },
-    {
-      title: "Remaining VL",
-      cellKey: "date_end",
-      textAlign: "left",
-      render: (value) => {
-        return <div>{10}</div>;
-      },
-    },
-    {
-      title: "Remaining SL",
-      cellKey: "date_end",
-      textAlign: "left",
-      render: (value) => {
-        return <div>{5}</div>;
-      },
-    },
-    {
-      title: "Year",
-      cellKey: "",
-      textAlign: "left",
-      render: (value) => {
-        return <div>{2023}</div>;
-      },
-    },
-  ];
   const { data, isLoading } = useFetch(
     "leaves-list",
     ["leaves-list", search, page, status],
@@ -175,11 +131,7 @@ function LeaveMangement() {
   return (
     <>
       <PageTitle title={["Leave Management", "Leaves"]} />
-      <Tab
-        tab={isTab}
-        setTab={setTab}
-        tabMenu={["leaves", "archive", "balances"]}
-      />
+      <Tab tab={isTab} setTab={setTab} tabMenu={["leaves", "archive"]} />
       <div className=" flex items-center flex-wrap gap-3 justify-between">
         <div className=" flex items-center gap-2">
           <Search search={search} setSearch={setSearch} />
@@ -217,8 +169,6 @@ function LeaveMangement() {
                   ),
                 },
               ]
-            : isTab === "balances"
-            ? balancesColumns
             : columns
         }
         data={

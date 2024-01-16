@@ -65,6 +65,8 @@ const AwardsAndAccomplishmentsChart = () => {
       },
       datalabels: {
         color: "#fff",
+        textShadowColor: "#000",
+        textShadowBlur: 10,
         formatter: function (value: any, context: any) {
           const hrValue = value <= 0 ? "" : value;
           return hrValue;

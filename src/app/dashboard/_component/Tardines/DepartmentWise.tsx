@@ -12,7 +12,6 @@ import {
 } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { useRouter } from "next/navigation";
-import { Line, Bar } from "react-chartjs-2";
 
 import { AiOutlineArrowRight } from "react-icons/ai";
 
@@ -26,7 +25,8 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  ChartDataLabels
 );
 
 type departmentWiseType = {
@@ -116,6 +116,8 @@ function DepartmentWise() {
       },
       datalabels: {
         color: "#fff",
+        textShadowColor: "#000",
+        textShadowBlur: 10,
         formatter: function (value: any, context: any) {
           const hrValue =
             departmentWise?.data[context.dataIndex]?.average_tardiness_time;
@@ -124,7 +126,6 @@ function DepartmentWise() {
       },
     },
   };
-  const plugins = [ChartDataLabels];
 
   return (
     <div className=" space-y-5 ">
@@ -153,25 +154,7 @@ function DepartmentWise() {
           </li>
         )}
       </ul>
-      {/* <ul className=" flex gap-3 items-center flex-wrap">
-        <li>Average</li>
-        <li>
-          <p className=" text-center">Minutes</p>
-          <h3 className=" font-bold text-black text-center">
-            {departmentWise?.average_minutes
-              ? departmentWise?.average_minutes
-              : "0mins"}
-          </h3>
-        </li>
-        <li>
-          <p className=" text-center">Occurences</p>
-          <h3 className=" font-bold text-black text-center">
-            {departmentWise?.average_occurrences}
-          </h3>
-        </li>
-      </ul> */}
       <aside className=" flex flex-col items-center gap-2">
-        {/* <Bar data={LineChart} options={options} /> */}
         <ChartComponent
           chartData={LineChart}
           type={"bar"}

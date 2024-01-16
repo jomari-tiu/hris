@@ -10,8 +10,12 @@ import {
   ArcElement,
 } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 import { Bar, Pie } from "react-chartjs-2";
+
 import { IoIosMenu } from "react-icons/io";
+
 import { useReactToPrint } from "react-to-print";
 
 ChartJS.register(
@@ -55,6 +59,10 @@ const ChartComponent = ({ chartData, type, options, chartName }: PropsType) => {
   const printRef: any = useRef(null);
 
   const downloadChartHandler = (name: string, fileType: string) => {
+    if (fileType === "pdf") {
+      downloadAsPDF();
+      return;
+    }
     const link = document.createElement("a");
     link.download = `${name}.${fileType}`;
     link.href = chartRef.current?.toBase64Image();
@@ -67,6 +75,15 @@ const ChartComponent = ({ chartData, type, options, chartName }: PropsType) => {
     content: () => printRef.current,
   });
 
+  const downloadAsPDF = () => {
+    const chartContainer: any = document.getElementById(chartName);
+    html2canvas(chartContainer, { logging: true }).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf: any = new jsPDF();
+      pdf.addImage(imgData, "PNG", 0, 0);
+      pdf.save(`${chartName}.pdf`);
+    });
+  };
   return (
     <div className=" flex flex-col w-full h-full">
       <div className=" w-full flex justify-end relative">
@@ -77,7 +94,7 @@ const ChartComponent = ({ chartData, type, options, chartName }: PropsType) => {
           <IoIosMenu />
         </button>
         {menu && (
-          <ul className=" absolute top-[110%] right-0 bg-white-0">
+          <ul className=" absolute top-[110%] right-0 bg-white-0 z-10 shadow-lg">
             <li
               className=" p-2 hover:bg-gray-100 duration-150 cursor-pointer"
               onClick={() => setFullScreen(!fullScreen)}
@@ -104,7 +121,7 @@ const ChartComponent = ({ chartData, type, options, chartName }: PropsType) => {
             </li>
             <li
               className=" p-2 hover:bg-gray-100 duration-150  cursor-pointer"
-              onClick={() => downloadChartHandler(chartName, "pdf")}
+              onClick={(e) => downloadChartHandler(chartName, "pdf")}
             >
               Download PDF document
             </li>
@@ -124,7 +141,7 @@ const ChartComponent = ({ chartData, type, options, chartName }: PropsType) => {
         )}
       </div>
 
-      <div className=" flex-1 h-full w-full">
+      <div className=" flex-1 h-full w-full " id={chartName}>
         {type === "bar" && (
           <div className=" w-full print:w-11/12">
             <Bar
@@ -151,7 +168,7 @@ const ChartComponent = ({ chartData, type, options, chartName }: PropsType) => {
 
       {fullScreen && (
         <section className="fixed top-0 left-0 bg-[#00000074] z-50 h-full w-full flex justify-center items-center">
-          <div className=" w-10/12 h-[90%] bg-white-0 p-5 rounded-lg">
+          <div className=" w-10/12 h-[90%] bg-white-0 p-5 rounded-lg div2PDF">
             {type === "bar" && (
               <Bar
                 ref={chartRef}

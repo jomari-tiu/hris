@@ -27,10 +27,6 @@ function DashboardPage() {
           <AwardsAndAccomplishmentsChart />
         </li>
       </ul>
-      {/* <PageTitle title={["Dashboard"]} />
-      <Tab tab={isTab} setTab={setTab} tabMenu={["Tardiness", "IPCR"]} />
-      {isTab === "Tardiness" && <Tardines />}
-      {isTab === "IPCR" && <Ipcr />} */}
     </>
   );
 }

@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 
 import { useRouter } from "next/navigation";
 
-import Dropdown from "@/components/Dropdown";
-
 import { useFetch } from "@/util/api";
 
 import ChartComponent from ".";
@@ -32,6 +30,8 @@ const EmployeeChart = () => {
       },
       datalabels: {
         color: "#fff",
+        textShadowColor: "#000",
+        textShadowBlur: 10,
         formatter: function (value: any, context: any) {
           return `${value}`;
         },

@@ -20,8 +20,6 @@ const IndividualPerformanceAndCarreerReviewChart = () => {
       // Handle click on the chart itself
       if (elements.length > 0) {
         router.push("/performance-management/ipcr");
-        // const clickedElement = elements[0];
-        // console.log("Chart Element Clicked:", clickedElement);
       }
     },
     responsive: true,
@@ -32,6 +30,8 @@ const IndividualPerformanceAndCarreerReviewChart = () => {
       },
       datalabels: {
         color: "#fff",
+        textShadowColor: "#000",
+        textShadowBlur: 10,
         formatter: function (value: any, context: any) {
           return value;
         },
@@ -51,7 +51,7 @@ const IndividualPerformanceAndCarreerReviewChart = () => {
 
   const { data: graph, isLoading: graphLoading } = useFetch(
     "ipcr-graph",
-    ["ipcr-graph", period.id],
+    ["ipcr-graph", period.id, department.id],
     `/api/ipcr-graph?ipcr_period_id=${period.id}&department_id=${department.id}`
   );
 
