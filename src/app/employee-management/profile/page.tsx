@@ -174,7 +174,7 @@ function ProfilePage() {
     (error: any) => {
       setNotification(true, "error", error);
     },
-    "/delete-employee-profile",
+    "/api/employees/delete-employee-profile",
     false,
     "profile-list"
   );
