@@ -70,6 +70,8 @@ function Ipcr() {
 
   const [defaultValue, setDefaultValue] = useState<any>(emptyVal);
 
+  const [adjectivalRating, setAdjectvalRating] = useState("");
+
   const opcrColumns: any = [
     {
       title: "Name",
@@ -90,7 +92,9 @@ function Ipcr() {
       textAlign: "left",
       render: (_: any, data: any) => {
         const finalAverage = parseFloat(data.final_average_rating);
-        return <div>{isNaN(finalAverage) ? 'N/A' : finalAverage.toFixed(2)}</div>;
+        return (
+          <div>{isNaN(finalAverage) ? "N/A" : finalAverage.toFixed(2)}</div>
+        );
       },
     },
     {
@@ -109,22 +113,6 @@ function Ipcr() {
         return <div>{data?.employee?.full_name}</div>;
       },
     },
-    // {
-    //   title: "Citizenship",
-    //   cellKey: "",
-    //   textAlign: "left",
-    //   render: (_, data) => {
-    //     return <div>{data?.employee?.citizenship}</div>;
-    //   },
-    // },
-    // {
-    //   title: "Birth Place",
-    //   cellKey: "",
-    //   textAlign: "left",
-    //   render: (_, data) => {
-    //     return <div>{data?.employee?.birth_place}</div>;
-    //   },
-    // },
     {
       title: "Final Rating",
       cellKey: "",
@@ -150,16 +138,19 @@ function Ipcr() {
       page,
       isDepartmentIds.map((item) => item.id),
       period.id,
+      adjectivalRating,
     ],
     `/api/ipcr_evaluations?search=${search}&page=${page}&period_id=${
       period.id
-    }&department_ids=${isDepartmentIds.map((item) => item.id)}`
+    }&department_ids=${isDepartmentIds.map(
+      (item) => item.id
+    )}&adjectival_rating=${adjectivalRating}`
   );
 
   const { data: opcr, isLoading: opcrLoading } = useFetch(
     "opcr-list",
-    ["opcr-list", search, page, period.id],
-    `/api/opcr?search=${search}&page=${page}&period_id=${period.id}`
+    ["opcr-list", search, page, period.id, adjectivalRating],
+    `/api/opcr?search=${search}&page=${page}&period_id=${period.id}&adjectival_rating=${adjectivalRating}`
   );
 
   const { data: archive, isLoading: archiveLoading } = useFetch(
@@ -170,10 +161,13 @@ function Ipcr() {
       page,
       isDepartmentIds.map((item) => item.id),
       period.id,
+      adjectivalRating,
     ],
     `/api/ipcr_evaluations/archive?search=${search}&page=${page}&period_id=${
       period.id
-    }&department_ids=${isDepartmentIds.map((item) => item.id)}`
+    }&department_ids=${isDepartmentIds.map(
+      (item) => item.id
+    )}&adjectival_rating=${adjectivalRating}`
   );
 
   const { setNotification } = useGlobalState();
@@ -215,6 +209,17 @@ function Ipcr() {
             label={"Period"}
             displayValueKey={"date_range"}
           />
+
+          <select onChange={(e) => setAdjectvalRating(e.target.value)}>
+            <option value="" disabled>
+              Select adjectival rating
+            </option>
+            <option value="1">Poor</option>
+            <option value="2">Unsatisfactory</option>
+            <option value="3">Satisfactory</option>
+            <option value="4">Very Satisfactory</option>
+            <option value="5">Outstanding</option>
+          </select>
         </aside>
 
         {isTab !== "OPCR" && (
