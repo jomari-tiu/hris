@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useQueryClient } from "react-query";
 
 import Button from "@/components/Button";
 import { useGlobalState } from "@/components/Context/AppMangement";
+import DateRangePicker from "@/components/DateRangePicker";
 import { textDateFormat } from "@/components/helper";
 import Modal from "@/components/Modal";
 import UserForm from "@/components/page-components/AdminSettings/Users/UserForm";
@@ -35,6 +36,15 @@ function TrainingPage() {
   };
 
   const [defaultValue, setDefaultValue] = useState(emptyVal);
+
+  const [dates, setDates] = useState({
+    startDate: "",
+    endDate: "",
+  });
+
+  useEffect(() => {
+    console.log(dates);
+  }, [dates]);
 
   const columns: TableColumnsType[] = [
     {
@@ -82,8 +92,8 @@ function TrainingPage() {
 
   const { data: archive, isLoading: archiveLoading } = useFetch(
     "trainings-list-archive",
-    ["trainings-list-archive", search, page],
-    `/api/trainings/archive?search=${search}&page=${page}`
+    ["trainings-list-archive", search, page, dates.startDate, dates.endDate],
+    `/api/trainings/archive?search=${search}&page=${page}&from=${dates.startDate}&to=${dates.endDate}`
   );
 
   const { setNotification } = useGlobalState();
@@ -105,7 +115,10 @@ function TrainingPage() {
       <PageTitle title={["Employee", "Training Records"]} />
       <Tab tab={isTab} setTab={setTab} tabMenu={["trainings", "archive"]} />
       <div className=" flex items-center flex-wrap gap-3 justify-between">
-        <Search search={search} setSearch={setSearch} />
+        <div className=" flex gap-5">
+          <Search search={search} setSearch={setSearch} />
+          <DateRangePicker dates={dates} setDate={setDates} />
+        </div>
         <Button
           appearance={"primary"}
           onClick={() => {

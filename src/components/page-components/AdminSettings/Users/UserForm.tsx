@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import Button from "@/components/Button";
 import { useGlobalState } from "@/components/Context/AppMangement";
 import ControllerField from "@/components/ControllerField";
+import DialogBox from "@/components/DialogBox";
 import { usePost, useRemove } from "@/util/api";
 
 type user = {
@@ -66,8 +67,21 @@ function UserForm({ defaultValues, setModal }: Props) {
     mutate(data);
   };
 
+  const [deleteModal, setDeleteModal] = useState(false);
+
   return (
     <div className=" space-y-5">
+      <DialogBox
+        onConfirm={() => {
+          Delete(defaultValues?.id);
+        }}
+        show={deleteModal}
+        setShow={setDeleteModal}
+        loading={DeleteLoading}
+        onClose={() => {
+          setDeleteModal(false);
+        }}
+      />
       <p>{id ? "Update" : "Create"} - User</p>
       <form onSubmit={handleSubmit(SubmitHandler)} className=" space-y-2">
         <ControllerField
@@ -91,7 +105,7 @@ function UserForm({ defaultValues, setModal }: Props) {
             <Button
               appearance={"primary"}
               loading={DeleteLoading}
-              onClick={() => Delete(defaultValues?.id)}
+              onClick={() => setDeleteModal(true)}
             >
               Delete
             </Button>

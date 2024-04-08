@@ -84,6 +84,7 @@ const ChartComponent = ({ chartData, type, options, chartName }: PropsType) => {
       pdf.save(`${chartName}.pdf`);
     });
   };
+
   return (
     <div className=" flex flex-col w-full h-full">
       <div className=" w-full flex justify-end relative">
@@ -125,7 +126,7 @@ const ChartComponent = ({ chartData, type, options, chartName }: PropsType) => {
             >
               Download PDF document
             </li>
-            <li
+            {/* <li
               className=" p-2 hover:bg-gray-100 duration-150  cursor-pointer"
               onClick={() => downloadChartHandler(chartName, "svg")}
             >
@@ -136,7 +137,7 @@ const ChartComponent = ({ chartData, type, options, chartName }: PropsType) => {
               onClick={() => downloadChartHandler(chartName, "csv")}
             >
               Download CSV
-            </li>
+            </li> */}
           </ul>
         )}
       </div>
@@ -168,7 +169,14 @@ const ChartComponent = ({ chartData, type, options, chartName }: PropsType) => {
 
       {fullScreen && (
         <section className="fixed top-0 left-0 bg-[#00000074] z-50 h-full w-full flex justify-center items-center">
-          <div className=" w-10/12 h-[90%] bg-white-0 p-5 rounded-lg div2PDF">
+          <div className=" w-10/12 h-[90%] bg-white-0 p-5 rounded-lg div2PDF relative">
+            <button
+              onClick={() => setFullScreen(!fullScreen)}
+              className=" mb-5 absolute top-2 right-2 bg-ccgreen4 hover:bg-ccgreen2 duration-150 flex justify-center items-center rounded-full"
+            >
+              Close
+            </button>
+
             {type === "bar" && (
               <Bar
                 ref={chartRef}
@@ -180,7 +188,7 @@ const ChartComponent = ({ chartData, type, options, chartName }: PropsType) => {
 
             {type === "pie" && (
               <div className=" flex h-full w-full items-center justify-center">
-                <div className=" w-10/12 max-w-[50rem]">
+                <div className=" 1024px:w-10/12 w-[40rem] aspect-square">
                   <Pie
                     ref={chartRef}
                     data={data}

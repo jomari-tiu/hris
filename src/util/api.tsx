@@ -114,6 +114,36 @@ export const useRemove = (
   );
 };
 
+export const useRemoveReason = (
+  id: string,
+  onSucces: any,
+  onError: any,
+  endpoint: string,
+  toRefetchNameQuery: string
+) => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (reason: string) => {
+      return axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}${endpoint}/${id}?reason=${reason}`,
+        {
+          headers: {
+            Authorization: "Bearer " + getCookie("user"),
+          },
+        }
+      );
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(toRefetchNameQuery);
+        queryClient.invalidateQueries(`${toRefetchNameQuery}-archive`);
+        onSucces();
+      },
+      onError: onError,
+    }
+  );
+};
+
 export const useFetch = (name: string, queryKey: any[], endpoint: string) => {
   return useQuery(
     queryKey,

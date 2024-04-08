@@ -9,6 +9,7 @@ import { useQueryClient } from "react-query";
 import Button from "@/components/Button";
 import { useGlobalState } from "@/components/Context/AppMangement";
 import DeleteButton from "@/components/DeleteButton";
+import DialogBox from "@/components/DialogBox";
 import { textDateFormat } from "@/components/helper";
 import Modal from "@/components/Modal";
 import EmployeeForm from "@/components/page-components/Employee/Profile/EmployeeForm/EmployeeForm";
@@ -23,7 +24,13 @@ import Search from "@/components/Search";
 import Tab from "@/components/Tab";
 import Table, { TableColumnsType } from "@/components/Table";
 import ViewButton from "@/components/ViewButton";
-import { useFetch, restore, useRemove } from "@/util/api";
+import {
+  useFetch,
+  restore,
+  useRemove,
+  useRemoveReason,
+  usePost,
+} from "@/util/api";
 
 function ProfilePage() {
   const [search, setSearch] = useState("");
@@ -159,19 +166,39 @@ function ProfilePage() {
   };
 
   const [deleteID, setDeleteID] = useState("");
-  const { mutate: Delete, isLoading: deleteLoading } = useRemove(
+  const { mutate: Delete, isLoading: deleteLoading } = usePost(
     () => {
       setNotification(true, "success", `Employee successfully deleted!`);
+      setDeleteID("");
     },
     (error: any) => {
       setNotification(true, "error", error);
     },
-    "/api/employees",
+    "/delete-employee-profile",
+    false,
     "profile-list"
   );
 
+  const [deleteReason, setDeleteReason] = useState("");
+
   return (
     <>
+      <DialogBox
+        onConfirm={() => {
+          Delete({
+            id: deleteID,
+            reason: deleteReason,
+          });
+        }}
+        onClose={() => {
+          setDeleteID("");
+        }}
+        show={deleteID !== ""}
+        setShow={setDeleteID}
+        loading={deleteLoading}
+        reason={deleteReason}
+        setReason={setDeleteReason}
+      />
       <PageTitle title={["Employee", "Profile"]} />
       <Tab tab={isTab} setTab={setTab} tabMenu={["profile", "archive"]} />
       <div className=" flex items-center flex-wrap gap-3 justify-between">
@@ -222,7 +249,6 @@ function ProfilePage() {
                         loading={deleteLoading && data?.id === deleteID}
                         onClick={() => {
                           setDeleteID(data?.id);
-                          Delete(data?.id);
                         }}
                       />
                     </div>

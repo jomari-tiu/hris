@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { addMinutes, format, startOfDay } from "date-fns";
 
 import { useForm } from "react-hook-form";
@@ -7,6 +7,7 @@ import Button from "@/components/Button";
 import { useGlobalState } from "@/components/Context/AppMangement";
 import ControllerField from "@/components/ControllerField";
 import ControllerFieldData from "@/components/ControllerFieldData";
+import DialogBox from "@/components/DialogBox";
 import LayoutColumn from "@/components/LayoutColumn";
 import { usePost, useRemove } from "@/util/api";
 
@@ -114,8 +115,21 @@ function LeaveForm({ defaultValues, setModal }: Props) {
     mutate(data);
   };
 
+  const [deleteModal, setDeleteModal] = useState(false);
+
   return (
     <div className=" space-y-5">
+      <DialogBox
+        onConfirm={() => {
+          Delete(defaultValues?.id);
+        }}
+        show={deleteModal}
+        setShow={setDeleteModal}
+        loading={DeleteLoading}
+        onClose={() => {
+          setDeleteModal(false);
+        }}
+      />
       <p>{id ? "Update" : "Create"} - Leave</p>
       <form onSubmit={handleSubmit(SubmitHandler)} className=" space-y-5">
         <ControllerFieldData
@@ -279,7 +293,7 @@ function LeaveForm({ defaultValues, setModal }: Props) {
             <Button
               appearance={"primary"}
               loading={DeleteLoading}
-              onClick={() => Delete(defaultValues?.id)}
+              onClick={() => setDeleteModal(true)}
             >
               Delete
             </Button>

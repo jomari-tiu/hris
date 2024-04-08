@@ -87,10 +87,10 @@ export const SideMenuLinks: SideMenuLinksType[] = [
         title: "User Management",
         url: "/admin-settings/user-management",
       },
-      {
-        title: "Audit Logs",
-        url: "/admin-settings/audit-logs",
-      },
+      // {
+      //   title: "Audit Logs",
+      //   url: "/admin-settings/audit-logs",
+      // },
     ],
   },
   {

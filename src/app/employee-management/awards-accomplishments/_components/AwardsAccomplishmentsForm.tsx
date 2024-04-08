@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import Button from "@/components/Button";
 import { useGlobalState } from "@/components/Context/AppMangement";
 import ControllerField from "@/components/ControllerField";
 import ControllerFieldData from "@/components/ControllerFieldData";
+import DialogBox from "@/components/DialogBox";
 import { usePost, useRemove } from "@/util/api";
 
 type awards = {
@@ -70,9 +71,20 @@ function AwardsAccomplishmentsForm({ defaultValues, setModal }: Props) {
     delete data.id;
     mutate(data);
   };
-
+  const [deleteModal, setDeleteModal] = useState(false);
   return (
     <div className=" space-y-5">
+      <DialogBox
+        onConfirm={() => {
+          Delete(defaultValues?.id);
+        }}
+        show={deleteModal}
+        setShow={setDeleteModal}
+        loading={DeleteLoading}
+        onClose={() => {
+          setDeleteModal(false);
+        }}
+      />
       <p>{id ? "Update" : "Create"} - Awards and Accomplishments</p>
       <form onSubmit={handleSubmit(SubmitHandler)} className=" space-y-2">
         <ControllerFieldData
@@ -117,7 +129,7 @@ function AwardsAccomplishmentsForm({ defaultValues, setModal }: Props) {
             <Button
               appearance={"primary"}
               loading={DeleteLoading}
-              onClick={() => Delete(defaultValues?.id)}
+              onClick={() => setDeleteModal(true)}
             >
               Delete
             </Button>

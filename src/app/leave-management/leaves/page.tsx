@@ -53,7 +53,7 @@ function LeaveMangement() {
       title: "Name",
       cellKey: "last_name",
       textAlign: "left",
-      render: (_, data) => <div>{data.employee.full_name}</div>,
+      render: (_, data) => <div>{data?.employee?.full_name}</div>,
     },
     {
       title: "Type",
