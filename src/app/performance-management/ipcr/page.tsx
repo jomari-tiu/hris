@@ -70,7 +70,7 @@ function Ipcr() {
 
   const [defaultValue, setDefaultValue] = useState<any>(emptyVal);
 
-  const [adjectivalRating, setAdjectvalRating] = useState("");
+  const [adjectivalRating, setAdjectvalRating] = useState("all");
 
   const opcrColumns: any = [
     {
@@ -210,10 +210,11 @@ function Ipcr() {
             displayValueKey={"date_range"}
           />
 
-          <select onChange={(e) => setAdjectvalRating(e.target.value)}>
-            <option value="" disabled>
-              Select adjectival rating
-            </option>
+          <select
+            onChange={(e) => setAdjectvalRating(e.target.value)}
+            defaultValue={"all"}
+          >
+            <option value="all">All</option>
             <option value="1">Poor</option>
             <option value="2">Unsatisfactory</option>
             <option value="3">Satisfactory</option>
