@@ -88,6 +88,10 @@ function Ipcr() {
       title: "Final Average",
       cellKey: "final_average_rating",
       textAlign: "left",
+      render: (_: any, data: any) => {
+        const finalAverage = parseFloat(data.final_average_rating);
+        return <div>{isNaN(finalAverage) ? 'N/A' : finalAverage.toFixed(2)}</div>;
+      },
     },
     {
       title: "Adjectival Rating",
