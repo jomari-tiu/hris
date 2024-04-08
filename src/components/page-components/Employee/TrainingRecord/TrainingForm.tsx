@@ -15,6 +15,7 @@ type training = {
   period_to: string;
   hours: number;
   type_of_ld: string;
+  url: string;
   id?: any;
 };
 
@@ -136,6 +137,13 @@ function TrainingForm({ defaultValues, setModal }: Props) {
             type={"number"}
           />
         </LayoutColumn>
+        <ControllerField
+          control={control}
+          errors={errors}
+          name={"url"}
+          placeholder={"Certificate URL/Link"}
+          type={"text"}
+        />
         <div className=" flex justify-end items-center">
           {defaultValues?.id && (
             <Button
