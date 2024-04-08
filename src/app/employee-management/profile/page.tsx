@@ -229,6 +229,11 @@ function ProfilePage() {
                     </div>
                   ),
                 },
+                {
+                  title: "Action",
+                  cellKey: "deleted_by_name",
+                  textAlign: "left",
+                },
               ]
             : [
                 ...columns,
