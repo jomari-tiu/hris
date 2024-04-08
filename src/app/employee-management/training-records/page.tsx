@@ -33,6 +33,7 @@ function TrainingPage() {
     hours: 0,
     type_of_ld: "",
     id: undefined,
+    url: "",
   };
 
   const [defaultValue, setDefaultValue] = useState(emptyVal);
@@ -174,7 +175,7 @@ function TrainingPage() {
         }}
         width="narrow"
       >
-        <TrainingForm defaultValues={defaultValue} setModal={setModal} />
+        <TrainingForm setModal={setModal} defaultValues={defaultValue} />
       </Modal>
     </>
   );
