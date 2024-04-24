@@ -87,8 +87,8 @@ function TrainingPage() {
   ];
   const { data, isLoading } = useFetch(
     "trainings-list",
-    ["trainings-list", search, page],
-    `/api/trainings?search=${search}&page=${page}`
+    ["trainings-list", search, page, dates.startDate, dates.endDate],
+    `/api/trainings?search=${search}&page=${page}&from=${dates.startDate}&to=${dates.endDate}`
   );
 
   const { data: archive, isLoading: archiveLoading } = useFetch(
