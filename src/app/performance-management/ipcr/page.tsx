@@ -153,7 +153,11 @@ function Ipcr() {
     `/api/opcr?search=${search}&page=${page}&period_id=${period.id}&adjectival_rating=${adjectivalRating}`
   );
 
-  const { data: archive, isLoading: archiveLoading } = useFetch(
+  const {
+    data: archive,
+    isLoading: archiveLoading,
+    refetch,
+  } = useFetch(
     "ipcr-list-archive",
     [
       "ipcr-list-archive",

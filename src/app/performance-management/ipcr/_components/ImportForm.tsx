@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 
 import { LuImport } from "react-icons/lu";
 
+import { useQueryClient } from "react-query";
+
 import { RotateLoader } from "react-spinners";
 
 import Button from "@/components/Button";
@@ -21,6 +23,7 @@ type Props = {
 };
 
 function ImportIPCRForm({ setModal }: Props) {
+  const queryClient = useQueryClient();
   const [period, setPeriod] = useState({
     value: "",
     id: "",
@@ -29,6 +32,8 @@ function ImportIPCRForm({ setModal }: Props) {
   const { setNotification } = useGlobalState();
 
   const success = () => {
+    queryClient.invalidateQueries("ipcr-list");
+    queryClient.invalidateQueries("ipcr-list-archive");
     setModal(false);
     setNotification(true, "success", `Successfully Imported!`);
   };
@@ -80,7 +85,7 @@ function ImportIPCRForm({ setModal }: Props) {
     const extension = filearray[filearray.length - 1];
     const payload: any = {
       file: file,
-      ipcr_period_id: period.id
+      ipcr_period_id: period.id,
     };
 
     const formData: any = new FormData();
