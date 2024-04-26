@@ -19,6 +19,16 @@ import DataForm, { DataType } from "./_components/DataForm";
 
 const columns: TableColumnsType[] = [
   {
+    title: "Employee",
+    cellKey: "employee",
+    textAlign: "left",
+  },
+  {
+    title: "Department",
+    cellKey: "department_name",
+    textAlign: "left",
+  },
+  {
     title: "Award",
     cellKey: "award_name",
     textAlign: "left",
@@ -30,8 +40,8 @@ const columns: TableColumnsType[] = [
     textAlign: "left",
   },
   {
-    title: "Remarks",
-    cellKey: "remarks",
+    title: "Frequency",
+    cellKey: "frequency",
     textAlign: "left",
   },
 ];
