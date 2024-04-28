@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 
 import { useRouter } from "next/navigation";
@@ -18,7 +19,11 @@ export type AwardsDataType = {
   }[];
 };
 
-const AwardsAndAccomplishmentsChart = () => {
+const AwardsAndAccomplishmentsChart = ({
+  disableRedirect,
+}: {
+  disableRedirect?: boolean;
+}) => {
   const router = useRouter();
 
   const [barChartData, setBarChartData] = useState<any>({
@@ -50,6 +55,7 @@ const AwardsAndAccomplishmentsChart = () => {
 
   const options = {
     onClick: (event: any, elements: any) => {
+      if (disableRedirect) return;
       // Handle click on the chart itself
       if (elements.length > 0) {
         router.push("/employee-management/awards-accomplishments");

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 
 import { useRouter } from "next/navigation";
@@ -18,7 +20,7 @@ export type TrainingDataType = {
   }[];
 };
 
-const TrainingChart = () => {
+const TrainingChart = ({ disableRedirect }: { disableRedirect?: boolean }) => {
   const router = useRouter();
 
   const [barChartData, setBarChartData] = useState<any>({
@@ -50,6 +52,7 @@ const TrainingChart = () => {
 
   const options = {
     onClick: (event: any, elements: any) => {
+      if (disableRedirect) return;
       // Handle click on the chart itself
       if (elements.length > 0) {
         router.push("/employee-management/training-records");

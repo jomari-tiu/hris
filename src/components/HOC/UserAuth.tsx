@@ -1,10 +1,9 @@
-import React from "react";
 import axios from "axios";
 import { deleteCookie } from "cookies-next";
 import { cookies } from "next/headers";
 
-function UserAuth(OriginalComponent: any) {
-  const NewComponent = async () => {
+function UserAuth(gssp: any) {
+  const NewComponent = async (context: any) => {
     const token = cookies()?.get("user")?.value;
     let profile: any = "";
     if (token) {
@@ -23,7 +22,14 @@ function UserAuth(OriginalComponent: any) {
           throw err;
         });
     }
-    return <OriginalComponent profile={profile.data} />;
+
+    const gsspData = await gssp(context);
+    return {
+      props: {
+        ...gsspData.props,
+        profile,
+      },
+    };
   };
   return NewComponent;
 }

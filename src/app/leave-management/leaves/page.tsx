@@ -59,9 +59,9 @@ function LeaveMangement() {
       title: "Type",
       cellKey: "type",
       textAlign: "left",
-      render: (value) => {
-        return <div>SL</div>;
-      },
+      // render: (value) => {
+      //   return <div>SL</div>;
+      // },
     },
     {
       title: "Date Start",
@@ -83,17 +83,17 @@ function LeaveMangement() {
       title: "Credit",
       cellKey: "credit",
       textAlign: "left",
-      render: (value) => {
-        return <div>10</div>;
-      },
+      // render: (value) => {
+      //   return <div>10</div>;
+      // },
     },
     {
       title: "States",
       cellKey: "status",
       textAlign: "left",
-      render: (value) => {
-        return <div>Late-filing</div>;
-      },
+      // render: (value) => {
+      //   return <div>Late-filing</div>;
+      // },
     },
     {
       title: "Remarks",

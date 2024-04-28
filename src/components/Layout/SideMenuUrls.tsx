@@ -22,7 +22,25 @@ export type SideMenuLinksType = {
   }[];
 };
 
-export const SideMenuLinks: SideMenuLinksType[] = [
+export const SideMenuLinksEmployee: SideMenuLinksType[] = [
+  {
+    title: "Dashboard",
+    url: "/employee/dashboard",
+    icon: <LuLayoutDashboard />,
+  },
+  {
+    title: "Attendance",
+    url: "/employee/attendance",
+    icon: <BsCalendar2Range />,
+  },
+  {
+    title: "Leave",
+    url: "/employee/leave",
+    icon: <BsRecordCircleFill />,
+  },
+];
+
+export const SideMenuLinksAdmin: SideMenuLinksType[] = [
   {
     title: "Dashboard",
     url: "/dashboard",
@@ -87,10 +105,6 @@ export const SideMenuLinks: SideMenuLinksType[] = [
         title: "User Management",
         url: "/admin-settings/user-management",
       },
-      // {
-      //   title: "Audit Logs",
-      //   url: "/admin-settings/audit-logs",
-      // },
     ],
   },
   {
