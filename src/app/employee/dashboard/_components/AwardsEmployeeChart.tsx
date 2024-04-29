@@ -1,25 +1,21 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 
 import { useRouter } from "next/navigation";
 
+import ChartComponent from "@/app/dashboard/_component/Charts";
 import { useFetch } from "@/util/api";
 
-import ChartComponent from ".";
-
-export type AwardsDataType = {
-  years: number[];
+export type TrainingDataType = {
   data: {
-    backgroundColor: "#c8ddf9";
-    label: "CAS";
-    count: {
-      year: number;
-      value: number;
-    }[];
+    count: number;
+    year: number;
   }[];
+  years: number[];
 };
 
-const AwardsAndAccomplishmentsChart = ({
+const AwardsEmployeeChart = ({
   disableRedirect,
 }: {
   disableRedirect?: boolean;
@@ -32,42 +28,40 @@ const AwardsAndAccomplishmentsChart = ({
   });
 
   const { data, isLoading } = useFetch(
-    "dashboard-awards-accomplishments",
-    [`dashboard-awards-accomplishments`],
-    "/api/dashboard/awards"
+    "dashboard-employee-awards",
+    ["dashboard-employee-awards"],
+    "/api/dashboard/employee-awards"
   );
 
-  const awardsData: AwardsDataType = data?.data?.data;
+  const trainingData: TrainingDataType = data?.data?.data;
 
   useEffect(() => {
     setBarChartData({
-      labels: awardsData?.years, // x-axis
-      datasets: awardsData?.data?.map((item) => {
-        return {
-          id: item?.count?.map((item) => item.year),
-          label: item?.label,
-          data: item?.count?.map((item) => item.value),
-          backgroundColor: item?.backgroundColor,
-        };
-      }),
+      labels: trainingData?.years, // x-axis
+      datasets: [
+        {
+          id: trainingData?.data.map((item) => item.count),
+          label: trainingData?.data.map((item) => item.year),
+          data: trainingData?.data.map((item) => item.count),
+          backgroundColor: "#d1c675",
+        },
+      ],
     });
-  }, [awardsData]);
+  }, [trainingData]);
 
   const options = {
     onClick: (event: any, elements: any) => {
       if (disableRedirect) return;
       // Handle click on the chart itself
       if (elements.length > 0) {
-        router.push("/employee-management/awards-accomplishments");
-        // const clickedElement = elements[0];
-        // console.log("Chart Element Clicked:", clickedElement);
+        router.push("/employee-management/training-records");
       }
     },
     responsive: true,
     plugins: {
       legend: {
         position: "top" as const,
-        display: true,
+        display: false,
       },
       datalabels: {
         color: "#fff",
@@ -93,17 +87,17 @@ const AwardsAndAccomplishmentsChart = ({
     <>
       <div className=" flex flex-col items-start w-full">
         <h5 className="inline-block font-bold text-black relative underline-ccgreen">
-          Awards and Accomplishments
+          Training
         </h5>
         <ChartComponent
           chartData={barChartData}
           type={"bar"}
           options={options}
-          chartName={"awards-accomplishments-chart"}
+          chartName={"traning-chart"}
         />
       </div>
     </>
   );
 };
 
-export default AwardsAndAccomplishmentsChart;
+export default AwardsEmployeeChart;

@@ -12,7 +12,7 @@ type Props = {
 };
 
 const Layout = async ({ children }: Props) => {
-  let isAdmin = true;
+  let isAdmin = false;
   const token = cookies()?.get("user")?.value;
 
   let profile: any = "";
@@ -24,8 +24,8 @@ const Layout = async ({ children }: Props) => {
         },
       })
       .then((res) => {
-        profile = res.data;
-        console.log(profile);
+        profile = res.data?.data;
+        isAdmin = res?.data?.data?.is_admin;
         // redirect to employee dashboard when not admin
       })
       .catch((err) => {

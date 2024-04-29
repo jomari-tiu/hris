@@ -25,6 +25,7 @@ type Props = {
 };
 
 function UserForm({ defaultValues, setModal }: Props) {
+  console.log(defaultValues);
   const { setNotification } = useGlobalState();
   const id = defaultValues?.id;
   const {
@@ -32,6 +33,7 @@ function UserForm({ defaultValues, setModal }: Props) {
     control,
     setValue,
     watch,
+    reset,
     formState: { errors },
   } = useForm<user>({
     defaultValues: defaultValues,
@@ -42,6 +44,7 @@ function UserForm({ defaultValues, setModal }: Props) {
     setNotification(true, "success", `user Successfully deleted!`);
   };
   const success = () => {
+    reset();
     setModal(false);
     setNotification(
       true,
@@ -127,9 +130,9 @@ function UserForm({ defaultValues, setModal }: Props) {
           rules={{ required: "required" }}
           name={"employee_id"}
           keyID="id"
-          keyName="full_name_formal"
-          displayValue={watch("full_name_formal")}
-          displayValueKey={"full_name_formal"}
+          keyName="full_name"
+          displayValue={watch("employee_name")}
+          displayValueKey={"employee_name"}
           setDisplayValue={setValue}
           placeholder={"Employee"}
           endpoint={"/api/options/bind-employees"}

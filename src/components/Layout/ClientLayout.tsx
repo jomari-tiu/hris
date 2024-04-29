@@ -50,13 +50,14 @@ function ClientLayout({ children, isAdmin }: Props) {
     `/api/profile`
   );
 
-  if (isAdmin && validatePathnameIfEmployeePage) {
-    router.push("/dashboard");
-  }
-
-  if (!isAdmin && !validatePathnameIfEmployeePage) {
-    router.push("/employee/dashboard");
-  }
+  useEffect(() => {
+    if (isAdmin && validatePathnameIfEmployeePage) {
+      router.push("/dashboard");
+    }
+    if (!isAdmin && !validatePathnameIfEmployeePage) {
+      router.push("/employee/dashboard");
+    }
+  });
 
   useEffect(() => {
     const HandlerResize = () => {

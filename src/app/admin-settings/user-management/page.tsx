@@ -129,7 +129,7 @@ function UserPage() {
               role_id: data?.role?.id,
               employee_id: data?.employee?.id,
               role_name: data?.role?.name,
-              employee_name: data?.role?.name,
+              employee_name: data?.employee?.full_name,
               id: data?.id,
             });
             setModal(true);

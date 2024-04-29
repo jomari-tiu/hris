@@ -1,10 +1,10 @@
 import React from "react";
 
-import AwardsAndAccomplishmentsChart from "@/app/dashboard/_component/Charts/AwardsAndAccomplishmentsChart";
 import EmployeeChart from "@/app/dashboard/_component/Charts/EmployeesChart";
-import TrainingChart from "@/app/dashboard/_component/Charts/TrainingChart";
 
+import AwardsEmployeeChart from "./_components/AwardsEmployeeChart";
 import IPCROutstanding from "./_components/IPCROutstanding";
+import TrainingEmployeeChart from "./_components/TrainingEmployeeChart";
 
 function DashboardEmployeePage() {
   return (
@@ -18,10 +18,10 @@ function DashboardEmployeePage() {
         </li>
 
         <li className=" shadow-md 1280px:col-span-6 col-span-3  rounded-md p-5 h-auto bg-white-0 ">
-          <TrainingChart disableRedirect />
+          <TrainingEmployeeChart disableRedirect />
         </li>
         <li className=" shadow-md 1280px:col-span-6 col-span-3 rounded-md p-5 h-auto bg-white-0 ">
-          <AwardsAndAccomplishmentsChart disableRedirect />
+          <AwardsEmployeeChart disableRedirect />
         </li>
       </ul>
     </>

@@ -14,15 +14,15 @@ const IPCROutstanding = () => {
     id: "",
   });
 
-  const { data: graph, isLoading: graphLoading } = useFetch(
+  const { data, isLoading: graphLoading } = useFetch(
     "ipcr-employee-graph",
     ["ipcr-employee-graph", period.id],
-    `/api/ipcr-graph?ipcr_period_id=${period.id}`
+    `/api/dashboard/employee-ipcr?ipcr_period_id=${period.id}`
   );
 
   return (
-    <div className=" h-full flex flex-col items-start justify-start gap-5">
-      <h5 className="inline-block font-bold text-black relative underline-ccgreen">
+    <div className=" h-full flex flex-col items-start justify-start gap-g">
+      <h5 className="inline-block font-bold text-black relative underline-ccgreen mb-2">
         Individual Performance and Career Review
       </h5>
       <ul className=" flex-1 flex justify-between items-start flex-wrap w-full">
@@ -37,13 +37,15 @@ const IPCROutstanding = () => {
         </li>
         <li className=" text-end flex-1 flex justify-center items-center">
           <div className=" text-center">
-            <h1 className=" 480px:text-[5rem] text-[8rem]">4.05</h1>
+            <h1 className=" text-3xl">
+              {data?.data?.data?.final_average_rating}
+            </h1>
             <p>Final Average Rating</p>
           </div>
         </li>
         <li className=" text-end flex-1 flex justify-center items-center">
           <div className=" text-center">
-            <h1 className=" 480px:text-[5rem] text-[8rem]">4.05</h1>
+            <h1 className=" text-3xl">{data?.data?.data?.adjectival_rating}</h1>
             <p>Adjectival Rating</p>
           </div>
         </li>
