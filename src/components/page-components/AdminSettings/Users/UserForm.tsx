@@ -6,10 +6,15 @@ import { useGlobalState } from "@/components/Context/AppMangement";
 import ControllerField from "@/components/ControllerField";
 import DialogBox from "@/components/DialogBox";
 import { usePost, useRemove } from "@/util/api";
+import ControllerFieldData from "@/components/ControllerFieldData";
 
 type user = {
   name: string;
   email: string;
+  role_id: string;
+  employee_id: string;
+  role_name: string;
+  employee_name: string;
   id?: string;
 };
 
@@ -25,6 +30,7 @@ function UserForm({ defaultValues, setModal }: Props) {
     handleSubmit,
     control,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<user>({
     defaultValues: defaultValues,
@@ -99,6 +105,32 @@ function UserForm({ defaultValues, setModal }: Props) {
           rules={{ required: "required" }}
           placeholder={"Email"}
           type={"email"}
+        />
+        <ControllerFieldData
+          control={control}
+          errors={errors}
+          rules={{ required: "required" }}
+          name={"role_id"}
+          keyID="id"
+          keyName="name"
+          displayValue={watch("role_name")}
+          displayValueKey={"role_name"}
+          setDisplayValue={setValue}
+          placeholder={"Role"}
+          endpoint={"/api/options/roles"}
+        />
+        <ControllerFieldData
+          control={control}
+          errors={errors}
+          rules={{ required: "required" }}
+          name={"employee_id"}
+          keyID="id"
+          keyName="full_name_formal"
+          displayValue={watch("full_name_formal")}
+          displayValueKey={"full_name_formal"}
+          setDisplayValue={setValue}
+          placeholder={"Employee"}
+          endpoint={"/api/options/bind-employees"}
         />
         <div className=" flex justify-end items-center">
           {defaultValues?.id && (

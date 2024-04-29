@@ -122,7 +122,6 @@ function DepartmentForm({ defaultValues, setModal }: Props) {
             control={control}
             errors={errors}
             name={"non_teaching"}
-            rules={{ required: "required" }}
             placeholder={""}
             type={"checkbox"}
           />

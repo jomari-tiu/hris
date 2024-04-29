@@ -40,6 +40,23 @@ function UserPage() {
       cellKey: "email",
       textAlign: "left",
     },
+    ,
+    {
+      title: "Emp ID",
+      cellKey: "employee_id",
+      textAlign: "left",
+      render: (_: any, data: any) => {
+        return <div>{data?.employee?.employee_id}</div>;
+      },
+    },
+    {
+      title: "Role",
+      cellKey: "role",
+      textAlign: "left",
+      render: (_: any, data: any) => {
+        return <div>{data?.role?.name}</div>;
+      },
+    },
   ];
   const { data, isLoading } = useFetch(
     "users-list",
