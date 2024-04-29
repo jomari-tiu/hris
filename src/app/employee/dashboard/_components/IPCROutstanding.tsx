@@ -38,7 +38,13 @@ const IPCROutstanding = () => {
         <li className=" text-end flex-1 flex justify-center items-center">
           <div className=" text-center">
             <h1 className=" 480px:text-[5rem] text-[8rem]">4.05</h1>
-            <p>Outstanding</p>
+            <p>Final Average Rating</p>
+          </div>
+        </li>
+        <li className=" text-end flex-1 flex justify-center items-center">
+          <div className=" text-center">
+            <h1 className=" 480px:text-[5rem] text-[8rem]">4.05</h1>
+            <p>Adjectival Rating</p>
           </div>
         </li>
       </ul>

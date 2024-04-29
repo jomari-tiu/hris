@@ -12,7 +12,7 @@ type Props = {
 };
 
 const Layout = async ({ children }: Props) => {
-  let isAdmin = false;
+  let isAdmin = true;
   const token = cookies()?.get("user")?.value;
 
   let profile: any = "";

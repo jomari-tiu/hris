@@ -25,6 +25,11 @@ function UserPage() {
   const emptyVal = {
     name: "",
     email: "",
+    role_id: "",
+    employee_id: "",
+    role_name: "",
+    employee_name: "",
+    id: undefined,
   };
 
   const [defaultValue, setDefaultValue] = useState(emptyVal);
@@ -40,24 +45,18 @@ function UserPage() {
       cellKey: "email",
       textAlign: "left",
     },
-    ,
     {
       title: "Emp ID",
       cellKey: "employee_id",
       textAlign: "left",
-      render: (_: any, data: any) => {
-        return <div>{data?.employee?.employee_id}</div>;
-      },
     },
     {
       title: "Role",
-      cellKey: "role",
+      cellKey: "role_name",
       textAlign: "left",
-      render: (_: any, data: any) => {
-        return <div>{data?.role?.name}</div>;
-      },
     },
   ];
+
   const { data, isLoading } = useFetch(
     "users-list",
     ["users-list", search, page],
@@ -124,7 +123,15 @@ function UserPage() {
         }
         onClickRow={(data) => {
           if (isTab === "users") {
-            setDefaultValue(data);
+            setDefaultValue({
+              name: data?.name,
+              email: data?.email,
+              role_id: data?.role?.id,
+              employee_id: data?.employee?.id,
+              role_name: data?.role?.name,
+              employee_name: data?.role?.name,
+              id: data?.id,
+            });
             setModal(true);
           }
         }}

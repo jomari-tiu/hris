@@ -4,9 +4,9 @@ import { useForm } from "react-hook-form";
 import Button from "@/components/Button";
 import { useGlobalState } from "@/components/Context/AppMangement";
 import ControllerField from "@/components/ControllerField";
+import ControllerFieldData from "@/components/ControllerFieldData";
 import DialogBox from "@/components/DialogBox";
 import { usePost, useRemove } from "@/util/api";
-import ControllerFieldData from "@/components/ControllerFieldData";
 
 type user = {
   name: string;
@@ -15,6 +15,7 @@ type user = {
   employee_id: string;
   role_name: string;
   employee_name: string;
+  full_name_formal?: string;
   id?: string;
 };
 
@@ -68,8 +69,9 @@ function UserForm({ defaultValues, setModal }: Props) {
   );
 
   const SubmitHandler = (data: any) => {
-    delete data.deleted_at;
-    delete data.user_id;
+    delete data.employee_name;
+    delete data.full_name_formal;
+    delete data.role_name;
     mutate(data);
   };
 
