@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 export function convertToRoman(num: number) {
   if (num <= 0 || num >= 4000) {
     return "Invalid number"; // Roman numerals typically don't represent numbers outside this range
@@ -30,3 +32,14 @@ export function convertToRoman(num: number) {
 
   return result;
 }
+
+export const useDebounce = <T>(value: T, delay = 500) => {
+  const [deboundValue, setDebounceValue] = useState<T>(value);
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDebounceValue(value);
+    }, delay);
+    return () => clearTimeout(timeout);
+  }, [value, delay]);
+  return deboundValue;
+};

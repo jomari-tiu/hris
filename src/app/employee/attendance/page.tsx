@@ -9,9 +9,11 @@ import Search from "@/components/Search";
 import Tab from "@/components/Tab";
 import Table, { TableColumnsType } from "@/components/Table";
 import { useFetch } from "@/util/api";
+import { useDebounce } from "@/util/helpers";
 
 function AttendancesEmployeePage() {
   const [search, setSearch] = useState("");
+  const debounceSearch = useDebounce(search, 500);
   const [page, setPage] = useState(1);
   const [isTab, setTab] = useState("attendances");
 
@@ -47,14 +49,14 @@ function AttendancesEmployeePage() {
   ];
   const { data, isLoading } = useFetch(
     "attendances-list",
-    ["attendances-list", search, page],
-    `/api/attendances?search=${search}&page=${page}`
+    ["attendances-list", debounceSearch, page],
+    `/api/attendances?search=${debounceSearch}&page=${page}`
   );
 
   const { data: archive, isLoading: archiveLoading } = useFetch(
     "attendances-list-archive",
-    ["attendances-list-archive", search, page],
-    `/api/attendances/archive?search=${search}&page=${page}`
+    ["attendances-list-archive", debounceSearch, page],
+    `/api/attendances/archive?search=${debounceSearch}&page=${page}`
   );
 
   return (

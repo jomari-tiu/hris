@@ -18,9 +18,11 @@ import Search from "@/components/Search";
 import Tab from "@/components/Tab";
 import Table, { TableColumnsType } from "@/components/Table";
 import { useFetch, restore } from "@/util/api";
+import { useDebounce } from "@/util/helpers";
 
 function EmployeeStatusPage() {
   const [search, setSearch] = useState("");
+  const debounceSearch = useDebounce(search, 500);
   const [page, setPage] = useState(1);
   const [isTab, setTab] = useState("employee status");
   const [modal, setModal] = useState(false);
@@ -44,14 +46,14 @@ function EmployeeStatusPage() {
 
   const { data, isLoading } = useFetch(
     "employment_statuses-list",
-    ["employment_statuses-list", search, page],
-    `/api/employment_statuses?search=${search}&page=${page}`
+    ["employment_statuses-list", debounceSearch, page],
+    `/api/employment_statuses?search=${debounceSearch}&page=${page}`
   );
 
   const { data: archive, isLoading: archiveLoading } = useFetch(
     "employment_statuses-list-archive",
-    ["employment_statuses-list-archive", search, page],
-    `/api/employment_statuses/archive?search=${search}&page=${page}`
+    ["employment_statuses-list-archive", debounceSearch, page],
+    `/api/employment_statuses/archive?search=${debounceSearch}&page=${page}`
   );
 
   const { setNotification } = useGlobalState();

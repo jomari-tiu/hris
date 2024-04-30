@@ -17,9 +17,11 @@ import Search from "@/components/Search";
 import Tab from "@/components/Tab";
 import Table, { TableColumnsType } from "@/components/Table";
 import { useFetch, restore } from "@/util/api";
+import { useDebounce } from "@/util/helpers";
 
 function TrainingPage() {
   const [search, setSearch] = useState("");
+  const debounceSearch = useDebounce(search, 500);
   const [page, setPage] = useState(1);
   const [isTab, setTab] = useState("trainings");
   const [modal, setModal] = useState(false);
@@ -42,10 +44,6 @@ function TrainingPage() {
     startDate: "",
     endDate: "",
   });
-
-  useEffect(() => {
-    console.log(dates);
-  }, [dates]);
 
   const columns: TableColumnsType[] = [
     {
@@ -87,14 +85,20 @@ function TrainingPage() {
   ];
   const { data, isLoading } = useFetch(
     "trainings-list",
-    ["trainings-list", search, page, dates.startDate, dates.endDate],
-    `/api/trainings?search=${search}&page=${page}&from=${dates.startDate}&to=${dates.endDate}`
+    ["trainings-list", debounceSearch, page, dates.startDate, dates.endDate],
+    `/api/trainings?search=${debounceSearch}&page=${page}&from=${dates.startDate}&to=${dates.endDate}`
   );
 
   const { data: archive, isLoading: archiveLoading } = useFetch(
     "trainings-list-archive",
-    ["trainings-list-archive", search, page, dates.startDate, dates.endDate],
-    `/api/trainings/archive?search=${search}&page=${page}&from=${dates.startDate}&to=${dates.endDate}`
+    [
+      "trainings-list-archive",
+      debounceSearch,
+      page,
+      dates.startDate,
+      dates.endDate,
+    ],
+    `/api/trainings/archive?search=${debounceSearch}&page=${page}&from=${dates.startDate}&to=${dates.endDate}`
   );
 
   const { setNotification } = useGlobalState();

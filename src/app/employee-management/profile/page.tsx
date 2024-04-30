@@ -31,9 +31,11 @@ import {
   useRemoveReason,
   usePost,
 } from "@/util/api";
+import { useDebounce } from "@/util/helpers";
 
 function ProfilePage() {
   const [search, setSearch] = useState("");
+  const debounceSearch = useDebounce(search, 500);
   const [page, setPage] = useState(1);
   const [isTab, setTab] = useState("profile");
   const [modal, setModal] = useState(false);
@@ -140,14 +142,14 @@ function ProfilePage() {
   ];
   const { data, isLoading } = useFetch(
     "profile-list",
-    ["profile-list", search, page],
-    `/api/employees?search=${search}&page=${page}`
+    ["profile-list", debounceSearch, page],
+    `/api/employees?search=${debounceSearch}&page=${page}`
   );
 
   const { data: archive, isLoading: archiveLoading } = useFetch(
     "profile-list-archive",
-    ["profile-list-archive", search, page],
-    `/api/employees/archive?search=${search}&page=${page}`
+    ["profile-list-archive", debounceSearch, page],
+    `/api/employees/archive?search=${debounceSearch}&page=${page}`
   );
 
   const { setNotification } = useGlobalState();

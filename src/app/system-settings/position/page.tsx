@@ -14,9 +14,11 @@ import Search from "@/components/Search";
 import Tab from "@/components/Tab";
 import Table, { TableColumnsType } from "@/components/Table";
 import { useFetch, restore } from "@/util/api";
+import { useDebounce } from "@/util/helpers";
 
 function PositionPage() {
   const [search, setSearch] = useState("");
+  const debounceSearch = useDebounce(search, 500);
   const [page, setPage] = useState(1);
   const [isTab, setTab] = useState("positions");
   const [modal, setModal] = useState(false);
@@ -51,14 +53,14 @@ function PositionPage() {
 
   const { data, isLoading } = useFetch(
     "positions-list",
-    ["positions-list", search, page],
-    `/api/positions?search=${search}&page=${page}`
+    ["positions-list", debounceSearch, page],
+    `/api/positions?search=${debounceSearch}&page=${page}`
   );
 
   const { data: archive, isLoading: archiveLoading } = useFetch(
     "positions-list-archive",
-    ["positions-list-archive", search, page],
-    `/api/positions/archive?search=${search}&page=${page}`
+    ["positions-list-archive", debounceSearch, page],
+    `/api/positions/archive?search=${debounceSearch}&page=${page}`
   );
 
   const { setNotification } = useGlobalState();

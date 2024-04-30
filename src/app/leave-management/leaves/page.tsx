@@ -18,9 +18,11 @@ import Search from "@/components/Search";
 import Tab from "@/components/Tab";
 import Table, { TableColumnsType } from "@/components/Table";
 import { useFetch, restore } from "@/util/api";
+import { useDebounce } from "@/util/helpers";
 
 function LeaveMangement() {
   const [search, setSearch] = useState("");
+  const debounceSearch = useDebounce(search, 500);
   const [status, setStatus] = useState("");
   const [page, setPage] = useState(1);
   const [isTab, setTab] = useState("leaves");
@@ -104,14 +106,14 @@ function LeaveMangement() {
 
   const { data, isLoading } = useFetch(
     "leaves-list",
-    ["leaves-list", search, page, status],
-    `/api/leaves?search=${search}&status=${status}&page=${page}`
+    ["leaves-list", debounceSearch, page, status],
+    `/api/leaves?search=${debounceSearch}&status=${status}&page=${page}`
   );
 
   const { data: archive, isLoading: archiveLoading } = useFetch(
     "leaves-list-archive",
-    ["leaves-list-archive", search, page, status],
-    `/api/leaves/archive?search=${search}&status=${status}&page=${page}`
+    ["leaves-list-archive", debounceSearch, page, status],
+    `/api/leaves/archive?search=${debounceSearch}&status=${status}&page=${page}`
   );
 
   const { setNotification } = useGlobalState();
