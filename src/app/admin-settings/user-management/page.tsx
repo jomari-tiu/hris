@@ -15,9 +15,11 @@ import Search from "@/components/Search";
 import Tab from "@/components/Tab";
 import Table, { TableColumnsType } from "@/components/Table";
 import { useFetch, restore } from "@/util/api";
+import { useDebounce } from "@/util/helpers";
 
 function UserPage() {
   const [search, setSearch] = useState("");
+  const debounceSearch = useDebounce(search, 500);
   const [page, setPage] = useState(1);
   const [isTab, setTab] = useState("users");
   const [modal, setModal] = useState(false);
@@ -25,6 +27,11 @@ function UserPage() {
   const emptyVal = {
     name: "",
     email: "",
+    role_id: "",
+    employee_id: "",
+    role_name: "",
+    employee_name: "",
+    id: undefined,
   };
 
   const [defaultValue, setDefaultValue] = useState(emptyVal);
@@ -40,34 +47,28 @@ function UserPage() {
       cellKey: "email",
       textAlign: "left",
     },
-    ,
     {
       title: "Emp ID",
       cellKey: "employee_id",
       textAlign: "left",
-      render: (_: any, data: any) => {
-        return <div>{data?.employee?.employee_id}</div>;
-      },
     },
     {
       title: "Role",
-      cellKey: "role",
+      cellKey: "role_name",
       textAlign: "left",
-      render: (_: any, data: any) => {
-        return <div>{data?.role?.name}</div>;
-      },
     },
   ];
+
   const { data, isLoading } = useFetch(
     "users-list",
-    ["users-list", search, page],
-    `/api/users?search=${search}&page=${page}`
+    ["users-list", debounceSearch, page],
+    `/api/users?search=${debounceSearch}&page=${page}`
   );
 
   const { data: archive, isLoading: archiveLoading } = useFetch(
     "users-list-archive",
-    ["users-list-archive", search, page],
-    `/api/users/archive?search=${search}&page=${page}`
+    ["users-list-archive", debounceSearch, page],
+    `/api/users/archive?search=${debounceSearch}&page=${page}`
   );
 
   const { setNotification } = useGlobalState();
@@ -124,7 +125,15 @@ function UserPage() {
         }
         onClickRow={(data) => {
           if (isTab === "users") {
-            setDefaultValue(data);
+            setDefaultValue({
+              name: data?.name,
+              email: data?.email,
+              role_id: data?.role?.id,
+              employee_id: data?.employee?.id,
+              role_name: data?.role?.name,
+              employee_name: data?.employee?.full_name,
+              id: data?.id,
+            });
             setModal(true);
           }
         }}

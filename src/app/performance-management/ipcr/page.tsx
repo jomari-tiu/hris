@@ -24,6 +24,8 @@ import Table, { TableColumnsType } from "@/components/Table";
 
 import { useFetch, restore } from "@/util/api";
 
+import { useDebounce } from "@/util/helpers";
+
 import ImportIPCRForm from "./_components/ImportForm";
 import IpcrForm from "./_components/IpcrForm";
 import { ipcr } from "./_components/ipcrType";
@@ -32,6 +34,7 @@ import SubCategoryForm from "./_components/SubCategoryForm";
 
 function Ipcr() {
   const [search, setSearch] = useState("");
+  const debounceSearch = useDebounce(search, 500);
   const [page, setPage] = useState(1);
   const [isTab, setTab] = useState("IPCR");
   const [modal, setModal] = useState(false);
@@ -134,13 +137,13 @@ function Ipcr() {
     "ipcr-list",
     [
       "ipcr-list",
-      search,
+      debounceSearch,
       page,
       isDepartmentIds.map((item) => item.id),
       period.id,
       adjectivalRating,
     ],
-    `/api/ipcr_evaluations?search=${search}&page=${page}&period_id=${
+    `/api/ipcr_evaluations?search=${debounceSearch}&page=${page}&period_id=${
       period.id
     }&department_ids=${isDepartmentIds.map(
       (item) => item.id
@@ -149,21 +152,25 @@ function Ipcr() {
 
   const { data: opcr, isLoading: opcrLoading } = useFetch(
     "opcr-list",
-    ["opcr-list", search, page, period.id, adjectivalRating],
-    `/api/opcr?search=${search}&page=${page}&period_id=${period.id}&adjectival_rating=${adjectivalRating}`
+    ["opcr-list", debounceSearch, page, period.id, adjectivalRating],
+    `/api/opcr?search=${debounceSearch}&page=${page}&period_id=${period.id}&adjectival_rating=${adjectivalRating}`
   );
 
-  const { data: archive, isLoading: archiveLoading } = useFetch(
+  const {
+    data: archive,
+    isLoading: archiveLoading,
+    refetch,
+  } = useFetch(
     "ipcr-list-archive",
     [
       "ipcr-list-archive",
-      search,
+      debounceSearch,
       page,
       isDepartmentIds.map((item) => item.id),
       period.id,
       adjectivalRating,
     ],
-    `/api/ipcr_evaluations/archive?search=${search}&page=${page}&period_id=${
+    `/api/ipcr_evaluations/archive?search=${debounceSearch}&page=${page}&period_id=${
       period.id
     }&department_ids=${isDepartmentIds.map(
       (item) => item.id

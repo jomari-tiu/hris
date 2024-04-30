@@ -14,10 +14,12 @@ import Search from "@/components/Search";
 import Tab from "@/components/Tab";
 import Table, { TableColumnsType } from "@/components/Table";
 import { useFetch, restore } from "@/util/api";
+import { useDebounce } from "@/util/helpers";
 
 function LeaveTypePage() {
   const { setNotification } = useGlobalState();
   const [search, setSearch] = useState("");
+  const debounceSearch = useDebounce(search, 500);
   const [page, setPage] = useState(1);
   const [isTab, setTab] = useState("leave types");
   const [modal, setModal] = useState(false);
@@ -46,14 +48,14 @@ function LeaveTypePage() {
 
   const { data, isLoading } = useFetch(
     "leave_types-list",
-    ["leave_types-list", search, page],
-    `/api/leave_types?search=${search}&page=${page}`
+    ["leave_types-list", debounceSearch, page],
+    `/api/leave_types?search=${debounceSearch}&page=${page}`
   );
 
   const { data: archive, isLoading: archiveLoading } = useFetch(
     "leave_types-list-archive",
-    ["leave_types-list-archive", search, page],
-    `/api/leave_types/archive?search=${search}&page=${page}`
+    ["leave_types-list-archive", debounceSearch, page],
+    `/api/leave_types/archive?search=${debounceSearch}&page=${page}`
   );
 
   const queryClient = useQueryClient();

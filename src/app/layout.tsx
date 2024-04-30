@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 
 import Layout from "@/components/Layout";
 import Authentication from "@/components/Layout/Auth/Authentication";

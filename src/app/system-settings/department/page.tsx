@@ -16,9 +16,11 @@ import Search from "@/components/Search";
 import Tab from "@/components/Tab";
 import Table, { TableColumnsType } from "@/components/Table";
 import { useFetch, restore } from "@/util/api";
+import { useDebounce } from "@/util/helpers";
 
 function DepartmentPage() {
   const [search, setSearch] = useState("");
+  const debounceSearch = useDebounce(search, 500);
   const [page, setPage] = useState(1);
   const [isTab, setTab] = useState("departments");
   const [modal, setModal] = useState(false);
@@ -43,21 +45,21 @@ function DepartmentPage() {
       cellKey: "",
       textAlign: "left",
       render: (_, data) => {
-        return <div>{data?.head_employee?.full_name_formal}</div>
-      }
+        return <div>{data?.head_employee?.full_name_formal}</div>;
+      },
     },
   ];
 
   const { data, isLoading } = useFetch(
     "departments-list",
-    ["departments-list", search, page],
-    `/api/departments?search=${search}&page=${page}`
+    ["departments-list", debounceSearch, page],
+    `/api/departments?search=${debounceSearch}&page=${page}`
   );
 
   const { data: archive, isLoading: archiveLoading } = useFetch(
     "departments-list-archive",
-    ["departments-list-archive", search, page],
-    `/api/departments/archive?search=${search}&page=${page}`
+    ["departments-list-archive", debounceSearch, page],
+    `/api/departments/archive?search=${debounceSearch}&page=${page}`
   );
 
   const { setNotification } = useGlobalState();

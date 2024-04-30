@@ -4,9 +4,9 @@ import { useForm } from "react-hook-form";
 import Button from "@/components/Button";
 import { useGlobalState } from "@/components/Context/AppMangement";
 import ControllerField from "@/components/ControllerField";
+import ControllerFieldData from "@/components/ControllerFieldData";
 import DialogBox from "@/components/DialogBox";
 import { usePost, useRemove } from "@/util/api";
-import ControllerFieldData from "@/components/ControllerFieldData";
 
 type user = {
   name: string;
@@ -15,6 +15,7 @@ type user = {
   employee_id: string;
   role_name: string;
   employee_name: string;
+  full_name_formal?: string;
   id?: string;
 };
 
@@ -24,6 +25,7 @@ type Props = {
 };
 
 function UserForm({ defaultValues, setModal }: Props) {
+  console.log(defaultValues);
   const { setNotification } = useGlobalState();
   const id = defaultValues?.id;
   const {
@@ -31,6 +33,7 @@ function UserForm({ defaultValues, setModal }: Props) {
     control,
     setValue,
     watch,
+    reset,
     formState: { errors },
   } = useForm<user>({
     defaultValues: defaultValues,
@@ -41,6 +44,7 @@ function UserForm({ defaultValues, setModal }: Props) {
     setNotification(true, "success", `user Successfully deleted!`);
   };
   const success = () => {
+    reset();
     setModal(false);
     setNotification(
       true,
@@ -68,8 +72,9 @@ function UserForm({ defaultValues, setModal }: Props) {
   );
 
   const SubmitHandler = (data: any) => {
-    delete data.deleted_at;
-    delete data.user_id;
+    delete data.employee_name;
+    delete data.full_name_formal;
+    delete data.role_name;
     mutate(data);
   };
 
@@ -125,9 +130,9 @@ function UserForm({ defaultValues, setModal }: Props) {
           rules={{ required: "required" }}
           name={"employee_id"}
           keyID="id"
-          keyName="full_name_formal"
-          displayValue={watch("full_name_formal")}
-          displayValueKey={"full_name_formal"}
+          keyName="full_name"
+          displayValue={watch("employee_name")}
+          displayValueKey={"employee_name"}
           setDisplayValue={setValue}
           placeholder={"Employee"}
           endpoint={"/api/options/bind-employees"}

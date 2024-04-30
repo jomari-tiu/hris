@@ -14,10 +14,13 @@ import Tab from "@/components/Tab";
 import Table, { TableColumnsType } from "@/components/Table";
 import { useFetch, restore } from "@/util/api";
 
+import { useDebounce } from "@/util/helpers";
+
 import BalancesForm, { BalancesFormType } from "./_components/BalancesForm";
 
 function BalancesPage() {
   const [search, setSearch] = useState("");
+  const debounceSearch = useDebounce(search, 500);
   const [page, setPage] = useState(1);
   const [isTab, setTab] = useState("balances");
   const [modal, setModal] = useState(false);
@@ -62,14 +65,14 @@ function BalancesPage() {
   ];
   const { data, isLoading } = useFetch(
     "leave-balances-list",
-    ["leave-balances-list", search, page],
-    `/api/leave_balances?search=${search}&page=${page}`
+    ["leave-balances-list", debounceSearch, page],
+    `/api/leave_balances?search=${debounceSearch}&page=${page}`
   );
 
   const { data: archive, isLoading: archiveLoading } = useFetch(
     "leave-balances-list-archive",
-    ["leave-balances-list-archive", search, page],
-    `/api/leave_balances/archive?search=${search}&page=${page}`
+    ["leave-balances-list-archive", debounceSearch, page],
+    `/api/leave_balances/archive?search=${debounceSearch}&page=${page}`
   );
 
   const { setNotification } = useGlobalState();

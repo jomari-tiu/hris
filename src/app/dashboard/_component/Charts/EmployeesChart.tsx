@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 
 import { useRouter } from "next/navigation";
@@ -6,7 +8,7 @@ import { useFetch } from "@/util/api";
 
 import ChartComponent from ".";
 
-const EmployeeChart = () => {
+const EmployeeChart = ({ disableRedirect }: { disableRedirect?: boolean }) => {
   const router = useRouter();
   const [data, setData] = useState<any>({
     labels: [],
@@ -15,6 +17,7 @@ const EmployeeChart = () => {
 
   const options = {
     onClick: (event: any, elements: any) => {
+      if (disableRedirect) return;
       // Handle click on the chart itself
       if (elements.length > 0) {
         router.push("/employee-management/profile");

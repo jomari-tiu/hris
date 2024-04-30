@@ -14,6 +14,8 @@ import Tab from "@/components/Tab";
 import Table, { TableColumnsType } from "@/components/Table";
 import { useFetch, restore } from "@/util/api";
 
+import { useDebounce } from "@/util/helpers";
+
 import AwardsAccomplishmentsForm from "./_components/AwardsAccomplishmentsForm";
 import DataForm, { DataType } from "./_components/DataForm";
 
@@ -79,6 +81,7 @@ const columnsData: TableColumnsType[] = [
 
 function AwardsAccomplishmentsPage() {
   const [search, setSearch] = useState("");
+  const debounceSearch = useDebounce(search, 500);
   const [page, setPage] = useState(1);
   const [isTab, setTab] = useState("lists");
   const [modal, setModal] = useState(false);
@@ -109,20 +112,20 @@ function AwardsAccomplishmentsPage() {
 
   const { data, isLoading } = useFetch(
     "awards-list",
-    ["awards-list", search, page],
-    `/api/awards?search=${search}&page=${page}`
+    ["awards-list", debounceSearch, page],
+    `/api/awards?search=${debounceSearch}&page=${page}`
   );
 
   const { data: archive, isLoading: archiveLoading } = useFetch(
     "awards-list-archive",
-    ["awards-list-archive", search, page],
-    `/api/awards/archive?search=${search}&page=${page}`
+    ["awards-list-archive", debounceSearch, page],
+    `/api/awards/archive?search=${debounceSearch}&page=${page}`
   );
 
   const { data: awardsData, isLoading: dataLoading } = useFetch(
     "awards-list-data",
-    ["awards-list-data", search, page],
-    `/api/awards/details?search=${search}&page=${page}`
+    ["awards-list-data", debounceSearch, page],
+    `/api/awards/details?search=${debounceSearch}&page=${page}`
   );
 
   const { setNotification } = useGlobalState();
