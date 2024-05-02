@@ -87,7 +87,7 @@ const AwardsEmployeeChart = ({
     <>
       <div className=" flex flex-col items-start w-full">
         <h5 className="inline-block font-bold text-black relative underline-ccgreen">
-          Training
+          Awards & Accomplishments
         </h5>
         <ChartComponent
           chartData={barChartData}
