@@ -61,6 +61,11 @@ function LeaveEmloyeePage() {
     ["leaves-list", debounceSearch, page, status],
     `/api/leaves?search=${debounceSearch}&status=${status}&page=${page}`
   );
+  const { data: remainingVLSL } = useFetch(
+    "remaining-vl-sl",
+    ["remaining-vl-sl", debounceSearch, page, status],
+    `/api/leave_balances/employee`
+  );
 
   const { data: archive, isLoading: archiveLoading } = useFetch(
     "leaves-list-archive",
@@ -82,6 +87,20 @@ function LeaveEmloyeePage() {
             <option value="disapproved">Disapproved</option>
           </select>
         </div>
+        <ul className=" flex items-center flex-wrap gap-5">
+          <li>
+            <p>
+              Remaining VL:{" "}
+              <span>{remainingVLSL?.data?.data?.remaining_vl || 0}</span>
+            </p>
+          </li>
+          <li>
+            <p>
+              Remaining SL:{" "}
+              <span>{remainingVLSL?.data?.data?.remaining_sl || 0}</span>
+            </p>
+          </li>
+        </ul>
       </div>
       <Table
         isLoading={isTab === "leaves" ? isLoading : archiveLoading}
