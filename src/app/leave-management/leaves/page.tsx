@@ -90,7 +90,7 @@ function LeaveMangement() {
       // },
     },
     {
-      title: "States",
+      title: "Status",
       cellKey: "status",
       textAlign: "left",
       // render: (value) => {
