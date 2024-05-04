@@ -49,7 +49,7 @@ function UserPage() {
     },
     {
       title: "Emp ID",
-      cellKey: "employee_id",
+      cellKey: "emp_id",
       textAlign: "left",
     },
     {
