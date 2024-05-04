@@ -93,13 +93,13 @@ function LeaveMangement() {
       title: "Status",
       cellKey: "status",
       textAlign: "left",
-      // render: (value) => {
-      //   return <div>Late-filing</div>;
-      // },
+      render: (value) => {
+        return <div>{value === 0 ? "On-Time" : "Late Filing"}</div>;
+      },
     },
     {
       title: "Remarks",
-      cellKey: "status",
+      cellKey: "remarks",
       textAlign: "left",
     },
   ];
