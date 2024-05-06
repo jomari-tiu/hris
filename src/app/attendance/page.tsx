@@ -42,15 +42,9 @@ function AttendancesPage() {
       textAlign: "left",
       render: (_, data) => (
         <div>
-          {data?.employee?.first_name} {data?.employee?.last_name}
+          {data?.employee?.full_name_formal}
         </div>
       ),
-    },
-    {
-      title: "Email",
-      cellKey: "",
-      textAlign: "left",
-      render: (_, data) => <div>{data?.employee?.email}</div>,
     },
     {
       title: "Time In",
