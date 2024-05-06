@@ -42,8 +42,7 @@ function BalancesPage() {
       textAlign: "left",
       render: (_, data) => (
         <div>
-          {data?.employee?.last_name}, {data?.employee?.first_name},{" "}
-          {data?.employee?.middle_name}
+          {data?.employee?.full_name_formal}
         </div>
       ),
     },
