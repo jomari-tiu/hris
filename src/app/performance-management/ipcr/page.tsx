@@ -113,7 +113,7 @@ function Ipcr() {
       cellKey: "",
       textAlign: "left",
       render: (_, data) => {
-        return <div>{data?.employee?.full_name}</div>;
+        return <div>{data?.employee?.full_name_formal}</div>;
       },
     },
     {
