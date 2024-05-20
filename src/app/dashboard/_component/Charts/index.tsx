@@ -126,18 +126,6 @@ const ChartComponent = ({ chartData, type, options, chartName }: PropsType) => {
             >
               Download PDF document
             </li>
-            {/* <li
-              className=" p-2 hover:bg-gray-100 duration-150  cursor-pointer"
-              onClick={() => downloadChartHandler(chartName, "svg")}
-            >
-              Download SVG vector image
-            </li>
-            <li
-              className=" p-2 hover:bg-gray-100 duration-150  cursor-pointer"
-              onClick={() => downloadChartHandler(chartName, "csv")}
-            >
-              Download CSV
-            </li> */}
           </ul>
         )}
       </div>

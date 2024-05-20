@@ -30,6 +30,15 @@ const IndividualPerformanceAndCarreerReviewChart = () => {
         position: "bottom" as const,
         display: false,
       },
+      title: {
+        display: true,
+        text: "Individual Performance and Carreer Review",
+        font: {
+          weight: "bold",
+          size: 20,
+        },
+        align: "start",
+      },
       datalabels: {
         color: "#fff",
         textShadowColor: "#000",
@@ -73,9 +82,9 @@ const IndividualPerformanceAndCarreerReviewChart = () => {
 
   return (
     <div className=" h-full flex flex-col items-start justify-start gap-5">
-      <h5 className="inline-block font-bold text-black relative underline-ccgreen">
+      {/* <h5 className="inline-block font-bold text-black relative underline-ccgreen">
         Individual Performance and Career Review
-      </h5>
+      </h5> */}
       <ul className=" flex flex-wrap gap-3">
         <li>
           <Dropdown

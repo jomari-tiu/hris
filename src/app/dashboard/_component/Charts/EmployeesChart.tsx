@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 
+import { display } from "html2canvas/dist/types/css/property-descriptors/display";
+
 import { useRouter } from "next/navigation";
 
 import { useFetch } from "@/util/api";
@@ -30,6 +32,15 @@ const EmployeeChart = ({ disableRedirect }: { disableRedirect?: boolean }) => {
       legend: {
         position: "top" as const,
         display: true,
+      },
+      title: {
+        display: true,
+        text: "Employees",
+        font: {
+          weight: "bold",
+          size: 20,
+        },
+        align: "center",
       },
       datalabels: {
         color: "#fff",
@@ -68,10 +79,9 @@ const EmployeeChart = ({ disableRedirect }: { disableRedirect?: boolean }) => {
 
   return (
     <div className=" h-full flex flex-col items-start justify-start">
-      <h5 className="inline-block font-bold text-black relative underline-ccgreen">
+      {/* <h5 className="inline-block font-bold text-black relative underline-ccgreen">
         Employees
-      </h5>
-
+      </h5> */}
       <div className=" w-full">
         <ChartComponent
           chartData={data}

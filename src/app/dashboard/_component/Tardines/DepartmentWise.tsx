@@ -114,6 +114,15 @@ function DepartmentWise() {
         position: "bottom" as const,
         display: false,
       },
+      title: {
+        display: true,
+        text: "Department Wise Tardiness",
+        font: {
+          weight: "bold",
+          size: 20,
+        },
+        align: "start",
+      },
       datalabels: {
         color: "#fff",
         textShadowColor: "#000",
@@ -129,9 +138,9 @@ function DepartmentWise() {
 
   return (
     <div className=" space-y-5 ">
-      <h5 className="inline-block font-bold text-black relative underline-ccgreen">
+      {/* <h5 className="inline-block font-bold text-black relative underline-ccgreen">
         Department Wise Tardiness
-      </h5>
+      </h5> */}
       <ul className=" flex items-center justify-between gap-3 flex-wrap w-full ">
         <li>
           <select

@@ -69,6 +69,15 @@ const AwardsAndAccomplishmentsChart = ({
         position: "top" as const,
         display: true,
       },
+      title: {
+        display: true,
+        text: "Awards and Accomplishments",
+        font: {
+          weight: "bold",
+          size: 20,
+        },
+        align: "start",
+      },
       datalabels: {
         color: "#fff",
         textShadowColor: "#000",
@@ -92,9 +101,9 @@ const AwardsAndAccomplishmentsChart = ({
   return (
     <>
       <div className=" flex flex-col items-start w-full">
-        <h5 className="inline-block font-bold text-black relative underline-ccgreen">
+        {/* <h5 className="inline-block font-bold text-black relative underline-ccgreen">
           Awards and Accomplishments
-        </h5>
+        </h5> */}
         <ChartComponent
           chartData={barChartData}
           type={"bar"}
