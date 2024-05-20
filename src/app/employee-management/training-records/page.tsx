@@ -50,16 +50,19 @@ function TrainingPage() {
       title: "Title",
       cellKey: "title",
       textAlign: "left",
+      render: (value) => value.toUpperCase(),
     },
     {
       title: "Description",
       cellKey: "description",
       textAlign: "left",
+      render: (value) => value.toUpperCase(),
     },
     {
       title: "Conducted by",
       cellKey: "conducted_by",
       textAlign: "left",
+      render: (value) => value.toUpperCase(),
     },
     {
       title: "From",
