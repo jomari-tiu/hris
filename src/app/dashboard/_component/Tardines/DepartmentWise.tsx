@@ -122,6 +122,9 @@ function DepartmentWise() {
           size: 20,
         },
         align: "start",
+        padding: {
+          bottom: 20,
+        },
       },
       datalabels: {
         color: "#fff",

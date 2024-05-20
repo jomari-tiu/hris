@@ -72,6 +72,9 @@ const TrainingChart = ({ disableRedirect }: { disableRedirect?: boolean }) => {
           size: 20,
         },
         align: "start",
+        padding: {
+          bottom: 20,
+        },
       },
       datalabels: {
         color: "#fff",
@@ -99,6 +102,7 @@ const TrainingChart = ({ disableRedirect }: { disableRedirect?: boolean }) => {
         {/* <h5 className="inline-block font-bold text-black relative underline-ccgreen">
           Training
         </h5> */}
+
         <ChartComponent
           chartData={barChartData}
           type={"bar"}

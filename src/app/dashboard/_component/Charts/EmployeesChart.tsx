@@ -40,6 +40,7 @@ const EmployeeChart = ({ disableRedirect }: { disableRedirect?: boolean }) => {
           weight: "bold",
           size: 20,
         },
+
         align: "center",
       },
       datalabels: {
