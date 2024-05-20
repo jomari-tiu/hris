@@ -178,7 +178,11 @@ export const useFetchDetail = (name: string, endpoint: string, id: any) => {
 
 export const restore = (onSuccess: any, onError: any, endpoint: string) => {
   return axios
-    .get(`${process.env.NEXT_PUBLIC_API_URL}${endpoint}`)
+    .get(`${process.env.NEXT_PUBLIC_API_URL}${endpoint}`, {
+      headers: {
+        Authorization: "Bearer " + getCookie("user"),
+      },
+    })
     .then(function (response) {
       onSuccess(response);
     })
