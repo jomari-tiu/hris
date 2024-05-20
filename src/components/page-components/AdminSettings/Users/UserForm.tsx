@@ -130,7 +130,7 @@ function UserForm({ defaultValues, setModal }: Props) {
           rules={{ required: "required" }}
           name={"employee_id"}
           keyID="id"
-          keyName="full_name"
+          keyName="full_name_formal"
           displayValue={watch("employee_name")}
           displayValueKey={"employee_name"}
           setDisplayValue={setValue}

@@ -55,7 +55,7 @@ function LeaveMangement() {
       title: "Name",
       cellKey: "last_name",
       textAlign: "left",
-      render: (_, data) => <div>{data?.employee?.full_name}</div>,
+      render: (_, data) => <div>{data?.employee?.full_name_formal}</div>,
     },
     {
       title: "Type",
@@ -90,16 +90,16 @@ function LeaveMangement() {
       // },
     },
     {
-      title: "States",
+      title: "Status",
       cellKey: "status",
       textAlign: "left",
-      // render: (value) => {
-      //   return <div>Late-filing</div>;
-      // },
+      render: (value) => {
+        return <div>{value === 0 ? "On-Time" : "Late Filing"}</div>;
+      },
     },
     {
       title: "Remarks",
-      cellKey: "status",
+      cellKey: "remarks",
       textAlign: "left",
     },
   ];

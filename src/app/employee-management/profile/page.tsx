@@ -97,15 +97,7 @@ function ProfilePage() {
   const columns: TableColumnsType[] = [
     {
       title: "Name",
-      cellKey: "first_name",
-      render: (value, data) => {
-        return (
-          <div>
-            {data?.last_name} {data?.first_name} {data?.name_ext}{" "}
-            {data?.middle_name}
-          </div>
-        );
-      },
+      cellKey: "full_name_formal",
       textAlign: "left",
     },
     {
