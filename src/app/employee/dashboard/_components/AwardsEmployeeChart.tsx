@@ -63,6 +63,18 @@ const AwardsEmployeeChart = ({
         position: "top" as const,
         display: false,
       },
+      title: {
+        display: true,
+        text: "Awards",
+        font: {
+          weight: "bold",
+          size: 20,
+        },
+        align: "start",
+        padding: {
+          bottom: 20,
+        },
+      },
       datalabels: {
         color: "#fff",
         textShadowColor: "#000",
@@ -86,9 +98,9 @@ const AwardsEmployeeChart = ({
   return (
     <>
       <div className=" flex flex-col items-start w-full">
-        <h5 className="inline-block font-bold text-black relative underline-ccgreen">
-          Awards & Accomplishments
-        </h5>
+        {/* <h5 className="inline-block font-bold text-black relative underline-ccgreen">
+          Awards
+        </h5> */}
         <ChartComponent
           chartData={barChartData}
           type={"bar"}

@@ -64,6 +64,18 @@ const TrainingChart = ({ disableRedirect }: { disableRedirect?: boolean }) => {
         position: "top" as const,
         display: true,
       },
+      title: {
+        display: true,
+        text: "Training",
+        font: {
+          weight: "bold",
+          size: 20,
+        },
+        align: "start",
+        padding: {
+          bottom: 20,
+        },
+      },
       datalabels: {
         color: "#fff",
         textShadowColor: "#000",
@@ -87,9 +99,10 @@ const TrainingChart = ({ disableRedirect }: { disableRedirect?: boolean }) => {
   return (
     <>
       <div className=" flex flex-col items-start w-full">
-        <h5 className="inline-block font-bold text-black relative underline-ccgreen">
+        {/* <h5 className="inline-block font-bold text-black relative underline-ccgreen">
           Training
-        </h5>
+        </h5> */}
+
         <ChartComponent
           chartData={barChartData}
           type={"bar"}

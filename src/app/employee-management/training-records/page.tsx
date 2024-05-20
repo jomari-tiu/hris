@@ -2,6 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 
+import { FaSort } from "react-icons/fa";
+import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
+
 import { useQueryClient } from "react-query";
 
 import Button from "@/components/Button";
@@ -20,6 +23,10 @@ import { useFetch, restore } from "@/util/api";
 import { useDebounce } from "@/util/helpers";
 
 function TrainingPage() {
+  const [sort, setSort] = useState({
+    sortByColumn: "period_from",
+    sortBy: "DESC",
+  });
   const [search, setSearch] = useState("");
   const debounceSearch = useDebounce(search, 500);
   const [page, setPage] = useState(1);
@@ -40,6 +47,17 @@ function TrainingPage() {
 
   const [defaultValue, setDefaultValue] = useState(emptyVal);
 
+  useEffect(() => {
+    console.log(sort);
+  }, [sort]);
+
+  const sortHandler = (columnName: string) => {
+    setSort({
+      sortByColumn: columnName,
+      sortBy: sort.sortBy === "DESC" ? "ASC" : "DESC",
+    });
+  };
+
   const [dates, setDates] = useState({
     startDate: "",
     endDate: "",
@@ -50,19 +68,38 @@ function TrainingPage() {
       title: "Title",
       cellKey: "title",
       textAlign: "left",
+      render: (value) => value.toUpperCase(),
     },
     {
       title: "Description",
       cellKey: "description",
       textAlign: "left",
+      render: (value) => value.toUpperCase(),
     },
     {
       title: "Conducted by",
       cellKey: "conducted_by",
       textAlign: "left",
+      render: (value) => value.toUpperCase(),
     },
     {
-      title: "From",
+      title: (
+        <div className=" flex justify-between items-center">
+          From
+          {sort.sortByColumn === "period_from" && sort.sortBy === "DESC" && (
+            <TiArrowSortedDown className=" text-xl" />
+          )}
+          {sort.sortByColumn === "period_from" && sort.sortBy === "ASC" && (
+            <TiArrowSortedUp className=" text-xl" />
+          )}
+          {sort.sortByColumn !== "period_from" && (
+            <FaSort className=" text-lg" />
+          )}
+        </div>
+      ),
+      titleOnClick: () => {
+        sortHandler("period_from");
+      },
       cellKey: "period_from",
       textAlign: "left",
       render: (value) => {
@@ -70,7 +107,21 @@ function TrainingPage() {
       },
     },
     {
-      title: "To",
+      title: (
+        <div className=" flex justify-between items-center">
+          To
+          {sort.sortByColumn === "period_to" && sort.sortBy === "DESC" && (
+            <TiArrowSortedDown className=" text-xl" />
+          )}
+          {sort.sortByColumn === "period_to" && sort.sortBy === "ASC" && (
+            <TiArrowSortedUp className=" text-xl" />
+          )}
+          {sort.sortByColumn !== "period_to" && <FaSort className=" text-lg" />}
+        </div>
+      ),
+      titleOnClick: () => {
+        sortHandler("period_to");
+      },
       cellKey: "period_to",
       textAlign: "left",
       render: (value) => {
@@ -85,8 +136,16 @@ function TrainingPage() {
   ];
   const { data, isLoading } = useFetch(
     "trainings-list",
-    ["trainings-list", debounceSearch, page, dates.startDate, dates.endDate],
-    `/api/trainings?search=${debounceSearch}&page=${page}&from=${dates.startDate}&to=${dates.endDate}`
+    [
+      "trainings-list",
+      debounceSearch,
+      page,
+      dates.startDate,
+      dates.endDate,
+      sort.sortBy,
+      sort.sortByColumn,
+    ],
+    `/api/trainings?search=${debounceSearch}&page=${page}&from=${dates.startDate}&to=${dates.endDate}&sortBy=${sort.sortBy}&sortByColumn=${sort.sortByColumn}`
   );
 
   const { data: archive, isLoading: archiveLoading } = useFetch(
@@ -97,8 +156,10 @@ function TrainingPage() {
       page,
       dates.startDate,
       dates.endDate,
+      sort.sortBy,
+      sort.sortByColumn,
     ],
-    `/api/trainings/archive?search=${debounceSearch}&page=${page}&from=${dates.startDate}&to=${dates.endDate}`
+    `/api/trainings/archive?search=${debounceSearch}&page=${page}&from=${dates.startDate}&to=${dates.endDate}&sortBy=${sort.sortBy}&sortByColumn=${sort.sortByColumn}`
   );
 
   const { setNotification } = useGlobalState();

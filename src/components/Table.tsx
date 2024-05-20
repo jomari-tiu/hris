@@ -18,6 +18,7 @@ type Props = {
 
 export type TableColumnsType = {
   title: string | React.ReactNode;
+  titleOnClick?: () => void;
   cellKey: string;
   textAlign?: "right" | "left" | "center";
   render?: (value: any, data?: any) => React.ReactNode;
@@ -50,8 +51,11 @@ function Table({
             <tr>
               {columns.map((item, index) => (
                 <th
+                  onClick={item.titleOnClick}
                   key={index}
-                  className=" p-4 text-sm text-start capitalized font-semibold"
+                  className={` p-4 text-sm text-start capitalized font-semibold ${
+                    item.titleOnClick && "cursor-pointer hover:bg-gray-200"
+                  }`}
                 >
                   {item.title}
                 </th>
