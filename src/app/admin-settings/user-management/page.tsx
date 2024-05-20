@@ -41,11 +41,13 @@ function UserPage() {
       title: "Name",
       cellKey: "name",
       textAlign: "left",
+      render: (value) => value.toUpperCase(),
     },
     {
       title: "Email",
       cellKey: "email",
       textAlign: "left",
+      render: (value) => value.toUpperCase(),
     },
     {
       title: "Emp ID",
@@ -56,6 +58,7 @@ function UserPage() {
       title: "Role",
       cellKey: "role_name",
       textAlign: "left",
+      render: (value) => value.toUpperCase(),
     },
   ];
 

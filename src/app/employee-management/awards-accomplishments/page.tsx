@@ -13,6 +13,7 @@ import Search from "@/components/Search";
 import Tab from "@/components/Tab";
 import Table, { TableColumnsType } from "@/components/Table";
 import { useFetch, restore } from "@/util/api";
+import { textDateFormat } from "@/components/helper";
 
 import { useDebounce } from "@/util/helpers";
 
@@ -24,22 +25,26 @@ const columns: TableColumnsType[] = [
     title: "Employee",
     cellKey: "employee",
     textAlign: "left",
+    render: (value) => value.toUpperCase(),
   },
   {
     title: "Department",
     cellKey: "department_name",
     textAlign: "left",
+    render: (value) => value.toUpperCase(),
   },
   {
     title: "Award",
     cellKey: "award_name",
     textAlign: "left",
+    render: (value) => value.toUpperCase(),
   },
 
   {
     title: "Date Awarded",
     cellKey: "date_awarded",
     textAlign: "left",
+    render: (value) => value.toUpperCase(),
   },
   {
     title: "Frequency",
@@ -51,13 +56,12 @@ const columns: TableColumnsType[] = [
 const columnsData: TableColumnsType[] = [
   {
     title: "Employee",
-    cellKey: "employee_name",
+    cellKey: "employee_",
     textAlign: "left",
     render: (_, value) => {
       return (
         <div>
-          {value?.employee.last_name} {value?.employee.first_name}{" "}
-          {value?.employee.middle_name}
+          {value?.employee.full_name_formal} 
         </div>
       );
     },
@@ -65,17 +69,24 @@ const columnsData: TableColumnsType[] = [
   {
     title: "Department",
     cellKey: "",
-    render: (_, value) => <div>{value?.employee?.department?.name}</div>,
+    render: (_, record) => {
+      const departmentName = record?.employee?.department?.name?.toUpperCase();
+      return <div>{departmentName}</div>;
+    },
   },
   {
     title: "Award",
     cellKey: "award_name",
     textAlign: "left",
+    render: (value) => value.toUpperCase(),
   },
   {
     title: "Date Awarded",
     cellKey: "date_awarded",
     textAlign: "left",
+    render: (value) => {
+      return <div>{textDateFormat(value)}</div>;
+    },
   },
 ];
 
