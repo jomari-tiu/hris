@@ -60,7 +60,7 @@ export const SideMenuLinksAdmin: SideMenuLinksType[] = [
         url: "/employee-management/training-records",
       },
       {
-        title: "Awards / Accomplishments",
+        title: "Awards and Accomplishments",
         url: "/employee-management/awards-accomplishments",
       },
     ],

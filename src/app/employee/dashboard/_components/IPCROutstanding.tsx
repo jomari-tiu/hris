@@ -23,7 +23,7 @@ const IPCROutstanding = () => {
   return (
     <div className=" h-full flex flex-col items-start justify-start gap-g">
       <h5 className="inline-block font-bold text-black relative underline-ccgreen mb-2">
-        Individual Performance and Career Review
+        Individual Performance Commitment Review
       </h5>
       <ul className=" flex-1 flex justify-between items-start flex-wrap w-full">
         <li className=" w-full">

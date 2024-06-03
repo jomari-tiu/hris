@@ -123,7 +123,7 @@ function IndividualPerformanceAndCareerReview() {
       <ul className=" flex justify-between flex-wrap gap-3 items-center">
         <li>
           <h5 className="inline-block font-bold text-black relative underline-ccgreen">
-            Individual Performance and Career Review
+            Individual Performance Commitment Review
           </h5>
         </li>
         <li className=" flex gap-2 flex-wrap items-center">
