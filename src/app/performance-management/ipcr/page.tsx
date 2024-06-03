@@ -31,8 +31,15 @@ import IpcrForm from "./_components/IpcrForm";
 import { ipcr } from "./_components/ipcrType";
 import ModifyForm from "./_components/ModifyForm";
 import SubCategoryForm from "./_components/SubCategoryForm";
+import { FaSort } from "react-icons/fa";
+import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 
 function Ipcr() {
+  const [sort, setSort] = useState({
+    sortByColumn: "last_name",
+    sortBy: "DESC",
+  });
+
   const [search, setSearch] = useState("");
   const debounceSearch = useDebounce(search, 500);
   const [page, setPage] = useState(1);
@@ -55,6 +62,17 @@ function Ipcr() {
       id: "",
     });
   }, [isTab]);
+
+  useEffect(() => {
+    console.log(sort);
+  }, [sort]);
+
+  const sortHandler = (columnName: string) => {
+    setSort({
+      sortByColumn: columnName,
+      sortBy: sort.sortBy === "DESC" ? "ASC" : "DESC",
+    });
+  };
 
   const emptyVal: ipcr = {
     id: undefined,
@@ -108,20 +126,60 @@ function Ipcr() {
   ];
 
   const columns: TableColumnsType[] = [
+    // {
+    //   title: "Name",
+    //   cellKey: "",
+    //   textAlign: "left",
+    //   render: (_, data) => {
+    //     return <div>{data?.employee?.full_name_formal}</div>;
+    //   },
+    // },
     {
-      title: "Name",
-      cellKey: "",
+      title: (
+        <div className=" flex justify-between items-center">
+          Name
+          {sort.sortByColumn === "last_name" && sort.sortBy === "DESC" && (
+            <TiArrowSortedDown className=" text-xl" />
+          )}
+          {sort.sortByColumn === "last_name" && sort.sortBy === "ASC" && (
+            <TiArrowSortedUp className=" text-xl" />
+          )}
+          {sort.sortByColumn !== "last_name" && (
+            <FaSort className=" text-lg" />
+          )}
+        </div>
+      ),
+      titleOnClick: () => {
+        sortHandler("last_name");
+      },
+      cellKey: "last_name",
       textAlign: "left",
       render: (_, data) => {
         return <div>{data?.employee?.full_name_formal}</div>;
       },
     },
     {
-      title: "Final Rating",
-      cellKey: "",
+      title: (
+        <div className=" flex justify-between items-center">
+          Final Rating
+          {sort.sortByColumn === "final_average_rating" && sort.sortBy === "DESC" && (
+            <TiArrowSortedDown className=" text-xl" />
+          )}
+          {sort.sortByColumn === "final_average_rating" && sort.sortBy === "ASC" && (
+            <TiArrowSortedUp className=" text-xl" />
+          )}
+          {sort.sortByColumn !== "final_average_rating" && (
+            <FaSort className=" text-lg" />
+          )}
+        </div>
+      ),
+      titleOnClick: () => {
+        sortHandler("final_average_rating");
+      },
+      cellKey: "final_average_rating",
       textAlign: "left",
-      render: (_, data) => {
-        return <div>{data?.final_average_rating}</div>;
+      render: (value) => {
+        return <div>{value}</div>;
       },
     },
     {
@@ -142,12 +200,15 @@ function Ipcr() {
       isDepartmentIds.map((item) => item.id),
       period.id,
       adjectivalRating,
+      sort.sortBy,
+      sort.sortByColumn,
     ],
     `/api/ipcr_evaluations?search=${debounceSearch}&page=${page}&period_id=${
       period.id
     }&department_ids=${isDepartmentIds.map(
       (item) => item.id
-    )}&adjectival_rating=${adjectivalRating}`
+    )}&adjectival_rating=${adjectivalRating}
+    &sortBy=${sort.sortBy}&sortByColumn=${sort.sortByColumn}`
   );
 
   const { data: opcr, isLoading: opcrLoading } = useFetch(
@@ -169,12 +230,15 @@ function Ipcr() {
       isDepartmentIds.map((item) => item.id),
       period.id,
       adjectivalRating,
+      sort.sortBy,
+      sort.sortByColumn,
     ],
     `/api/ipcr_evaluations/archive?search=${debounceSearch}&page=${page}&period_id=${
       period.id
     }&department_ids=${isDepartmentIds.map(
       (item) => item.id
-    )}&adjectival_rating=${adjectivalRating}`
+    )}&adjectival_rating=${adjectivalRating}
+    &sortBy=${sort.sortBy}&sortByColumn=${sort.sortByColumn}`
   );
 
   const { setNotification } = useGlobalState();

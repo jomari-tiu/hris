@@ -32,7 +32,7 @@ const IndividualPerformanceAndCarreerReviewChart = () => {
       },
       title: {
         display: true,
-        text: "Individual Performance and Carreer Review",
+        text: "Individual Performance Commitment Review",
         font: {
           weight: "bold",
           size: 20,
@@ -86,7 +86,7 @@ const IndividualPerformanceAndCarreerReviewChart = () => {
   return (
     <div className=" h-full flex flex-col items-start justify-start gap-5">
       {/* <h5 className="inline-block font-bold text-black relative underline-ccgreen">
-        Individual Performance and Career Review
+        Individual Performance Commitment Review
       </h5> */}
       <ul className=" flex flex-wrap gap-3">
         <li>
@@ -114,7 +114,7 @@ const IndividualPerformanceAndCarreerReviewChart = () => {
             chartData={data}
             type={"bar"}
             options={options}
-            chartName={"Individual-Performance-and-Career-Review"}
+            chartName={"Individual-Performance-Commitment-Review"}
           />
         </div>
       </div>
