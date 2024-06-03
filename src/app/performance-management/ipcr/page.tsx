@@ -36,7 +36,7 @@ import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 
 function Ipcr() {
   const [sort, setSort] = useState({
-    sortByColumn: "last_name",
+    sortByColumn: "final_average_rating",
     sortBy: "DESC",
   });
 
