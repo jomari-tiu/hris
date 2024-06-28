@@ -66,7 +66,7 @@ const TrainingChart = ({ disableRedirect }: { disableRedirect?: boolean }) => {
       },
       title: {
         display: true,
-        text: "Training",
+        text: "Training Record",
         font: {
           weight: "bold",
           size: 20,
