@@ -11,11 +11,11 @@ import { usePost, useRemove } from "@/util/api";
 type user = {
   name: string;
   email: string;
-  role_id: string;
-  employee_id: string;
-  role_name: string;
-  employee_name: string;
-  full_name_formal?: string;
+  // role_id: string;
+  // employee_id: string;
+  // role_name: string;
+  // employee_name: string;
+  // full_name_formal?: string;
   id?: string;
 };
 
@@ -111,7 +111,7 @@ function UserForm({ defaultValues, setModal }: Props) {
           placeholder={"Email"}
           type={"email"}
         />
-        <ControllerFieldData
+        {/* <ControllerFieldData
           control={control}
           errors={errors}
           rules={{ required: "required" }}
@@ -123,8 +123,8 @@ function UserForm({ defaultValues, setModal }: Props) {
           setDisplayValue={setValue}
           placeholder={"Role"}
           endpoint={"/api/options/roles"}
-        />
-        <ControllerFieldData
+        /> */}
+        {/* <ControllerFieldData
           control={control}
           errors={errors}
           rules={{ required: "required" }}
@@ -136,7 +136,7 @@ function UserForm({ defaultValues, setModal }: Props) {
           setDisplayValue={setValue}
           placeholder={"Employee"}
           endpoint={"/api/options/bind-employees"}
-        />
+        /> */}
         <div className=" flex justify-end items-center">
           {defaultValues?.id && (
             <Button

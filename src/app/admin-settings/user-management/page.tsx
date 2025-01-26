@@ -27,10 +27,10 @@ function UserPage() {
   const emptyVal = {
     name: "",
     email: "",
-    role_id: "",
-    employee_id: "",
-    role_name: "",
-    employee_name: "",
+    // role_id: "",
+    // employee_id: "",
+    // role_name: "",
+    // employee_name: "",
     id: undefined,
   };
 
@@ -54,12 +54,12 @@ function UserPage() {
       cellKey: "emp_id",
       textAlign: "left",
     },
-    {
-      title: "Role",
-      cellKey: "role_name",
-      textAlign: "left",
-      render: (value) => value.toUpperCase(),
-    },
+    // {
+    //   title: "Role",
+    //   cellKey: "role_name",
+    //   textAlign: "left",
+    //   render: (value) => value.toUpperCase(),
+    // },
   ];
 
   const { data, isLoading } = useFetch(
@@ -131,10 +131,10 @@ function UserPage() {
             setDefaultValue({
               name: data?.name,
               email: data?.email,
-              role_id: data?.role?.id,
-              employee_id: data?.employee?.id,
-              role_name: data?.role?.name,
-              employee_name: data?.employee?.full_name,
+              // role_id: data?.role?.id,
+              // employee_id: data?.employee?.id,
+              // role_name: data?.role?.name,
+              // employee_name: data?.employee?.full_name,
               id: data?.id,
             });
             setModal(true);
