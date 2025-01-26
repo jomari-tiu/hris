@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import * as XLSX from 'xlsx';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -17,6 +18,7 @@ import { Bar, Pie } from "react-chartjs-2";
 import { IoIosMenu } from "react-icons/io";
 
 import { useReactToPrint } from "react-to-print";
+import { generatePdf } from './PDFChart';
 
 ChartJS.register(
   CategoryScale,
@@ -43,7 +45,7 @@ type PropsType = {
   chartName: string;
 };
 
-const ChartComponent = ({ chartData, type, options, chartName }: PropsType) => {
+const ChartComponent = ({ chartData, type, options, chartName  }: PropsType) => {
   const [menu, setMenu] = useState(false);
   const [fullScreen, setFullScreen] = useState(false);
   const [data, setData] = useState<any>({
@@ -58,33 +60,55 @@ const ChartComponent = ({ chartData, type, options, chartName }: PropsType) => {
 
   const printRef: any = useRef(null);
 
-  const downloadChartHandler = (name: string, fileType: string) => {
-    if (fileType === "pdf") {
-      downloadAsPDF();
-      return;
-    }
-    const link = document.createElement("a");
-    link.download = `${name}.${fileType}`;
-    link.href = chartRef.current?.toBase64Image();
-    link.click();
-  };
-
   const plugins: any = [ChartDataLabels];
 
   const handlePrint = useReactToPrint({
     content: () => printRef.current,
   });
 
-  const downloadAsPDF = () => {
-    const chartContainer: any = document.getElementById(chartName);
-    html2canvas(chartContainer, { logging: true }).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf: any = new jsPDF();
-      pdf.addImage(imgData, "PNG", 0, 0);
-      pdf.save(`${chartName}.pdf`);
-    });
-  };
+  const downloadChartHandler = (name: string, fileType: string) => {
+    if (fileType === "pdf") {
+      const chartImage = chartRef.current?.toBase64Image();
+      generatePdf(chartImage); 
+      return;
+    }
+   
 
+    if (fileType === "xlsx") {
+      const chart = chartRef.current;
+      console.log(chart) 
+      if (!chart) {
+        console.error("Chart data not available");
+        return;
+      }
+
+      const chartData = chart.data;
+      const excelData: (string | number)[][] = []; 
+      const headers = ["Label", ...chartData.datasets.map((dataset: any) => dataset.label)];
+      excelData.push(headers);
+
+      const numRows = chartData.labels.length;
+      for (let i = 0; i < numRows; i++) {
+        const row: (string | number)[] = [chartData.labels[i]]; 
+        chartData.datasets.forEach((dataset: any) => {
+          row.push(dataset.data[i]); 
+        });
+        excelData.push(row);
+      }
+
+      const wb = XLSX.utils.book_new();
+      const ws = XLSX.utils.aoa_to_sheet(excelData);
+      XLSX.utils.book_append_sheet(wb, ws, "Chart Data");
+      XLSX.writeFile(wb, `${name}.xlsx`);
+      return;
+    }
+
+    const link = document.createElement("a");
+    link.download = `${name}.${fileType}`;
+    link.href = chartRef.current?.toBase64Image();
+    link.click();
+  };
+  
   return (
     <div className=" flex flex-col w-full h-full">
       <div className=" w-full flex justify-end relative">
@@ -125,6 +149,12 @@ const ChartComponent = ({ chartData, type, options, chartName }: PropsType) => {
               onClick={(e) => downloadChartHandler(chartName, "pdf")}
             >
               Download PDF document
+            </li>
+            <li
+              className=" p-2 hover:bg-gray-100 duration-150  cursor-pointer"
+              onClick={(e) => downloadChartHandler(chartName, "xlsx")}
+            >
+              Download Excel document
             </li>
           </ul>
         )}
