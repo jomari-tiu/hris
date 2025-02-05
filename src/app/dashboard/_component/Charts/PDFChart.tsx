@@ -13,7 +13,7 @@ export const generatePdf = (chartImage: string | undefined) => {
     pdf.text('ILOCOS SUR POLYTECHNIC STATE COLLEGE', 52, 23); 
     pdf.setFont("helvetica", "normal");
     pdf.setFontSize(15); 
-    pdf.text('Santa Maria, Ilocos Sur', 85, 30); 
+    pdf.text('Main Campus', 85, 30); 
 
     if (chartImage) {
       const img = new Image();
