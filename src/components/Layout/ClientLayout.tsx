@@ -97,7 +97,7 @@ function ClientLayout({ children, isAdmin }: Props) {
         setNotification(true, "error", "Authentication failed");
       }
     } catch (error) {
-      setNotification(true, "error", "Something went Wront");
+      setNotification(true, "error", "Something went Wrong");
       deleteCookie("user");
       router.refresh();
     }
@@ -109,9 +109,8 @@ function ClientLayout({ children, isAdmin }: Props) {
         {notification.toggle && <PromptMessage />}
       </AnimatePresence>
       <section
-        className={` ${
-          !menu && "ml-[-20rem] 820px:ml-[-15rem]"
-        }  duration-200 w-[20rem] bg-white-0 1024px:w-[15rem] relative h-full bg-white0 text-gray-400 flex flex-col items-center py-5 space-y-7`}
+        className={` ${!menu && "ml-[-20rem] 820px:ml-[-15rem]"
+          }  duration-200 w-[20rem] bg-white-0 1024px:w-[15rem] relative h-full bg-white0 text-gray-400 flex flex-col items-center py-5 space-y-7`}
       >
         <aside className=" 820px:block hidden cursor-pointer duration-500 ease-in-out p-2 bg-ccgreen  text-white absolute top-0 left-full hover:shadow-lg hover:bg-ccgreen5 hover:text-black">
           <CgMenuRight onClick={() => setMenu(!menu)} />
@@ -219,11 +218,10 @@ const Menu = ({ itemMenu, isTab, setTab }: MenuProps) => {
               setTab(itemMenu.title);
             }
           }}
-          className={` cursor-pointer gap-3 flex items-center justify-between rounded-md w-full font-medium text-black py-4 px-5 duration-200 ease-in-out ${
-            pathname.includes(itemMenu.url)
+          className={` cursor-pointer gap-3 flex items-center justify-between rounded-md w-full font-medium text-black py-4 px-5 duration-200 ease-in-out ${pathname.includes(itemMenu.url)
               ? "bg-cchovergray text-black font-semibold"
               : "hover:bg-cchovergray text-black"
-          }`}
+            }`}
         >
           <div className=" flex items-start gap-3">
             <div className=" aspect-square bg-ccgreen text-white p-1 rounded-md">
@@ -232,19 +230,17 @@ const Menu = ({ itemMenu, isTab, setTab }: MenuProps) => {
             {itemMenu.title}
           </div>
           <BiDownArrow
-            className={`duration-300 ease-in-out ${
-              isTab === itemMenu.title && "rotate-180"
-            }`}
+            className={`duration-300 ease-in-out ${isTab === itemMenu.title && "rotate-180"
+              }`}
           />
         </motion.div>
       ) : (
         <Link href={itemMenu.url} className=" w-full inline-block">
           <div
-            className={` gap-3 flex items-center rounded-md w-full  text-black py-4 px-5 duration-200 ease-in-out ${
-              pathname.includes(itemMenu.url)
+            className={` gap-3 flex items-center rounded-md w-full  text-black py-4 px-5 duration-200 ease-in-out ${pathname.includes(itemMenu.url)
                 ? "bg-cchovergray text-black font-semibold"
                 : "hover:bg-cchovergray text-black"
-            }`}
+              }`}
           >
             <span className=" aspect-square bg-ccgreen text-white p-1 rounded-md">
               {itemMenu.icon}
@@ -259,11 +255,10 @@ const Menu = ({ itemMenu, isTab, setTab }: MenuProps) => {
           {itemMenu?.submenu?.map((item, index) => (
             <Link href={item.url} key={index}>
               <motion.div
-                className={` mt-2 gap-3 flex items-center rounded-md w-full  text-black py-4 px-5 pl-[3.5rem] duration-200 ease-in-out ${
-                  pathname.includes(item.url)
+                className={` mt-2 gap-3 flex items-center rounded-md w-full  text-black py-4 px-5 pl-[3.5rem] duration-200 ease-in-out ${pathname.includes(item.url)
                     ? "bg-cchovergray text-black font-semibold"
                     : "hover:bg-cchovergray text-black"
-                }`}
+                  }`}
               >
                 {item.title}
               </motion.div>

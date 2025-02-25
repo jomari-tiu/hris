@@ -1,12 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
-import { setCookie } from "cookies-next";
+import React from "react";
 import { AnimatePresence } from "framer-motion";
 
 import Image from "next/image";
-
-import Link from "next/link";
 
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -18,6 +15,7 @@ import PromptMessage from "@/components/PromptMessage";
 import { usePost } from "@/util/api";
 
 function ChangePassword() {
+
   const router = useRouter();
   const search = useSearchParams();
   const token = search.get("token");

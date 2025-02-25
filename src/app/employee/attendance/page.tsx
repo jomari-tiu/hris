@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 
 import { textDateFormat, timeTwelveFormat } from "@/components/helper";
-import UserAuth from "@/components/HOC/UserAuth";
 import PageTitle from "@/components/PageTitle";
 import Search from "@/components/Search";
 import Tab from "@/components/Tab";

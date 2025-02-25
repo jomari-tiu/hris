@@ -2,7 +2,7 @@ import axios from "axios";
 import { deleteCookie } from "cookies-next";
 import { cookies } from "next/headers";
 
-function UserAuth(gssp: any) {
+function UserAuth(WrapperComponent: any) {
   const NewComponent = async (context: any) => {
     const token = cookies()?.get("user")?.value;
     let profile: any = "";
@@ -22,14 +22,7 @@ function UserAuth(gssp: any) {
           throw err;
         });
     }
-
-    const gsspData = await gssp(context);
-    return {
-      props: {
-        ...gsspData.props,
-        profile,
-      },
-    };
+    return <WrapperComponent profile={profile?.data} />
   };
   return NewComponent;
 }

@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 
 import Layout from "@/components/Layout";
 import Authentication from "@/components/Layout/Auth/Authentication";
-import LoadingScreen from "@/components/Layout/LoadingScreen";
 import QueryProvider from "@/components/QueryProvider";
 
 import "./globals.css";

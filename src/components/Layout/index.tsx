@@ -1,10 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { deleteCookie } from "cookies-next";
-import { cookies, headers } from "next/headers";
-
-import { redirect } from "next/navigation";
-
+import { cookies } from "next/headers";
 import ClientLayout from "./ClientLayout";
 
 type Props = {

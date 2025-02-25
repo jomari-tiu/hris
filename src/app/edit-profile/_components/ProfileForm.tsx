@@ -79,6 +79,7 @@ function ProfileForm({ defaultValues }: Props) {
             type={"password"}
           />
         </aside>
+        <hr />
         <aside className=" space-y-5">
           <ControllerField
             control={control}
